@@ -50,7 +50,7 @@ export default {
       listuser.forEach((user) => {
         if(user.mssv === this.username && user.password === this.password){
           isLogin = true;
-          this.$router.push("/");
+          this.$router.push("/registertest");
         }
         return;
       })
