@@ -9,7 +9,6 @@
         <p>Password:</p>
         <input type="password" name="password" placeholder="password" id="password" v-model="password">
         <input type="submit" name="" value="Login" @click="click_login"><br>
-        <!-- <button type="button" >Click me</button> -->
         <a href="#"> Quên tài khoản?</a>
       </div>
     </div>
@@ -26,7 +25,7 @@
     <div id="footer">
       <p>
         Cổng thông tin đăng kí dự thi trường đại học ABC <br>
-        Phát triển bởi team tia chớp<br>
+        Phát triển bởi team DTT<br>
         144 Xuân Thủy, Cầu Giấy, Hà Nội 
       </p>
     </div>
@@ -36,6 +35,7 @@
 <script>
 import {listuser} from '../../config/test_user.js';
 export default {
+  
   name: 'login',
   data () {
     return {
@@ -59,17 +59,17 @@ export default {
         alert('Login faild');
       }
     }
-  }
+  },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-.login{
+#login{
 	margin: 0px;
 	padding: 0px;
-	background-image: url("../../public/images/bg.png");
+  /* background-image: url("../../public/images/bg.png"); */
 	background-size: cover;
 	background-repeat: no-repeat;
 	font-family: sans-serif;

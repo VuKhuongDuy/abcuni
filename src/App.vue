@@ -1,6 +1,14 @@
 <template>
   <div id="app">
     <router-view/>
+    <p>
+      <a href="http://localhost:8080/#/homeadmin">homeadmin</a>
+      
+      <br>
+      <a href="http://localhost:8080/#/home">home</a>
+      <br>
+      <a href="http://localhost:8080/#/login">login</a>
+    </p>
   </div>
 </template>
 
@@ -10,13 +18,5 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
 </style>
