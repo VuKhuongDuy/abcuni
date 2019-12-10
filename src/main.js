@@ -16,6 +16,10 @@ Vue.use(VueRouter);
 //   let exist = false;
 //   var cookies = document.cookie.split(";");
 
+// router.beforeEach((to, from, next) => {
+//   let exist = false;
+//   var cookies = document.cookie.split(";");
+
 //   cookies.forEach(cookie => {
 //     if (cookie.indexOf("token") > 0) exist = true;
 //   });

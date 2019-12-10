@@ -6,13 +6,13 @@
             </div>
             <div id="headerTitle">
                     <h3>Cổng thông tin đăng kí thi</h3>
-                    <h4>Dành cho <span>sinh viên</span></h4>
+                    <h4>Dành cho <span>Admin</span></h4>
                 </div>
             <div id="header-right">
                 <div id="headerWelcome">
                     <div>
                         <p>
-                            Xin chào: <strong>Nguyễn Xuân Tự</strong> <br>MSSV: <strong>17021119</strong>
+                            Xin chào: <strong>Admin</strong>
                         </p>
                     </div>
                 </div>
@@ -37,32 +37,22 @@
             <div id="menu">
                 <div id="components-menu">
                     <tbody>
-                        <router-view/>
-                        <tr>
-                            <td>
-                                Trang Chủ
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Môn học đã đăng kí
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Đăng kí dự thi
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Danh sách đã đăng kí
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                In danh sách
-                            </td>
-                        </tr> 
+                        <button @click="check0 = !check0">Quản lý môn</button>
+                        <template v-if="check0">
+                            <ul>
+                                <li><a href="">Thêm lịch thi</a></li>
+                                <li><a href="">Sửa lịch thi</a></li>
+                            </ul>   
+                        </template>
+                        <button @click="check1 = !check1">Quản lý sinh viên</button>
+                        <template v-if="check1">
+                            <ul>
+                                <li><a href="">Import danh sách sinh viên</a></li>
+                                <li><a href="">Import danh sách sinh viên đủ điều kiện thi</a></li>
+                                <li><a href="">Sửa danh sách sinh viên</a></li>
+                                <li><a href="">Sửa danh sách sinh viên đủ diều kiện thi</a></li>
+                            </ul>   
+                        </template>
                     </tbody>
 
                 </div>
@@ -89,15 +79,19 @@
             <div id="footerRight">
                 Cổng thông tin đăng kí dự thi trường đại học ABC <br>
                 Phát triển bởi team DTT<br>
-                144 Xuân Thủy, Cầu Giấy, Hà Nội 
-                <br>
+                144 Xuân Thủy, Cầu Giấy, Hà Nội <br>
             </div>
         </div>
     </div>    
 </template>
 <script>
 export default {
-    
+    data(){
+        return{
+            check0:false,
+            check1:false,
+        }   
+    },
 }
 </script>
 <style scoped>
@@ -177,25 +171,9 @@ tbody {
     display: table-row-group;
     border-collapse: collapse;
 }
-tr{
-    display: table-row;
+button{
+    width: 100%;
 }
-td{
-    cursor: pointer;
-    width: 200px;
-    background-color: #e7e7e7;
-    padding: 5px;
-    border: 1px solid #808080;
-}
-td:hover{
-    background-color: #fff;
-}
-td:active{
-    background-color: #066c00;
-    color: #fff;
-    font-size: 18px;
-}
-
 
 #content{ 
     width:calc(100% - 205px);
