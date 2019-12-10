@@ -2,7 +2,7 @@
     <div id="home">
         <div id="header">
             <div id="logo">
-                <img src="../../public/images/logo.png" width="100" height="100" alt="Logo" title="Logo">
+                <img src="@/../public/images/logo.png" width="100" height="100" alt="Logo" title="Logo">
             </div>
             <div id="headerTitle">
                     <h3>Cổng thông tin đăng kí thi</h3>
@@ -20,13 +20,13 @@
                 <div id="headerMenu">
                     <ul>
                         <li>
-                            <a href="#/home"><img src="../../public/icons/notification.png" width="18" height="20" id='notification'> Thông báo</a>
+                            <a href="#/home"><img src="@/../public/icons/notification.png" width="18" height="20" id='notification'> Thông báo</a>
                         </li>
                         <li>
-                            <a href="#/home"><img src="../../public/icons/change_password.png" width="18" height="18" id='change_password'>  Đổi mật khẩu</a>
+                            <a href="#/home"><img src="@/../public/icons/change_password.png" width="18" height="18" id='change_password'>  Đổi mật khẩu</a>
                         </li>
                         <li id='li_1'>
-                            <a href="#/home"><img src="../../public/icons/sign_out.png" width="20" height="20" id='sign_out'> Đăng xuất</a>
+                            <a href="#/home"><img src="@/../public/icons/sign_out.png" width="20" height="20" id='sign_out'> Đăng xuất</a>
                         </li>
                     </ul>
                 </div>

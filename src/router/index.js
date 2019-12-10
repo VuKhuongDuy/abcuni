@@ -1,14 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
 import Dashboard from '@/components/Dashboard'
-import Home from '@/components/Home'
-import TrangChu from '@/components/menus/TrangChu'
-import MonHoc from '@/components/menus/MonHoc'
-import DangKy from '@/components/menus/DangKy'
-import DanhSach from '@/components/menus/DanhSach'
-import InDanhSach from '@/components/menus/InDanhSach'
-import HomeAdmin from '@/components/HomeAdmin'
+import Login from '@/components/menus/Login'
+import Home from '@/components/menus/Home'
+import Subject from '@/components/menus/Subject'
+import RegisterTest from '@/components/menus/RegisterTest'
+import Registed from '@/components/menus/Registed'
+import Print from '@/components/menus/Print'
+import HomeAdmin from '@/components/menus/HomeAdmin'
 
 Vue.use(Router)
 
@@ -35,39 +34,24 @@ export default new Router({
           component: RegisterTest
         },
         {
-          path: '/trangchu',
-          name: 'TrangChu',
-          component: TrangChu
+          path: '/subject',
+          name: 'Subject',
+          component: Subject
         },
         {
-          path: '/monhoc',
-          name: 'MonHoc',
-          component: MonHoc
+          path: '/registed',
+          name: 'Registed',
+          component: Registed
         },
         {
-          path: '/dangky',
-          name: 'DangKy',
-          component: DangKy
-        },
-        {
-          path: '/danhsach',
-          name: 'DanhSach',
-          component: DanhSach
-        },
-        {
-          path: '/indanhsach',
-          name: 'InDanhSach',
-          component: InDanhSach
+          path: '/print',
+          name: 'Print',
+          component: Print
         },
         {
           path: '/homeadmin',
           name:'HomeAdmin',
-          component: HomeAdmin,
-          // children: [
-          //   {
-          //     path:
-          //   }
-          // ]
+          component: HomeAdmin
         }
       ]
     }

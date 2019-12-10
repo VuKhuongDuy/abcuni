@@ -1,14 +1,11 @@
 <template>
-  <div id="">
-    This is DanhSach.vue
-  </div>
+    <div>This is registed</div>
 </template>
-
 <script>
 export default {
-  
+    
 }
 </script>
-
 <style scoped>
+
 </style>

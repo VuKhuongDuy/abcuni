@@ -1,14 +1,13 @@
 <template>
-  <div id="">
-    This is TrangChu.vue
-  </div>
+    <div id="home">   
+        This is home     
+    </div>    
 </template>
-
 <script>
 export default {
-  
+    
 }
 </script>
-
 <style scoped>
+
 </style>

@@ -1,14 +1,11 @@
 <template>
-  <div id="">
-    This is MonHoc.vue
-  </div>
+    <div>This is subject</div>
 </template>
-
 <script>
 export default {
-  
+    
 }
 </script>
-
 <style scoped>
+
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="loginbox">
-      <img src="../../public/images/avatar.jpg" class="avatar">
+      <img src="@/../public/images/avatar.jpg" class="avatar">
       <h1>Login</h1>
       <div>
         <p>Username:</p>
@@ -15,7 +15,7 @@
 
     <div id="welcome">
       <div id="welcomeLogo">
-        <img src="../../public/images/logo.png">
+        <img src="@/../public/images/logo.png">
       </div>
       <div id="welcomeTitle">
           CỔNG THÔNG TIN ĐĂNG KÍ DỰ THI
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {listuser} from '../../config/test_user.js';
+import {listuser} from '@/../config/config.js';
 export default {
   
   name: 'login',
@@ -69,7 +69,7 @@ export default {
 #login{
 	margin: 0px;
 	padding: 0px;
-  /* background-image: url("../../public/images/bg.png"); */
+  /* background-image: url("@/../public/images/bg.png"); */
 	background-size: cover;
 	background-repeat: no-repeat;
 	font-family: sans-serif;
