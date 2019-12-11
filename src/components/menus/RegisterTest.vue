@@ -7,9 +7,13 @@
         <!-- <div v-for="(room, index) in listRoom" :key="index">
             <b-button variant="outline-primary">{{room}}</b-button>
         </div> -->
-        <b-table striped hover :items="listRoom" class="room"></b-table>
+        <div class="wrapper-table wrapper-roomtb">
+            <b-table striped hover :items="listRoom" class="room"></b-table>
+        </div>
         <b-button variant="success" id="btnRegisterTest">Đăng kí</b-button>
-        <b-table striped hover :items="subjectRegisted" class="subjectRegisted" :style="{width: '900px', maxwidth: '600px'}"></b-table>
+        <div class="wrapper-table wrapper wrapper-subjectRegistedTb">
+            <b-table striped hover :items="subjectRegisted" class="subjectRegisted"></b-table>
+        </div>
     </div>
 </template>
 <script>
@@ -59,7 +63,22 @@ export default {
                 {id: '301GD2', computer: 30, registed: 20},
                 {id: '302GD2', computer: 30, registed: 25},
                 {id: '303GD2', computer: 30, registed: 30},
-                {id: '304GD2', computer: 30, registed: 20}
+                {id: '304GD2', computer: 30, registed: 20},
+                {id: '301GD2', computer: 30, registed: 20},
+                {id: '302GD2', computer: 30, registed: 25},
+                {id: '303GD2', computer: 30, registed: 30},
+                {id: '304GD2', computer: 30, registed: 20},
+                {id: '301GD2', computer: 30, registed: 20},
+                {id: '302GD2', computer: 30, registed: 25},
+                {id: '303GD2', computer: 30, registed: 30},
+                {id: '304GD2', computer: 30, registed: 20},
+                {id: '302GD2', computer: 30, registed: 25},
+                {id: '303GD2', computer: 30, registed: 30},
+                {id: '304GD2', computer: 30, registed: 20},
+                {id: '301GD2', computer: 30, registed: 20},
+                {id: '302GD2', computer: 30, registed: 25},
+                {id: '303GD2', computer: 30, registed: 30},
+                {id: '304GD2', computer: 30, registed: 20},
             ],
             listRoomRender: [],
             subjectRegisted: [
@@ -81,6 +100,8 @@ export default {
 <style>
 
 #registerTest{
+    width: 100%;
+    height: 100%;
     padding-left: 60px;
 }
 
@@ -98,7 +119,7 @@ export default {
 }
 
 #btnRegisterTest{
-    margin-left: 400px;
+    margin-left: 40%;
 }
 
 .subjectRegisted{
@@ -107,14 +128,27 @@ export default {
 
 .breadcrumb{
     margin-left: -60px;
+    width: 105%;
 }
 
-.room{
+.wrapper-table{
     margin-top: 10px;
-    width: 900px;
+    width: 90%;
+    overflow: scroll;
+}
+
+.wrapper-roomtb{
+    max-height: 400px;
+}
+
+.wrapper-subjectRegistedTb{
+    max-height: 300px;
 }
 
 .select{
     margin-right: 15px;
+    width: 200px;
+    max-width: 200px;
+    min-width: 190px;
 }
 </style>

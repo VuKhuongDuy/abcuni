@@ -33,7 +33,8 @@
 </template>
 
 <script>
-import {listuser} from '@/../config/config.js';
+import {listuser, serverPath} from '@/../config/config.js';
+import * as axios from '@/../config/axios.js';
 export default {
   
   name: 'login',
@@ -45,15 +46,12 @@ export default {
   },
 
   methods: {
-    click_login: function(){
+    click_login: async function(){
       let isLogin = false;
-      listuser.forEach((user) => {
-        if(user.mssv === this.username && user.password === this.password){
-          isLogin = true;
-          this.$router.push("/registertest");
-        }
-        return;
-      })
+	  let url = serverPath + '/login';
+	  let body = {username: this.username, password: this.password};
+	  let result = await axios.postAxios(url, body);
+	  console.log(result);
       
       if(!isLogin){
         alert('Login faild');

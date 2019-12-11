@@ -15,3 +15,15 @@ function setCookie(strCookie, username){
       escape("token") + "=JWT " + escape(strCookie) + "; path=/";
     
 }
+
+function getToken(){
+  let token = '';
+  var cookies = document.cookie.split(";");
+  cookies.forEach((str) => {
+    if(str.indexOf('=')){
+      token = str.split('=')[1];
+    }
+  })
+  return token;
+}
+export { setCookie, getToken };

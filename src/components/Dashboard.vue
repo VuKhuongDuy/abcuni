@@ -71,16 +71,16 @@ export default {
 <style scoped>
 #dashboard{
     width: 100%;
-    height: 100%;
+    min-height: 1000px;
+    overflow: hidden;
 }
 
 #header{
     width: 100%;
-    height: 70px;
-    background-color: aquamarine;
+    height: 110px;
+    /* background-color: rgb(9, 157, 94); */
     border-bottom: 4px double gray;
     color: #066c00;
-    height: 100px;
     display: block;
 }
 #body{
@@ -88,14 +88,13 @@ export default {
 }
 #left{
     width: 15%;
-    height: 700px;
-    background-color: blue;
+    height: 95%;
     display:block;
 }
 
 #right{
     width: 85%;
-    height: 700px;
+    height: 95%;
 }
 
 .btn_router{
@@ -109,14 +108,17 @@ export default {
 }
 #logo{
     position: absolute;
+    top: 3px;
+    left: 25px;
 }
 #header-right{
     position: absolute;
-    right: 10px;
+    right: 30px;
 }
 #headerTitle{
     position: absolute;
-    left: 120px;
+    left: 160px;
+    top: 13px;
 }
 #headerWelcome p{
     text-align: right;
@@ -155,7 +157,7 @@ li a:active{
 /* body */
 #body{
     margin: 0;
-    height: 552px;
+    height: 95%;
 }
 
 #menu{
@@ -202,6 +204,7 @@ td:active{
   color: #066c00;
   font-family: "Courier New";
   font-weight: bold;
+  border-top: 1px double gray;
 }
 #footerLeft{
     float: left;
