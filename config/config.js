@@ -8,7 +8,7 @@ let listuser = [
         password: 'vuduy'
     }
 ]
-const serverPath = 'localhost:3000';
+const serverPath = 'http://localhost:3000';
 
 module.exports.listuser = listuser;
 module.exports.serverPath = serverPath;
