@@ -7,7 +7,10 @@ import Subject from '@/components/menus/Subject'
 import RegisterTest from '@/components/menus/RegisterTest'
 import Registed from '@/components/menus/Registed'
 import Print from '@/components/menus/Print'
-import HomeAdmin from '@/components/menus/HomeAdmin'
+
+import DashboardAdmin from '@/components/DashboardAdmin'
+import HomeAdmin from '@/components/menus_admin/HomeAdmin'
+
 
 Vue.use(Router)
 
@@ -48,11 +51,17 @@ export default new Router({
           name: 'Print',
           component: Print
         },
+      ]
+    },
+    {
+      path: '/admin',
+      name:'DashboardAdmin',
+      component: DashboardAdmin,
+      children:[
         {
           path: '/homeadmin',
-          name:'HomeAdmin',
-          component: HomeAdmin
-        }
+          component: HomeAdmin,
+        },
       ]
     }
   ]

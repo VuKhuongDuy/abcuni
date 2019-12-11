@@ -1,14 +1,13 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+    <div id="home">   
+        This is home admin    
+    </div>    
 </template>
-
 <script>
 export default {
-  name: 'App'
+    
 }
 </script>
-
 <style scoped>
+
 </style>
