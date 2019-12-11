@@ -6,7 +6,6 @@ let getAxios = function(url) {
       .get(url, {
         headers: {
           Authorization: cookie.getToken(),
-          "Access-Control-Allow-Origin": '*'
         }
       })
       .then(result => {
@@ -23,8 +22,7 @@ let postAxios = function(url, body){
     body,
     {
       headers: {
-        Authorization: cookie.getToken(),
-        "Access-Control-Allow-Origin": '*'
+        Authorization: cookie.getToken()
       }
     }
   ).then(result => {

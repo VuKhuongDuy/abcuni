@@ -5,9 +5,9 @@
                 <img src="@/../public/images/logo.png" width="100" height="100" alt="Logo" title="Logo">
             </div>
             <div id="headerTitle">
-                    <h3>Cổng thông tin đăng kí thi</h3>
-                    <h4>Dành cho <span>sinh viên</span></h4>
-                </div>
+                <h3>Cổng thông tin đăng kí thi</h3>
+                <h4>Dành cho <span>sinh viên</span></h4>
+            </div>
             <div id="header-right">
                 <div id="headerWelcome">
                     <div>
@@ -34,11 +34,11 @@
         </div>
         <div id = 'body'>
             <div id = "left">
-                <router-link to='/home'  tag='button' class="btn_router" >Trang Chủ</router-link>
-                <router-link to='/subject'  tag='button' class="btn_router" >Môn học</router-link>
-                <router-link to='/registertest'  tag='button' class="btn_router" >Đăng kí dự thi</router-link>
-                <router-link to='/registed'  tag='button' class="btn_router" >Danh sách đã đăng kí</router-link>
-                <router-link to='/print'  tag='button' class="btn_router" >In danh sách</router-link>
+                <router-link to='/home'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Trang Chủ<img src="@/../public/icons/right.png" class="icon_right"></router-link>
+                <router-link to='/subject'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn học<img src="@/../public/icons/right.png" class="icon_right"></router-link>
+                <router-link to='/registertest'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Đăng kí dự thi<img src="@/../public/icons/right.png" class="icon_right"></router-link>
+                <router-link to='/registed'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi<img src="@/../public/icons/right.png" class="icon_right"></router-link>
+                <router-link to='/print'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách<img src="@/../public/icons/right.png" class="icon_right"></router-link>
             </div>
             <div id= 'right'>
                 <router-view></router-view>
@@ -74,7 +74,6 @@ export default {
     min-height: 1000px;
     overflow: hidden;
 }
-
 #header{
     width: 100%;
     height: 110px;
@@ -91,17 +90,16 @@ export default {
     height: 95%;
     display:block;
 }
-
 #right{
     width: 85%;
     height: 95%;
 }
-
 .btn_router{
     width: 100%;
     height: 30px;
+    text-align: left;
+    /* background-color: #fff; */
 }
-
 #home{
     margin: 0;
     
@@ -155,47 +153,32 @@ li a:active{
     color:#ff0000;
 }
 /* body */
-#body{
+/* #body{
     margin: 0;
-    height: 95%;
-}
-
+    height: 552px;
+} */
 #menu{
     width: 200px;
     float: left;
     min-height: 100%;
 }
-tbody {
-    display: table-row-group;
-    border-collapse: collapse;
+.icon_stack{
+    width: 16px;
+    position: relative;
+    bottom: 2.5px;
 }
-tr{
-    display: table-row;
+.icon_right{
+    width: 15px;
+    float: right;
+    position: relative;
+    top: 5px;
 }
-td{
-    cursor: pointer;
-    width: 200px;
-    background-color: #e7e7e7;
-    padding: 5px;
-    border: 1px solid #808080;
-}
-td:hover{
-    background-color: #fff;
-}
-td:active{
-    background-color: #066c00;
-    color: #fff;
-    font-size: 18px;
-}
-
-
 #content{ 
     width:calc(100% - 205px);
     margin-left: 5px;
     min-height: 100%;
     float:left;
 }
-
 /* footer */
 #footer{
   width: 100%;
@@ -225,5 +208,4 @@ td:active{
     position: absolute;
     left:208px;
 }
-
 </style>
