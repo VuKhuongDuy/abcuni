@@ -74,7 +74,7 @@ export default {
 
 	  cookie.setCookie(result.token, this.username);
 	  if(result.isAdmin){
-		this.$router.push("/admin");	  
+		this.$router.push("/");	  
 	  }
 	  else this.$router.push("/");
     }

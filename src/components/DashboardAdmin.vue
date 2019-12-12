@@ -47,7 +47,7 @@
                             <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Import danh sách sinh viên</router-link>
                             <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Import danh sách sinh viên đủ điều kiện thi</router-link>
                             <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Sửa danh sách sinh viên</router-link>
-                            <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Sửa danh sách sinh viên đủ diều kiện thi</router-link>   
+                            <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Sửa danh sách s``inh viên đủ diều kiện thi</router-link>   
                         </template>
                     </tbody>
 
