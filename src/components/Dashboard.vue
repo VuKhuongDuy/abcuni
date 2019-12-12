@@ -71,7 +71,7 @@ export default {
 <style scoped>
 #dashboard{
     width: 100%;
-    min-height: 1000px;
+    min-height: 552px;
     overflow: hidden;
 }
 #header{
@@ -84,15 +84,16 @@ export default {
 }
 #body{
     display: flex;
+    height: 552px;
 }
 #left{
     width: 15%;
-    height: 95%;
     display:block;
 }
 #right{
     width: 85%;
-    height: 95%;
+    max-height: 552px;
+    display: inline-block;
 }
 .btn_router{
     width: 100%;
@@ -176,14 +177,14 @@ li a:active{
 #content{ 
     width:calc(100% - 205px);
     margin-left: 5px;
-    min-height: 100%;
+    /* min-height: 100%; */
     float:left;
 }
 /* footer */
 #footer{
   width: 100%;
-  height: 50px;
-  clear: both;
+  height: 92px;
+  /* clear: both; */
   color: #066c00;
   font-family: "Courier New";
   font-weight: bold;

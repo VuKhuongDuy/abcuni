@@ -37,28 +37,29 @@
             <div id="menu">
                 <div id="components-menu">
                     <tbody>
-                        <button @click="check0 = !check0"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý môn<img v-if="check0" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check0" src="@/../public/icons/down.png" class="icon_down"></button>
-                        <template v-if="check0">
-                            <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Thêm lịch thi</router-link>
-                            <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Sửa lịch thi</router-link> 
+                        <button @click="check2 = !check2" class="button_menu"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý sinh viên<img v-if="check2" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check2" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <template v-if="check2">
+                            <router-link to='/student'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Sinh Viên</router-link>
+                            <router-link to='/user'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Tài khoản sinh viên</router-link>
+                            <router-link to='/subjectfull'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Môn học SV đã học</router-link>
+                            <router-link to='/notenough'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">SV không đủ điều kiện</router-link>
                         </template>
-                        <button @click="check1 = !check1"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý sinh viên<img v-if="check1" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check1" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <button @click="check0 = !check0" class="button_menu"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý khách quan<img v-if="check0" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check0" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <template v-if="check0">
+                            <router-link to='/infrastructure'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Cơ sở vật chất</router-link>
+                            <router-link to='/subjectexam'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Môn thi</router-link>
+                            <router-link to='/ca'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Ca thi</router-link>
+                        </template>
+                        <button @click="check1 = !check1" class="button_menu"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý lịch thi<img v-if="check1" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check1" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check1">
-                            <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Import danh sách sinh viên</router-link>
-                            <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Import danh sách sinh viên đủ điều kiện thi</router-link>
-                            <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Sửa danh sách sinh viên</router-link>
-                            <router-link to='/homeadmin'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Sửa danh sách sinh viên đủ diều kiện thi</router-link>   
+                            <router-link to='/testexam'  tag='button' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Lịch thi</router-link>
                         </template>
                     </tbody>
 
                 </div>
             </div>
             <div id="content">
-                <h1>
                     <router-view></router-view>
-                </h1>
-
-                
             </div>
         </div>
         <hr>
@@ -86,6 +87,7 @@ export default {
         return{
             check0:false,
             check1:false,
+            check2:false,
         }   
     },
 }
@@ -95,10 +97,8 @@ export default {
     border: 1px solid #CDCDCD;
     box-sizing: border-box;
 } */
-
 #home{
     margin: 0;
-    
 }
 /* header */
 #header{
@@ -155,7 +155,7 @@ li a:active{
 /* body */
 #body{
     margin: 0;
-    height: 552px;
+    height: 515px;
 }
 
 #menu{
@@ -170,6 +170,10 @@ tbody {
 button{
     width: 100%;
     text-align: left;
+    border: none;
+}
+.button_menu{
+    background-color: #4da6ff;
 }
 .btn_router{
     width: 100%;
@@ -195,6 +199,12 @@ button{
     position: relative;
     top: 5px;
 }
+.icon_right_0{
+    width: 18px;
+    float: right;
+    position: relative;
+    top: 3px;
+}
 #content{ 
     width:calc(100% - 205px);
     margin-left: 5px;
@@ -205,7 +215,7 @@ button{
 /* footer */
 #footer{
   width: 100%;
-  height: 50px;
+  height: 73px;
   clear: both;
   color: #066c00;
   font-family: "Courier New";

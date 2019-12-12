@@ -1,6 +1,6 @@
 <template>
     <div id="home">   
-        This is home admin    
+        Test exam   
     </div>    
 </template>
 <script>
