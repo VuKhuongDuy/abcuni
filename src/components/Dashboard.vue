@@ -2,7 +2,7 @@
     <div id="dashboard">
         <div id="header">
             <div id="logo">
-                <img src="@/../public/images/logo.png" width="100" height="100" alt="Logo" title="Logo">
+                <router-link to='/home'><img src="@/../public/images/logo.png" width="100" height="100" alt="Logo" title="Logo" ></router-link>
             </div>
             <div id="headerTitle">
                 <h3>Cổng thông tin đăng kí thi</h3>
