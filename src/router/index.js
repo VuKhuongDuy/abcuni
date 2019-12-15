@@ -22,6 +22,7 @@ import TestExam from '@/components/menus_admin/TestExam'
 import HomeAdmin from '@/components/menus_admin/HomeAdmin'
 
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -66,16 +67,10 @@ export default new Router({
     {
       path: '/admin',
       component: DashboardAdmin,
-      redirect: '/homeadmin',
+      redirect: '/testexam',
       children:[
         {
-          path: '/homeadmin',
-          name: 'homeadmin',
-          component: HomeAdmin,
-        },
-        {
           path: '/testexam',
-
           component: TestExam,
         },
         {

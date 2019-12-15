@@ -4,9 +4,10 @@
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
-      placeholder="Choose a file or drop it here and click 'Submit' to import list student..."
+      placeholder="Choose a file or drop it here and click 'Submit' to import list user..."
       drop-placeholder="Drop file here..."
       multiple
+      style="width:630px"
     ></b-form-file>
     <div class="mt-3">
       Selected file: {{ file ? file.name : '' }}

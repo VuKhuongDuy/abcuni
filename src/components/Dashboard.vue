@@ -1,71 +1,48 @@
 <template>
     <div id="dashboard">
         <div id="header">
-            <div id="logo">
-                <router-link to='/home'><img src="@/../public/images/logo.png" width="100" height="100" alt="Logo" title="Logo" ></router-link>
-            </div>
-            <div id="headerTitle">
-                <h3>Cổng thông tin đăng kí thi</h3>
-                <h4>Dành cho <span>sinh viên</span></h4>
-            </div>
-            <div id="header-right">
-                <div id="headerWelcome">
-                    <div>
-                        <p>
-                            Xin chào: <strong>Nguyễn Xuân Tự</strong> <br>MSSV: <strong>17021119</strong>
-                        </p>
-                    </div>
-                </div>
-                
-                <div id="headerMenu">
-                    <ul>
-                        <li>
-                            <a href="#/home"><img src="@/../public/icons/notification.png" width="18" height="20" id='notification'> Thông báo</a>
-                        </li>
-                        <li>
-                            <a href="#/home"><img src="@/../public/icons/change_password.png" width="18" height="18" id='change_password'>  Đổi mật khẩu</a>
-                        </li>
-                        <li id='li_1'>
-                            <a href="#/home"><img src="@/../public/icons/sign_out.png" width="20" height="20" id='sign_out'> Đăng xuất</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <app-header
+              :dataAdmins="dataAdmins"
+            ></app-header>
         </div>
         <div id = 'body'>
             <div id = "left">
-                <router-link to='/home'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Trang Chủ<img src="@/../public/icons/right.png" class="icon_right"></router-link>
-                <router-link to='/subject'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn học<img src="@/../public/icons/right.png" class="icon_right"></router-link>
-                <router-link to='/registertest'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Đăng kí dự thi<img src="@/../public/icons/right.png" class="icon_right"></router-link>
-                <router-link to='/registed'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi<img src="@/../public/icons/right.png" class="icon_right"></router-link>
-                <router-link to='/print'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách<img src="@/../public/icons/right.png" class="icon_right"></router-link>
+                <button class="btn" type="button" @click="activeBtn = 'btn1'" :class="{active: activeBtn === 'btn1' }"><router-link to='/home'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Trang Chủ<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                <button class="btn" type="button" @click="activeBtn = 'btn2'" :class="{active: activeBtn === 'btn2' }"><router-link to='/subject'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn học<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                <button class="btn" type="button" @click="activeBtn = 'btn3'" :class="{active: activeBtn === 'btn3' }"><router-link to='/registertest'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Đăng kí dự thi<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                <button class="btn" type="button" @click="activeBtn = 'btn4'" :class="{active: activeBtn === 'btn4' }"><router-link to='/registed'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                <button class="btn" type="button" @click="activeBtn = 'btn5'" :class="{active: activeBtn === 'btn5' }"><router-link to='/print'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                
             </div>
             <div id= 'right'>
                 <router-view></router-view>
             </div>
         </div>
         <div id="footer">
-            <div id="footerLeft">
-                <span>Số người đang online </span>
-                <br>
-                <span class="numberOnline" id="numUserOnline">999  </span>
-                <br>
-                
-            </div>
-            <div id="footerSep">
-            </div>
-            <div id="footerRight">
-                Cổng thông tin đăng kí dự thi trường đại học ABC <br>
-                Phát triển bởi team DTT<br>
-                144 Xuân Thủy, Cầu Giấy, Hà Nội 
-                <br>
-            </div>
+            <app-footer></app-footer>
         </div>
     </div>    
 </template>
 <script>
+import Header from './component_dashboard/Header.vue'
+import Footer from './component_dashboard/Footer.vue'
 export default {
-    
+    data(){
+        return{
+            activeBtn:'btn1',
+            dataAdmins:{
+                home:'/home',
+                level:'sinh viên',
+                user: '17021119',
+            },
+        }
+    },
+    components:{
+        appHeader:Header,
+        appFooter:Footer
+    },
+    methods:{
+    }
 }
 </script>
 <style scoped>
@@ -74,94 +51,15 @@ export default {
     min-height: 552px;
     overflow: hidden;
 }
-#header{
-    width: 100%;
-    height: 110px;
-    /* background-color: rgb(9, 157, 94); */
-    border-bottom: 4px double gray;
-    color: #066c00;
-    display: block;
-}
+/* body  */
 #body{
     display: flex;
     height: 552px;
 }
+/* menu */
 #left{
-    width: 15%;
-    display:block;
-}
-#right{
-    width: 85%;
-    max-height: 552px;
-    display: inline-block;
-}
-.btn_router{
-    width: 100%;
-    height: 30px;
-    text-align: left;
-    /* background-color: #fff; */
-}
-#home{
-    margin: 0;
-    
-}
-#logo{
-    position: absolute;
-    top: 3px;
-    left: 25px;
-}
-#header-right{
-    position: absolute;
-    right: 30px;
-}
-#headerTitle{
-    position: absolute;
-    left: 160px;
-    top: 13px;
-}
-#headerWelcome p{
-    text-align: right;
-    margin: 0;
-    position: relative;
-    float: right;
-}
-#headerMenu{
-    margin-top: 70px;
-}
-ul{
-    bottom: 10px;
-    list-style-type: none;
-    font-size: 17px;
-}
-li{
-    float: left;
-    width:150px;
-}
-#li_1{
-    width: 126px;
-}
-li a{
-    color: #066c00;
-    vertical-align: super;
-    text-align: right;
-    text-decoration: none;
-    float: right;
-}
-li a:hover{
-    color: #0000ff;
-}
-li a:active{
-    color:#ff0000;
-}
-/* body */
-/* #body{
-    margin: 0;
-    height: 552px;
-} */
-#menu{
     width: 200px;
-    float: left;
-    min-height: 100%;
+    display:block;
 }
 .icon_stack{
     width: 16px;
@@ -174,39 +72,44 @@ li a:active{
     position: relative;
     top: 5px;
 }
-#content{ 
-    width:calc(100% - 205px);
-    margin-left: 5px;
-    /* min-height: 100%; */
-    float:left;
+button{
+    width: 200px;
+    text-align: left;
+    border: none;
+    display: block;
+    border: 1px solid  #d9d9d9;
 }
-/* footer */
-#footer{
-  width: 100%;
-  height: 92px;
-  /* clear: both; */
-  color: #066c00;
-  font-family: "Courier New";
-  font-weight: bold;
-  border-top: 1px double gray;
+.btn_router{
+    width: 100%;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    display: block;
+    color:#262626;
+    margin: 0px;
+    padding:4px;
 }
-#footerLeft{
-    float: left;
-    height: 100%;
+.btn{
+    display: block;
+    width: 200px;
+    margin:0px;
+    padding: 0px;
 }
-#footerSep{
-    margin-left:3px;
-    border-left: 2px solid #066c00;
-    float: left;
-    height: 100%;
-    left: 206px;
+.btn:hover{
+    background-color: #e6e6e6;
+    display: block;
 }
-#numUserOnline{
-    color:#ff0000;
-    float:right;
+.active,  .active:hover{
+    background: #33ff33;
+    width: 100%;
+    text-align: left;
+    /* border: none; */
 }
-#footerRight{
-    position: absolute;
-    left:208px;
+/* content */
+#right{
+    width: 85%;
+    max-height: 552px;
+    display: inline-block;
 }
+
 </style>

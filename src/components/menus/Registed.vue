@@ -76,9 +76,10 @@ export default {};
 <style scoped>
 .title {
   position: relative;
-  margin: 20px 250px 20px 0px;
+  margin: 0;
   padding: 10px;
-  left: -100px;
+  left: 260px;
+  display: inline-block;
   text-align: center;
   /* background-color: #99ccff; */
 }
