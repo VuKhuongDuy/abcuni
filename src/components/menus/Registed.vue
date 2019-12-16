@@ -1,6 +1,6 @@
 <template>
   <div id="registed">
-    <b-form-select v-model="exam" class="optionExam mt-3" :options="listExam" size="sm"></b-form-select>
+    <b-form-select v-model="exam" class="optionExam mt-3" :options="listExam" size="sm" @change="loadSubjectRegisted"></b-form-select>
     <b-form-input
       v-model="codeSubjectSearch"
       placeholder="Tìm môn"
@@ -157,6 +157,7 @@ export default {
 #btnRemove {
   position: absolute;
   right: 300px;
+  top: 170px;
 }
 
 #registed {

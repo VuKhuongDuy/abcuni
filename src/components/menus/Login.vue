@@ -70,6 +70,7 @@ export default {
       if (!result.success) {
         this.dismissCountDown = this.dismissSecs;
         this.message = result.message;
+        return;
       }
 
 	  cookie.setCookie(result.token, this.username);
