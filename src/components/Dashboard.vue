@@ -60,21 +60,7 @@
             </div>
         </div>
         <div id="footer">
-            <div id="footerLeft">
-                <span>Số người đang online </span>
-                <br>
-                <span class="numberOnline" id="numUserOnline">999  </span>
-                <br>
-                
-            </div>
-            <div id="footerSep">
-            </div>
-            <div id="footerRight">
-                Cổng thông tin đăng kí dự thi trường đại học ABC <br>
-                Phát triển bởi team DTT<br>
-                144 Xuân Thủy, Cầu Giấy, Hà Nội 
-                <br>
-            </div>
+            <app-footer></app-footer>
         </div>
     </div>    
 </template>
@@ -116,19 +102,13 @@ export default {
     min-height: 600px;
     overflow: hidden;
 }
-#header{
-    width: 100%;
-    height: 110px;
-    /* background-color: rgb(9, 157, 94); */
-    border-bottom: 4px double gray;
-    color: #066c00;
-    display: block;
-}
+/* body  */
 #body{
     display: flex;
     min-height: 700px;
     /* margin-top: 50px; */
 }
+/* menu */
 #left{
     width: 15%;
     height: 100%;
@@ -212,8 +192,7 @@ li a:active{
 } */
 #menu{
     width: 200px;
-    float: left;
-    min-height: 100%;
+    display:block;
 }
 .icon_stack{
     width: 16px;
@@ -226,11 +205,12 @@ li a:active{
     position: relative;
     top: 5px;
 }
-#content{ 
-    width:calc(100% - 205px);
-    margin-left: 5px;
-    /* min-height: 100%; */
-    float:left;
+button{
+    width: 200px;
+    text-align: left;
+    border: none;
+    display: block;
+    border: 1px solid  #d9d9d9;
 }
 /* footer */
 #footer{
@@ -248,19 +228,21 @@ li a:active{
     padding: 5px;
     height: 100%;
 }
-#footerSep{
-    margin-left:3px;
-    border-left: 2px solid #066c00;
-    float: left;
-    height: 100%;
-    left: 206px;
+.btn:hover{
+    background-color: #e6e6e6;
+    display: block;
 }
-#numUserOnline{
-    color:#ff0000;
-    float:right;
+.active,  .active:hover{
+    background: #33ff33;
+    width: 100%;
+    text-align: left;
+    /* border: none; */
 }
-#footerRight{
-    position: absolute;
-    left:208px;
+/* content */
+#right{
+    width: 85%;
+    max-height: 552px;
+    display: inline-block;
 }
+
 </style>
