@@ -8,7 +8,7 @@ import Kar98 from '@/components/menus_admin/masterdata/Kar98'
 import SubjectFull from '@/components/menus_admin/masterdata/SubjectFull'
 import User from '@/components/menus_admin/masterdata/User'
 import NotEnough from '@/components/menus_admin/masterdata/NotEnough'
-import HomeAdmin from '@/components/menus_admin/Home'
+// import HomeAdmin from '@/components/menus_admin/Home'
 // not admin
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'

@@ -1,6 +1,6 @@
 <template>
   <div id="registed">
-    <b-form-select v-model="exam" class="optionExam mt-3" :options="listExam" size="sm" @change="loadSubjectRegisted"></b-form-select>
+    <b-form-select v-model="selectedExam" class="optionExam mt-3" :options="listExam" size="sm" @change="loadSubjectRegisted"></b-form-select>
     <b-form-input
       v-model="codeSubjectSearch"
       placeholder="Tìm môn"
@@ -48,29 +48,29 @@ export default {
       codeSubjectSearch: "",
       isEmptySubjectRegisted: false,
       listExam: [{ value: null, text: "Please select an exam" }],
-      exam: "",
+      selectedExam: "",
       message: "",
       subjectChoosed: null
     };
   },
   methods: {
     
-    getExam: async function() {
+    loadExam: async function() {
       let url = "/exam";
       let data = await axios.getAxios(url);
       if (data.success) {
         data.data.forEach(exam => {
           let obj = { value: exam.exam_id, text: exam.exam_name };
           this.listExam.push(obj);
-          if (this.exam === "") this.exam = exam.exam_id;
         });
+        if (this.selectedExam === "") this.selectedExam = this.listExam[this.listExam.length-1].value;
       }
     },
 
     loadSubjectRegisted: async function() {
       this.listSubjectRegisted = [];
       this.isEmptySubjectRegisted = true;
-      let url = "/turn/registed/student/" + this.exam;
+      let url = "/turn/registed/student/" + this.selectedExam;
 
       let data = await axios.getAxios(url);
       if (data.success) {
@@ -128,7 +128,7 @@ export default {
   },
 
   mounted: async function() {
-    await this.getExam();
+    await this.loadExam();
     await this.loadSubjectRegisted();
     if(this.listSubjectRender.length === 0){
       this.message = "Không có môn nào"
@@ -157,7 +157,7 @@ export default {
 #btnRemove {
   position: absolute;
   right: 300px;
-  top: 170px;
+  top: 150px;
 }
 
 #registed {

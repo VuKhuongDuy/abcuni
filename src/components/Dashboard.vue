@@ -102,6 +102,16 @@ export default {
     min-height: 600px;
     overflow: hidden;
 }
+
+#header{
+    width: 100%;
+    height: 110px;
+    /* background-color: rgb(9, 157, 94); */
+    border-bottom: 4px double gray;
+    color: #066c00;
+    display: block;
+}
+
 /* body  */
 #body{
     display: flex;
@@ -119,19 +129,7 @@ export default {
     height: 100%;
     display: inline-block;
 }
-.btn_router{
-    width: 100%;
-    height: 30px;
-    text-align: left;
-    /* background-color: #fff; */
-}
-.btn_router_clicked{
-    width: 100%;
-    height: 30px;
-    text-align: left;
-    transform: scaleY(1.1);
-    border: 1px solid #29a2f2;
-}
+
 #home{
     margin: 0;
     
@@ -160,59 +158,16 @@ export default {
 #headerMenu{
     margin-top: 70px;
 }
-ul{
-    bottom: 10px;
-    list-style-type: none;
-    font-size: 17px;
-}
-li{
-    float: left;
-    width:150px;
-}
-#li_1{
-    width: 126px;
-}
-li a{
-    color: #066c00;
-    vertical-align: super;
-    text-align: right;
-    text-decoration: none;
-    float: right;
-}
-li a:hover{
-    color: #0000ff;
-}
-li a:active{
-    color:#ff0000;
-}
-/* body */
-/* #body{
-    margin: 0;
-    height: 552px;
-} */
+
 #menu{
     width: 200px;
     display:block;
 }
-.icon_stack{
-    width: 16px;
-    position: relative;
-    bottom: 2.5px;
+
+#li_1{
+    width: 126px;
 }
-.icon_right{
-    width: 15px;
-    float: right;
-    position: relative;
-    top: 5px;
-}
-button{
-    width: 200px;
-    text-align: left;
-    border: none;
-    display: block;
-    border: 1px solid  #d9d9d9;
-}
-/* footer */
+
 #footer{
   width: 100%;
   height: 72px;
@@ -238,11 +193,73 @@ button{
     text-align: left;
     /* border: none; */
 }
-/* content */
-#right{
-    width: 85%;
-    max-height: 552px;
-    display: inline-block;
+
+.btn_router{
+    width: 100%;
+    height: 30px;
+    text-align: left;
+    /* background-color: #fff; */
 }
+.btn_router_clicked{
+    width: 100%;
+    height: 30px;
+    text-align: left;
+    transform: scaleY(1.1);
+    border: 1px solid #29a2f2;
+}
+
+.icon_stack{
+    width: 16px;
+    position: relative;
+    bottom: 2.5px;
+}
+.icon_right{
+    width: 15px;
+    float: right;
+    position: relative;
+    top: 5px;
+}
+ul{
+    bottom: 10px;
+    list-style-type: none;
+    font-size: 17px;
+}
+li{
+    float: left;
+    width:150px;
+}
+
+li a{
+    color: #066c00;
+    vertical-align: super;
+    text-align: right;
+    text-decoration: none;
+    float: right;
+}
+li a:hover{
+    color: #0000ff;
+}
+li a:active{
+    color:#ff0000;
+}
+/* body */
+/* #body{
+    margin: 0;
+    height: 552px;
+} */
+
+button{
+    width: 200px;
+    text-align: left;
+    border: none;
+    display: block;
+    border: 1px solid  #d9d9d9;
+}
+
+/* #right{ */
+    /* width: 85%; */
+    /* max-height: 552px; */
+    /* display: inline-block; */
+/* } */
 
 </style>

@@ -72,6 +72,7 @@ export default {
         loadSubject: async function(){
             this.listSubject = [{ value: null, text: 'Subject' }];
             let url = '/subject/' + this.selectedExam;
+            console.log('loadsubject');
             let data = await axios.getAxios(url);
             if(data.success){
                 data.data.forEach(subject => {
@@ -139,6 +140,7 @@ export default {
                     this.listExam.push(obj);
                 });
             }
+            this.selectedExam = this.listExam[this.listExam.length-1].value;
         },
 
         chooseTurn: function(turn, index){
@@ -165,8 +167,8 @@ export default {
     },
     mounted: async function(){
         await this.loadExam();
+        await this.loadSubject();
         await this.loadTurnRegisted();
-        
     },
     beforeUpdate: function(){
         if(this.listTurnRegisted.length === 0){
