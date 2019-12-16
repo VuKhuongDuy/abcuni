@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div id="login" style="background-image: url(./public/images/bg.png)">
     <div class="loginbox">
       <b-alert variant="danger" :show="dismissCountDown">{{message}}</b-alert>
       <img src="@/../public/images/avatar.jpg" class="avatar" />
@@ -9,7 +9,7 @@
         <input
           type="text"
           name="username"
-          placeholder="mssv or username"
+          placeholder="Mssv or username"
           id="username"
           v-model="username"
         />
@@ -17,7 +17,7 @@
         <input
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="Password"
           id="password"
           v-model="password"
         />
@@ -92,12 +92,15 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   font-family: sans-serif;
+  width: 100%;
+  height: 700px;
 }
 
 .loginbox {
   width: 320px;
   height: 420px;
   background: #fff;
+  border: 1px solid green;
   top: 50%;
   left: 50%;
   position: absolute;
@@ -193,6 +196,6 @@ input[id="password"] {
   bottom: 0px;
   text-align: right;
   font-size: 12px;
-  font-family: Courier New;
+  font-family: "Courier New";
 }
 </style>

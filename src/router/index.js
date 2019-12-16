@@ -19,7 +19,9 @@ import Registed from '@/components/menus/Registed'
 import Print from '@/components/menus/Print'
 //admin
 import DashboardAdmin from '@/components/DashboardAdmin'
-import Exam from '@/components/menus_admin/Exam'
+import TestExam from '@/components/menus_admin/TestExam'
+import HomeAdmin from '@/components/menus_admin/HomeAdmin'
+
 
 
 Vue.use(Router)
@@ -67,17 +69,11 @@ export default new Router({
     {
       path: '/admin',
       component: DashboardAdmin,
-      redirect: '/homeadmin',
+      redirect: '/testexam',
       children:[
         {
-          path: '/homeadmin',
-          name: 'homeadmin',
-          component: HomeAdmin
-        },
-        {
-          path: '/exam',
-          name: 'exam',
-          component: Exam,
+          path: '/testexam',
+          component: TestExam,
         },
         {
           path: '/infrastructure',
