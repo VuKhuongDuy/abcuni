@@ -12,33 +12,48 @@
                 <div id="headerWelcome">
                     <div>
                         <p>
-                            Xin chào: <strong>Nguyễn Xuân Tự</strong> <br>MSSV: <strong>17021119</strong>
+                            Xin chào: <strong>{{username}}</strong> <br>MSSV: <strong>{{mssv}}</strong>
                         </p>
                     </div>
                 </div>
-                
                 <div id="headerMenu">
                     <ul>
+                        <!-- <li>
+                            <a href="#/login"><img src="@/../public/icons/notification.png" width="18" height="20" id='notification'> Thông báo</a>
+                        </li> -->
                         <li>
-                            <a href="#/home"><img src="@/../public/icons/notification.png" width="18" height="20" id='notification'> Thông báo</a>
-                        </li>
-                        <li>
-                            <a href="#/home"><img src="@/../public/icons/change_password.png" width="18" height="18" id='change_password'>  Đổi mật khẩu</a>
+                            <a href="#/login"><img src="@/../public/icons/change_password.png" width="18" height="18" id='change_password'>  Đổi mật khẩu</a>
                         </li>
                         <li id='li_1'>
-                            <a href="#/home"><img src="@/../public/icons/sign_out.png" width="20" height="20" id='sign_out'> Đăng xuất</a>
+                            <a href="#/login" @click.prevent="logout"><img src="@/../public/icons/sign_out.png" width="20" height="20" id='logout'> Đăng xuất</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
+
         <div id = 'body'>
-            <div id = "left">
-                <router-link to='/home'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Trang Chủ<img src="@/../public/icons/right.png" class="icon_right"></router-link>
-                <router-link to='/subject'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn học<img src="@/../public/icons/right.png" class="icon_right"></router-link>
-                <router-link to='/registertest'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Đăng kí dự thi<img src="@/../public/icons/right.png" class="icon_right"></router-link>
-                <router-link to='/registed'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi<img src="@/../public/icons/right.png" class="icon_right"></router-link>
-                <router-link to='/print'  tag='button' class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách<img src="@/../public/icons/right.png" class="icon_right"></router-link>
+            <div id = "left">    
+                <router-link to="/home"  tag='button' v-bind:class="[btnRouterClicked==='1'? 'btn_router_clicked' : 'btn_router']">
+                    <img src="@/../public/icons/stack.png" class="icon_stack"> Trang Chủ
+                    <img src="@/../public/icons/right.png" class="icon_right">
+                </router-link>
+                <router-link to='/subject'  tag='button' v-bind:class="[btnRouterClicked==='2'? 'btn_router_clicked' : 'btn_router']" > 
+                    <img src="@/../public/icons/stack.png" class="icon_stack"> Môn học
+                    <img src="@/../public/icons/right.png" class="icon_right">
+                </router-link>
+                <router-link to='/registertest'  tag='button' v-bind:class="[btnRouterClicked==='3'? 'btn_router_clicked' : 'btn_router']" >
+                    <img src="@/../public/icons/stack.png" class="icon_stack"> Đăng kí dự thi
+                    <img src="@/../public/icons/right.png" class="icon_right">
+                </router-link>
+                <router-link to='/registed'  tag='button' v-bind:class="[btnRouterClicked==='4'? 'btn_router_clicked' : 'btn_router']" >
+                    <img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi
+                    <img src="@/../public/icons/right.png" class="icon_right">
+                </router-link>
+                <router-link to='/print'  tag='button' v-bind:class="[btnRouterClicked==='5'? 'btn_router_clicked' : 'btn_router']" >
+                    <img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách
+                    <img src="@/../public/icons/right.png" class="icon_right">
+                </router-link>
             </div>
             <div id= 'right'>
                 <router-view></router-view>
@@ -64,14 +79,41 @@
     </div>    
 </template>
 <script>
+import * as config from '../../config/config';
+import * as axios from '../../config/axios';
+import * as cookie from '../../config/cookie'
 export default {
-    
+    name: 'dashboard',
+    data(){
+        return {
+            btnRouterClicked: this.$route.query,
+            username: '',
+            mssv: '',
+        }
+    },
+    methods : {
+        getUser: async function(){
+            const data = await axios.getAxios(config.listUrl.getUser);
+            if(data.success){
+                this.username = data.data.username;
+                this.mssv = data.data.mssv;
+            }   
+        },
+
+        logout: function(){
+            cookie.clearCookie();
+            this.$router.push("login");
+        }
+    },
+    mounted: function(){
+        this.getUser();
+    }
 }
 </script>
 <style scoped>
 #dashboard{
     width: 100%;
-    min-height: 1000px;
+    min-height: 600px;
     overflow: hidden;
 }
 #header{
@@ -84,21 +126,31 @@ export default {
 }
 #body{
     display: flex;
+    min-height: 700px;
+    /* margin-top: 50px; */
 }
 #left{
     width: 15%;
-    height: 95%;
+    height: 100%;
     display:block;
 }
 #right{
-    width: 85%;
-    height: 95%;
+    width: 80%;
+    height: 100%;
+    display: inline-block;
 }
 .btn_router{
     width: 100%;
     height: 30px;
     text-align: left;
     /* background-color: #fff; */
+}
+.btn_router_clicked{
+    width: 100%;
+    height: 30px;
+    text-align: left;
+    transform: scaleY(1.1);
+    border: 1px solid #29a2f2;
 }
 #home{
     margin: 0;
@@ -118,6 +170,7 @@ export default {
     left: 160px;
     top: 13px;
 }
+
 #headerWelcome p{
     text-align: right;
     margin: 0;
@@ -176,21 +229,23 @@ li a:active{
 #content{ 
     width:calc(100% - 205px);
     margin-left: 5px;
-    min-height: 100%;
+    /* min-height: 100%; */
     float:left;
 }
 /* footer */
 #footer{
   width: 100%;
-  height: 50px;
-  clear: both;
-  color: #066c00;
+  height: 72px;
+  /* clear: both; */
+  /* color: #066c00; */
   font-family: "Courier New";
   font-weight: bold;
-  border-top: 1px double gray;
+  background-color: #aaf2ab;
+  /* border-top: 1px double gray; */
 }
 #footerLeft{
     float: left;
+    padding: 5px;
     height: 100%;
 }
 #footerSep{

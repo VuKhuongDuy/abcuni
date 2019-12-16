@@ -1,26 +1,40 @@
 <template>
     <div id = 'registerTest'>
         <b-breadcrumb :items="items" ></b-breadcrumb>
-        <b-form-select v-model="selectedExam" :options="optionsExam" id="selectExam" class="select"></b-form-select>
-        <b-form-select v-model="selectedSubject" :options="optionsSubject" id="selectSubject" class="select"></b-form-select>
-        <b-form-select v-model="selectedTurn" :options="optionsTurn" id="selectTurn" class="select" @change="loadRoom"></b-form-select>
-        <!-- <div v-for="(room, index) in listRoom" :key="index">
-            <b-button variant="outline-primary">{{room}}</b-button>
-        </div> -->
+        <b-form-select v-model="selectedExam" :options="listExam" id="selectExam" class="select" @change="loadSubject"></b-form-select>
+        <b-form-select v-model="selectedSubject" :options="listSubject" id="selectSubject" class="select" @change="loadTurn"></b-form-select>
+        <b-alert :variant="typeAlert" :show="dismissCountDown">{{message}}</b-alert>
         <div class="wrapper-table wrapper-roomtb">
-            <b-table striped hover :items="listRoom" class="room"></b-table>
+            <b-table striped hover :items="listTurn" small fixed show-empty class="table" id="room" @row-clicked="chooseTurn" :fields="fieldsTurn">
+                 <template v-slot:empty="scope">
+                    <h4>{{ "Không có ca thi nào" }}</h4>
+                </template>
+            </b-table>
         </div>
-        <b-button variant="success" id="btnRegisterTest">Đăng kí</b-button>
+        <b-button variant="success" class="btn" id="btnRegisterTest" v-show="listTurn.length > 0" @click="clickRegist">Đăng kí</b-button>
         <div class="wrapper-table wrapper wrapper-subjectRegistedTb">
-            <b-table striped hover :items="subjectRegisted" class="subjectRegisted"></b-table>
+            <b-table striped hover :items="listTurnRegisted" dark small fixed show-empty class="table" id="subjectRegisted" :fields="fieldsTurn" @row-clicked="chooseTurn">
+                <template v-slot:empty="scope">
+                    <h4>{{ "Chưa đăng kí ca thi nào" }}</h4>
+                </template>
+            </b-table>
         </div>
+        <b-button variant="danger" class="btn" id="btnDeleteTest" v-show="listTurnRegisted.length > 0">Huỷ</b-button>
     </div>
 </template>
 <script>
+import * as axios from '../../../config/axios';
 export default {
     name: 'registertest',
     data () {
         return {
+            isEmptyTurn: true,
+            isEmptyTurnRegisted: true,
+            codeSubjectSearch: "",
+            typeAlert: 'info',
+            message: '',
+            dismissCountDown: 0,
+            timeCountAlert: 5,
             items: [
                 {
                     text: 'Admin',
@@ -35,64 +49,128 @@ export default {
                     active: true
                 }
             ],
+            fieldsTurn:[
+                {key: "Mã môn"},
+                {key: "Tên môn", sortable: true},
+                {key: "Phòng thi", sortable: true},
+                {key: "Ngày thi", sortable: true},
+                {key: "Thời gian bắt đầu"},
+                {key: "Thời gian kết thúc"},
+                {key: "Số lượng đăng kí", sortable: true}
+            ],
             selectedExam: null,
             selectedSubject: null,
             selectedTurn: null,
-            optionsExam: [
-                { value: null, text: 'Exam' },
-                { value: 'a', text: 'This is First option' },
-                { value: 'b', text: 'Selected Option' },
-                { value: { C: '3PO' }, text: 'This is an option with object value' },
-                { value: 'd', text: 'This one is disabled', disabled: true }
-            ],
-            optionsSubject: [
-                { value: null, text: 'Exam' },
-                { value: 'a', text: 'This is First option' },
-                { value: 'b', text: 'Selected Option' },
-                { value: { C: '3PO' }, text: 'This is an option with object value' },
-                { value: 'd', text: 'This one is disabled', disabled: true }
-            ],
-            optionsTurn: [
-                { value: null, text: 'Exam' },
-                { value: 'a', text: 'This is First option' },
-                { value: 'b', text: 'Selected Option' },
-                { value: { C: '3PO' }, text: 'This is an option with object value' },
-                { value: 'd', text: 'This one is disabled', disabled: true }
-            ],
-            listRoom: [
-                {id: '301GD2', computer: 30, registed: 20},
-                {id: '302GD2', computer: 30, registed: 25},
-                {id: '303GD2', computer: 30, registed: 30},
-                {id: '304GD2', computer: 30, registed: 20},
-                {id: '301GD2', computer: 30, registed: 20},
-                {id: '302GD2', computer: 30, registed: 25},
-                {id: '303GD2', computer: 30, registed: 30},
-                {id: '304GD2', computer: 30, registed: 20},
-                {id: '301GD2', computer: 30, registed: 20},
-                {id: '302GD2', computer: 30, registed: 25},
-                {id: '303GD2', computer: 30, registed: 30},
-                {id: '304GD2', computer: 30, registed: 20},
-                {id: '302GD2', computer: 30, registed: 25},
-                {id: '303GD2', computer: 30, registed: 30},
-                {id: '304GD2', computer: 30, registed: 20},
-                {id: '301GD2', computer: 30, registed: 20},
-                {id: '302GD2', computer: 30, registed: 25},
-                {id: '303GD2', computer: 30, registed: 30},
-                {id: '304GD2', computer: 30, registed: 20},
-            ],
-            listRoomRender: [],
-            subjectRegisted: [
-                {"Kì thi": 'HK I 2018-2019', "Môn học": 'Hệ quản trị cơ sở dữ liệu', 'Ca thi': 'Ca 1 (06:00 12-12-2019)',"Phòng thi": '301GD2'},
-                {"Kì thi": 'HK I 2018-2019', "Môn học": 'Hệ quản trị cơ sở dữ liệu', 'Ca thi': 'Ca 1 (06:00 12-12-2019)',"Phòng thi": '301GD2'},
-                {"Kì thi": 'HK I 2018-2019', "Môn học": 'Hệ quản trị cơ sở dữ liệu', 'Ca thi': 'Ca 1 (06:00 12-12-2019)',"Phòng thi": '301GD2'},
-                {"Kì thi": 'HK I 2018-2019', "Môn học": 'Hệ quản trị cơ sở dữ liệu', 'Ca thi': 'Ca 1 (06:00 12-12-2019)',"Phòng thi": '301GD2'},
-                {"Kì thi": 'HK I 2018-2019', "Môn học": 'Hệ quản trị cơ sở dữ liệu', 'Ca thi': 'Ca 1 (06:00 12-12-2019)',"Phòng thi": '301GD2'},
-            ]
+            listExam: [{ value: null, text: 'Exam' }],
+            listSubject: [{ value: null, text: 'Subject' }],
+            listTurn: [],
+            listTurnRegisted: [],
+            turnChoosed: null
         }
     },
     methods: {
-        loadRoom: function(){
-            
+        loadSubject: async function(){
+            this.listSubject = [{ value: null, text: 'Subject' }];
+            let url = '/subject/' + this.selectedExam;
+            let data = await axios.getAxios(url);
+            if(data.success){
+                data.data.forEach(subject => {
+                    let obj = {value: subject.subject_code, text: subject.subject_name};
+                    this.listSubject.push(obj);
+                });
+            }
+        }, 
+
+        loadTurn: async function(){
+            this.listTurn = [];
+            this.isEmptyTurn = true;
+            let url = '/turn/' + this.selectedExam + '/' + this.selectedSubject;
+
+            let data = await axios.getAxios(url);
+            if(data.success){
+                if(data.data.length > 0) this.isEmptyTurn =  false;
+                data.data.forEach(turn => {
+                    let obj = {
+                        "Id": turn.turn_id,
+                        "Mã môn": turn.subject_code,
+                        "Tên môn": turn.subject_name,
+                        "Phòng thi": turn.room_name,
+                        "Ngày thi" : turn.date,
+                        "Thời gian bắt đầu": turn.time_begin,
+                        "Thời gian kết thúc": turn.time_end,
+                        "Số lượng đăng kí": turn.registed + '/' + turn.count_computer
+                    };
+                    this.listTurn.push(obj);
+                });
+            }
+        },
+
+        loadTurnRegisted: async function(){
+            this.Rendergisted = [];
+            this.isEmptyTurnRegisted = true;
+            let url = '/turn/registed/student/' + this.selectedExam;
+ 
+            let data = await axios.getAxios(url);
+            if(data.success){
+                if(data.data.length === 0) this.isEmptyTurnRegisted = false;
+                data.data.forEach(turn=>{
+                    let obj = {
+                        "Id": turn.turn_id,
+                        "Mã môn": turn.subject_code,
+                        "Tên môn": turn.subject_name,
+                        "Phòng thi": turn.room_name,
+                        "Ngày thi" : turn.date,
+                        "Thời gian bắt đầu": turn.time_begin,
+                        "Thời gian kết thúc": turn.time_end,
+                        "Số lượng đăng kí": turn.registed + '/' + turn.count_computer
+                    };
+                    this.listTurnRegisted.push(obj);
+                })
+            }
+        },
+
+        loadExam: async function(){
+            this.listExam = [{ value: null, text: 'Exam' }];
+            let url = '/exam';
+            let data = await axios.getAxios(url);
+            if(data.success){
+                data.data.forEach(exam => {
+                    let obj = {value: exam.exam_id, text: exam.exam_name};
+                    this.listExam.push(obj);
+                });
+            }
+        },
+
+        chooseTurn: function(turn, index){
+            this.turnChoosed = this.listTurn[index];
+        },
+
+        clickRegist: async function(){
+            let url = "/turn/register";
+            let body = {turn: this.turnChoosed};
+            this.dismissCountDown = 0;
+            let data = await axios.postAxios(url, body);
+            if(!data.success){
+                this.dismissCountDown = this.timeCountAlert;
+                this.message = data.message;
+                this.typeAlert = 'warning';
+                return;
+            }else{
+                this.dismissCountDown = this.timeCountAlert;
+                this.message = data.message;
+                this.typeAlert = "success";
+            }        
+            this.loadTurnRegisted();
+        }
+    },
+    mounted: async function(){
+        await this.loadExam();
+        await this.loadTurnRegisted();
+        
+    },
+    beforeUpdate: function(){
+        if(this.listTurnRegisted.length === 0){
+            this.isEmptyTurnRegisted = true;
         }
     }
 }
@@ -118,12 +196,24 @@ export default {
     width: 200px;
 }
 
-#btnRegisterTest{
-    margin-left: 40%;
+
+#subjectRegisted{
+    margin-top: 10px;
 }
 
-.subjectRegisted{
+.inputSearch{
+    width: 40%;
     margin-top: 10px;
+}
+
+.table{
+    font-size: 12px;
+}
+
+.btn{
+    margin-left: 40%;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .breadcrumb{
@@ -151,4 +241,5 @@ export default {
     max-width: 200px;
     min-width: 190px;
 }
+
 </style>

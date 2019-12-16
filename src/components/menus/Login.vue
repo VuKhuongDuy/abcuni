@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { listuser, serverPath } from "@/../config/config.js";
+import * as config from "@/../config/config.js";
 import * as axios from "@/../config/axios.js";
 import * as cookie from "@/../config/cookie.js";
 export default {
@@ -64,7 +64,7 @@ export default {
     click_login: async function() {
       this.dismissCountDown = 0;
       let isLogin = false;
-      let url = serverPath + "/login";
+      let url = config.listUrl.login;
       let body = { username: this.username, password: this.password };
       let result = await axios.postAxios(url, body);
       if (!result.success) {

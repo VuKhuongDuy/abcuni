@@ -1,11 +1,16 @@
 <template>
     <div id="home">   
-        This is home     
+        {{exam}}    
     </div>    
 </template>
 <script>
 export default {
-    
+    props: {
+        exam: {
+            type: String,
+            default: "213"
+        }
+    }
 }
 </script>
 <style scoped>
