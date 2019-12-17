@@ -2,7 +2,7 @@
     <div id="home">
         <div id="header">
             <app-header
-              :dataAdmins="dataAdmins"
+              :data="dataAdmins"
             ></app-header>
         </div>
         <div id="body">
@@ -24,7 +24,7 @@
                         </template>
                         <button @click="check1 = !check1" class="button_menu"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý lịch thi<img v-if="check1" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check1" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check1"  class="transition_menu">
-                            <button class="btn" type="button"  @click="activeBtn = 'btn8'" :class="{active: activeBtn === 'btn8' }"><router-link to='/testexam' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Lịch thi</router-link></button>
+                            <button class="btn" type="button"  @click="activeBtn = 'btn8'" :class="{active: activeBtn === 'btn8' }"><router-link to='/exam' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Lịch thi</router-link></button>
                         </template>
                     </tbody>
                 </div>
@@ -49,9 +49,9 @@ export default {
             check1:true,
             check2:false,
             dataAdmins:{
-                home:'/testexam',
+                home:'/exam',
                 level:'admin',
-                user: 'Admin',
+                name: 'Admin',
             },
             activeBtn:'btn8',
             // backgroundImage: './public/images/logo.png',
@@ -87,7 +87,7 @@ button{
     border: none;
     display: block;
 }
-/* .button_menu{
+.button_menu{
     background-color: #4da6ff;
     height: 35px;
 }
@@ -148,6 +148,5 @@ button{
     float:left;
 }
 
-/* footer */
 
 </style>

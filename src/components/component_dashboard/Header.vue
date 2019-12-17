@@ -3,18 +3,20 @@
 <div>
   <div id="header">
     <div id="logo">
-        <router-link :to="{path:dataAdmins.home}"><img src="@/../public/images/logo.png" width="100" height="100" alt="Trang chủ" title="Logo" ></router-link>
+        <router-link :to="{path:data.home}"><img src="@/../public/images/logo.png" width="100" height="100" alt="Trang chủ" title="Logo" ></router-link>
     </div>
     <div id="headerTitle">
             <h3>Cổng thông tin đăng kí thi</h3>
-            <h4>Dành cho <span>{{dataAdmins.level}}</span></h4>
+            <h4>Dành cho <span>{{data.level}}</span></h4>
         </div>
     <div id="header-right">
         <div id="headerWelcome">
             <div>
-                <p>
-                    Xin chào: <strong>{{dataAdmins.user}}</strong>
-                </p>
+                    Xin chào: <strong>{{data.name}}</strong>
+                    <br>
+                    <p v-show="data.name != 'Admin'">
+                        MSSV: <strong>{{data.mssv}}</strong>
+                    </p>
             </div>
         </div>
         
@@ -35,7 +37,7 @@ import ButtonBlue from './elements/ButtonBlue.vue'
 import ButtonGreen from './elements/ButtonGreen.vue'
 import ButtonRed from './elements/ButtonRed.vue'
 export default {
-  props: ['dataAdmins'],
+  props: ['data'],
   data(){
     return{
       text:'homeadmin',

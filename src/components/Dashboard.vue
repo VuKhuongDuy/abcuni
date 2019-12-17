@@ -1,59 +1,18 @@
 <template>
     <div id="dashboard">
         <div id="header">
-            <div id="logo">
-                <img src="@/../public/images/logo.png" width="100" height="100" alt="Logo" title="Logo">
-            </div>
-            <div id="headerTitle">
-                <h3>Cổng thông tin đăng kí thi</h3>
-                <h4>Dành cho <span>sinh viên</span></h4>
-            </div>
-            <div id="header-right">
-                <div id="headerWelcome">
-                    <div>
-                        <p>
-                            Xin chào: <strong>{{username}}</strong> <br>MSSV: <strong>{{mssv}}</strong>
-                        </p>
-                    </div>
-                </div>
-                <div id="headerMenu">
-                    <ul>
-                        <!-- <li>
-                            <a href="#/login"><img src="@/../public/icons/notification.png" width="18" height="20" id='notification'> Thông báo</a>
-                        </li> -->
-                        <li>
-                            <a href="#/login"><img src="@/../public/icons/change_password.png" width="18" height="18" id='change_password'>  Đổi mật khẩu</a>
-                        </li>
-                        <li id='li_1'>
-                            <a href="#/login" @click.prevent="logout"><img src="@/../public/icons/sign_out.png" width="20" height="20" id='logout'> Đăng xuất</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <app-header
+              :data="dataStudent"
+            ></app-header>
         </div>
-
         <div id = 'body'>
-            <div id = "left">    
-                <router-link to="/home"  tag='button' v-bind:class="[btnRouterClicked==='1'? 'btn_router_clicked' : 'btn_router']">
-                    <img src="@/../public/icons/stack.png" class="icon_stack"> Trang Chủ
-                    <img src="@/../public/icons/right.png" class="icon_right">
-                </router-link>
-                <router-link to='/subject'  tag='button' v-bind:class="[btnRouterClicked==='2'? 'btn_router_clicked' : 'btn_router']" > 
-                    <img src="@/../public/icons/stack.png" class="icon_stack"> Môn học
-                    <img src="@/../public/icons/right.png" class="icon_right">
-                </router-link>
-                <router-link to='/registertest'  tag='button' v-bind:class="[btnRouterClicked==='3'? 'btn_router_clicked' : 'btn_router']" >
-                    <img src="@/../public/icons/stack.png" class="icon_stack"> Đăng kí dự thi
-                    <img src="@/../public/icons/right.png" class="icon_right">
-                </router-link>
-                <router-link to='/registed'  tag='button' v-bind:class="[btnRouterClicked==='4'? 'btn_router_clicked' : 'btn_router']" >
-                    <img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi
-                    <img src="@/../public/icons/right.png" class="icon_right">
-                </router-link>
-                <router-link to='/print'  tag='button' v-bind:class="[btnRouterClicked==='5'? 'btn_router_clicked' : 'btn_router']" >
-                    <img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách
-                    <img src="@/../public/icons/right.png" class="icon_right">
-                </router-link>
+            <div id = "left">
+                <button class="btn" type="button" @click="activeBtn = 'btn1'" :class="{active: activeBtn === 'btn1' }"><router-link to='/home'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Trang Chủ<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                <button class="btn" type="button" @click="activeBtn = 'btn2'" :class="{active: activeBtn === 'btn2' }"><router-link to='/subject'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn học<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                <button class="btn" type="button" @click="activeBtn = 'btn3'" :class="{active: activeBtn === 'btn3' }"><router-link to='/registertest'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Đăng kí dự thi<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                <button class="btn" type="button" @click="activeBtn = 'btn4'" :class="{active: activeBtn === 'btn4' }"><router-link to='/registed'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                <button class="btn" type="button" @click="activeBtn = 'btn5'" :class="{active: activeBtn === 'btn5' }"><router-link to='/print'  class="btn_router" ><img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách<img src="@/../public/icons/right.png" class="icon_right"></router-link></button>
+                
             </div>
             <div id= 'right'>
                 <router-view></router-view>
@@ -65,132 +24,41 @@
     </div>    
 </template>
 <script>
-import * as config from '../../config/config';
-import * as axios from '../../config/axios';
-import * as cookie from '../../config/cookie'
+import Header from './component_dashboard/Header.vue'
+import Footer from './component_dashboard/Footer.vue'
 export default {
-    name: 'dashboard',
     data(){
-        return {
-            btnRouterClicked: this.$route.query,
-            username: '',
-            mssv: '',
+        return{
+            activeBtn:'btn1',
+            dataStudent:{
+                home:'/home',
+                level:'sinh viên',
+                name:'Nguyễn Xuân Tự',
+                mssv: '17021119',
+            },
         }
     },
-    methods : {
-        getUser: async function(){
-            const data = await axios.getAxios(config.listUrl.getUser);
-            if(data.success){
-                this.username = data.data.username;
-                this.mssv = data.data.mssv;
-            }   
-        },
-
-        logout: function(){
-            cookie.clearCookie();
-            this.$router.push("login");
-        }
+    components:{
+        appHeader:Header,
+        appFooter:Footer
     },
-    mounted: function(){
-        this.getUser();
+    methods:{
     }
 }
 </script>
 <style scoped>
 #dashboard{
     width: 100%;
-    min-height: 600px;
+    min-height: 552px;
     overflow: hidden;
 }
 /* body  */
 #body{
     display: flex;
-    min-height: 700px;
-    /* margin-top: 50px; */
+    height: 552px;
 }
 /* menu */
 #left{
-    width: 15%;
-    height: 100%;
-    display:block;
-}
-#right{
-    width: 80%;
-    height: 100%;
-    display: inline-block;
-}
-.btn_router{
-    width: 100%;
-    height: 30px;
-    text-align: left;
-    /* background-color: #fff; */
-}
-.btn_router_clicked{
-    width: 100%;
-    height: 30px;
-    text-align: left;
-    transform: scaleY(1.1);
-    border: 1px solid #29a2f2;
-}
-#home{
-    margin: 0;
-    
-}
-#logo{
-    position: absolute;
-    top: 3px;
-    left: 25px;
-}
-#header-right{
-    position: absolute;
-    right: 30px;
-}
-#headerTitle{
-    position: absolute;
-    left: 160px;
-    top: 13px;
-}
-
-#headerWelcome p{
-    text-align: right;
-    margin: 0;
-    position: relative;
-    float: right;
-}
-#headerMenu{
-    margin-top: 70px;
-}
-ul{
-    bottom: 10px;
-    list-style-type: none;
-    font-size: 17px;
-}
-li{
-    float: left;
-    width:150px;
-}
-#li_1{
-    width: 126px;
-}
-li a{
-    color: #066c00;
-    vertical-align: super;
-    text-align: right;
-    text-decoration: none;
-    float: right;
-}
-li a:hover{
-    color: #0000ff;
-}
-li a:active{
-    color:#ff0000;
-}
-/* body */
-/* #body{
-    margin: 0;
-    height: 552px;
-} */
-#menu{
     width: 200px;
     display:block;
 }
@@ -212,21 +80,21 @@ button{
     display: block;
     border: 1px solid  #d9d9d9;
 }
-/* footer */
-#footer{
-  width: 100%;
-  height: 72px;
-  /* clear: both; */
-  /* color: #066c00; */
-  font-family: "Courier New";
-  font-weight: bold;
-  background-color: #aaf2ab;
-  /* border-top: 1px double gray; */
+.btn_router{
+    width: 100%;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    display: block;
+    color:#262626;
+    margin: 0px;
+    padding:4px;
 }
-#footerLeft{
-    float: left;
-    padding: 5px;
-    height: 100%;
+.btn{
+    display: block;
+    width: 200px;
+    margin:0px;
+    padding: 0px;
 }
 .btn:hover{
     background-color: #e6e6e6;
@@ -244,5 +112,4 @@ button{
     max-height: 552px;
     display: inline-block;
 }
-
 </style>
