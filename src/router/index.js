@@ -8,6 +8,10 @@ import Kar98 from '@/components/menus_admin/masterdata/Kar98'
 import SubjectFull from '@/components/menus_admin/masterdata/SubjectFull'
 import User from '@/components/menus_admin/masterdata/User'
 import NotEnough from '@/components/menus_admin/masterdata/NotEnough'
+<<<<<<< HEAD
+=======
+// import HomeAdmin from '@/components/menus_admin/Home'
+>>>>>>> a6dc876bb5b38c07bd79537fe91e4494f65dac48
 // not admin
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'
@@ -35,14 +39,14 @@ export default new Router({
     {
       path: '/',
       component: Dashboard,
-      redirect: '/home',
+      redirect: '/registed',
       children: [
-        {
-          path: '/home',
-          name: 'Home',
-          props: true,
-          component: Home,
-        },
+        // {
+        //   path: '/home',
+        //   name: 'Home',
+        //   props: true,
+        //   component: Home,
+        // },
         {
           path: '/registertest',
           name: 'Registertest',

@@ -1,12 +1,20 @@
 <template>
   <div id="registed">
-    <b-form-select v-model="exam" class="optionExam mt-3" :options="listExam" size="sm"></b-form-select>
+    <b-form-select
+      v-model="selectedExam"
+      class="optionExam mt-3"
+      :options="listExam"
+      size="sm"
+      @change="loadSubjectRegisted"
+    ></b-form-select>
+    <b-alert :variant="typeAlert" :show="dismissCountDown">{{message_alert}}</b-alert>
     <b-form-input
       v-model="codeSubjectSearch"
       placeholder="Tìm môn"
       class="input searchSubject"
       v-on:keyup.enter="searchSubject"
     ></b-form-input>
+    <b-button variant="success" id="btnGoToAdd" @click="gotoAdd">Đăng kí thi</b-button>
     <b-button variant="danger" id="btnRemove" @click="removeSubject">Xoá môn</b-button>
     <div class="wrapper_table">
       <b-table
@@ -34,6 +42,10 @@ export default {
   name: "registed",
   data: function() {
     return {
+      message_alert: "",
+      dismissCountDown: 0,
+      timeCountAlert: 5,
+      typeAlert: "",
       fieldsSubject: [
         { key: "Mã môn" },
         { key: "Tên môn", sortable: true },
@@ -48,32 +60,43 @@ export default {
       codeSubjectSearch: "",
       isEmptySubjectRegisted: false,
       listExam: [{ value: null, text: "Please select an exam" }],
-      exam: "",
+      selectedExam: "",
       message: "",
       subjectChoosed: null
     };
   },
   methods: {
-    
-    getExam: async function() {
-      let url = "/exam";
-      let data = await axios.getAxios(url);
-      if (data.success) {
+    loadExam: async function() {
+      try {
+        let url = "/exam";
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
         data.data.forEach(exam => {
           let obj = { value: exam.exam_id, text: exam.exam_name };
           this.listExam.push(obj);
-          if (this.exam === "") this.exam = exam.exam_id;
         });
+        if (this.selectedExam === "")
+          this.selectedExam = this.listExam[this.listExam.length - 1].value;
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
 
     loadSubjectRegisted: async function() {
-      this.listSubjectRegisted = [];
-      this.isEmptySubjectRegisted = true;
-      let url = "/turn/registed/student/" + this.exam;
+      try {
+        this.listSubjectRegisted = [];
+        this.isEmptySubjectRegisted = true;
+        let url = "/turn/registed/student/" + this.selectedExam;
 
-      let data = await axios.getAxios(url);
-      if (data.success) {
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+
         if (data.data.length === 0) this.isEmptySubjectRegisted = false;
         data.data.forEach(turn => {
           let obj = {
@@ -89,22 +112,28 @@ export default {
           this.listSubjectRegisted.push(obj);
         });
         this.listSubjectRender = this.listSubjectRegisted;
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
 
     searchSubject: function() {
-      this.listSubjectRender = [];
-      if(this.codeSubjectSearch === ""){
-        this.listSubjectRender = this.listSubjectRegisted;
-        return;
-      }
-      this.listSubjectRegisted.forEach(subjetc => {
-        if (subjetc["Mã môn"] === this.codeSubjectSearch) {
-          this.listSubjectRender.push(subjetc["Mã môn"]);
+      try {
+        this.listSubjectRender = [];
+        if (this.codeSubjectSearch === "") {
+          this.listSubjectRender = this.listSubjectRegisted;
+          return;
         }
-      });
-      if(this.listSubjectRender.length === 0){
-        this.message = "Không có môn nào"
+        this.listSubjectRegisted.forEach(subjetc => {
+          if (subjetc["Mã môn"] === this.codeSubjectSearch) {
+            this.listSubjectRender.push(subjetc["Mã môn"]);
+          }
+        });
+        if (this.listSubjectRender.length === 0) {
+          this.message = "Không có môn nào";
+        }
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
 
@@ -113,30 +142,54 @@ export default {
     },
 
     removeSubject: async function() {
-      if(!this.subjectChoosed){
-        // this.message = "Hãy chọn một môn";
-        return;
+      try {
+        this.dismissCountDown = 0;
+
+        if (!this.subjectChoosed) {
+          this.changeTypeAlert("Hãy chọn 1 môn", "warning");
+          return;
+        }
+
+        let url = "/turn/" + this.subjectChoosed["Id"];
+        let data = await axios.deleteAxios(url);
+
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+        this.changeTypeAlert(data.message, "success");
+        this.loadSubjectRegisted();
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
-      let url = "/turn/" + this.subjectChoosed['Id'];
-      let data = await axios.deleteAxios(url);
-      if(!data.success){
-        return;
-      }
-      this.loadSubjectRegisted();
-      // something here
     },
+
+    gotoAdd: function() {
+      this.$router.push("/registertest");
+    },
+
+    changeTypeAlert: function(message, type) {
+      this.message_alert = message;
+      this.typeAlert = type;
+      this.dismissCountDown = this.timeCountAlert;
+    }
   },
 
   mounted: async function() {
-    await this.getExam();
+    this.$emit("change_path");
+    await this.loadExam();
     await this.loadSubjectRegisted();
-    if(this.listSubjectRender.length === 0){
-      this.message = "Không có môn nào"
+    if (this.listSubjectRender.length === 0) {
+      this.message = "Không có môn nào";
     }
   }
 };
 </script>
 <style scoped>
+b-alert {
+  display: block;
+}
+
 .optionExam {
   width: 15%;
   line-height: 20px;
@@ -151,12 +204,15 @@ export default {
 }
 
 .wrapper_table {
-  margin-top: 57px;
+  margin-top: 20px;
 }
 
 #btnRemove {
-  position: absolute;
-  right: 300px;
+  margin-left: 10px;
+}
+
+#btnGoToAdd {
+  margin-left: 200px;
 }
 
 #registed {

@@ -40,6 +40,8 @@
     </div>    
 </template>
 <script>
+import * as axios from '../../config/axios'
+import * as cookie from '../../config/cookie'
 import Header from './component_dashboard/Header.vue'
 import Footer from './component_dashboard/Footer.vue'
 export default {
@@ -56,6 +58,20 @@ export default {
             activeBtn:'btn8',
             // backgroundImage: './public/images/logo.png',
         }   
+    },
+    methods: {
+        checkUser: async function(){
+            let url = "/admin";
+            let data = await axios.getAxios(url);
+            console.log(data);
+            if(!data.success){
+                cookie.clearCookie();
+                this.$router.push("/login");	  
+            }
+        }
+    },
+    mounted: function(){
+        this.checkUser();
     },
     components:{
         appHeader:Header,
