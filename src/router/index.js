@@ -8,7 +8,7 @@ import Kar98 from '@/components/menus_admin/masterdata/Kar98'
 import SubjectFull from '@/components/menus_admin/masterdata/SubjectFull'
 import User from '@/components/menus_admin/masterdata/User'
 import NotEnough from '@/components/menus_admin/masterdata/NotEnough'
-// not admin
+// SV
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'
 import Subject from '@/components/menus/Subject'
@@ -19,6 +19,10 @@ import Print from '@/components/menus/Print'
 import DashboardAdmin from '@/components/DashboardAdmin'
 import exam from '@/components/menus_admin/exam'
 import HomeAdmin from '@/components/menus_admin/HomeAdmin'
+//superadmin
+import DashboardSuperAdmin from '@/components/DashboardSuperAdmin'
+import SuperAdmin from '@/components/menu_super_admin/SuperAdmin'
+import ManageAdmin from '@/components/menu_super_admin/ManageAdmin'
 
 
 
@@ -98,6 +102,21 @@ export default new Router({
           component: User,
         },
 
+      ]
+    },
+    {
+      path: '/sa',
+      component: DashboardSuperAdmin,
+      redirect: '/superadmin',
+      children:[
+        {
+          path: '/superadmin',
+          component: SuperAdmin,
+        },
+        {
+          path: '/manage_admin',
+          component: ManageAdmin,
+        },
       ]
     }
   ]

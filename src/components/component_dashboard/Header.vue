@@ -14,7 +14,7 @@
             <div>
                     Xin chào: <strong>{{data.name}}</strong>
                     <br>
-                    <p v-show="data.name != 'Admin'">
+                    <p v-show="data.mssv != null">
                         MSSV: <strong>{{data.mssv}}</strong>
                     </p>
             </div>

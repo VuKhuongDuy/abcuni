@@ -11,7 +11,7 @@
     ></b-form-file>
     <div class="mt-3">
       Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" variant="">Submit</b-button>
+      <b-button id="submit" :variant="variantState">Submit</b-button>
       <i class='title'>
         *Quản lý tài khoản SV
       </i>
@@ -46,7 +46,9 @@
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-        <b-button variant="success" class="add_new">Thêm mới</b-button>
+        <div>
+          <b-button variant="success" class="add_new">Thêm mới</b-button>
+        </div>
       </div>
   </div>
 </template>
@@ -60,7 +62,7 @@ export default {
       noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
-      file:'null',
+      file:'',
       fields:[
         {
           key:'index',
@@ -90,7 +92,12 @@ export default {
           {MSSV: 17021121, full_name:"Nguyễn Xuân Long", password: '31231',},
       ],
     }
-  }
+  },
+  computed: {
+      variantState(){
+        return this.file!='' ? 'success':''
+      }
+    },
 };
 </script>
 
@@ -113,9 +120,10 @@ export default {
   left:300px;
   bottom:4px;
 }
-.add_new{
-    position: relative;
-    left: 850px;
+.add_new {
+  position: relative;
+  right: -1170px;
+  top:-20px;
 }
 .sort{
     font-style: italic;
