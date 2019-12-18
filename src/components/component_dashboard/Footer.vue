@@ -29,16 +29,17 @@ export default {
 <style scoped>
 .hr_footer{
     border-top: 1px solid #2196f3;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
-  #footer{
+#footer{
   width: 100%;
-  height: 64px;
+  height: 71px;
   clear: both;
   color: #066c00;
   font-family: "Courier New";
   font-weight: bold;
-  margin:-14px 0 -4 0;
+  margin:0;
+  background-color: #aaf2ab;
 }
 #footerLeft{
     float: left;

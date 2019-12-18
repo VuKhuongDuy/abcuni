@@ -83,9 +83,10 @@ export default {
   margin-bottom: 20px;
 }
 .wrapper_table {
-  width: 80%;
+  /* position: absolute; */
+  width:100%;
   margin-left: 30px;
-  height: 400px;
+  height: 567px;
   overflow: scroll;
 }
 </style>

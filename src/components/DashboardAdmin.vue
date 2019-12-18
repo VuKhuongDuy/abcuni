@@ -85,7 +85,7 @@ export default {
 /* body */
 #body{
     margin: 0;
-    height: 552px;
+    height: 557px;
 }
 
 #menu{
