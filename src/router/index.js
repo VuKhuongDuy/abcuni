@@ -36,14 +36,14 @@ export default new Router({
     {
       path: '/',
       component: Dashboard,
-      redirect: '/home',
+      redirect: '/registed',
       children: [
-        {
-          path: '/home',
-          name: 'Home',
-          props: true,
-          component: Home,
-        },
+        // {
+        //   path: '/home',
+        //   name: 'Home',
+        //   props: true,
+        //   component: Home,
+        // },
         {
           path: '/registertest',
           name: 'Registertest',

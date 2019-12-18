@@ -1,7 +1,7 @@
 <template>
   <div id="login" style="background-image: url(./public/images/bg.png)">
     <div class="loginbox">
-      <b-alert variant="danger" :show="dismissCountDown">{{message}}</b-alert>
+      <b-alert :variant="typeAlert" :show="dismissCountDown">{{message}}</b-alert>
       <img src="@/../public/images/avatar.jpg" class="avatar" />
       <h1>Login</h1>
       <div>
@@ -55,29 +55,38 @@ export default {
       username: "",
       password: "",
       dismissCountDown: 0,
-      dismissSecs: 4,
-      message: ""
+      timeCountAlert: 4,
+      message: "",
+      typeAlert: ""
     };
   },
 
   methods: {
     click_login: async function() {
-      this.dismissCountDown = 0;
-      let isLogin = false;
-      let url = config.listUrl.login;
-      let body = { username: this.username, password: this.password };
-      let result = await axios.postAxios(url, body);
-      if (!result.success) {
-        this.dismissCountDown = this.dismissSecs;
-        this.message = result.message;
-        return;
-      }
+      try {
+        this.dismissCountDown = 0;
+        let isLogin = false;
+        let url = config.listUrl.login;
+        let body = { username: this.username, password: this.password };
+        let result = await axios.postAxios(url, body);
+        if (!result || !result.success) {
+          this.changeTypeAlert(result.message, "warning");
+          return;
+        }
 
-	  cookie.setCookie(result.token, this.username);
-	  if(result.isAdmin){
-		this.$router.push("/admin");	  
-	  }
-	  else this.$router.push("/");
+        cookie.setCookie(result.token, this.username);
+        if (result.isAdmin) {
+          this.$router.push("/admin");
+        } else this.$router.push("/");
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
+      }
+    },
+
+    changeTypeAlert: function(message, type) {
+      this.message = message;
+      this.typeAlert = type;
+      this.dismissCountDown = this.timeCountAlert;
     }
   }
 };
