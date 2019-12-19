@@ -66,7 +66,7 @@ export default {
       try {
         this.dismissCountDown = 0;
         let isLogin = false;
-        let url = config.listUrl.login;
+        let url = '/login';
         let body = { username: this.username, password: this.password };
         let result = await axios.postAxios(url, body);
         if (!result || !result.success) {

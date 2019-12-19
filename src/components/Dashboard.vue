@@ -8,21 +8,18 @@
                 <h3>Cổng thông tin đăng kí thi</h3>
                 <h4>Dành cho <span>sinh viên</span></h4>
             </div>
-            <div id="header-right">
-                <div id="headerWelcome">
+            <div id="headerRight">
+                <div id="headerUsername">
                     <div>
                         <p>
                             Xin chào: <strong>{{username}}</strong> <br>MSSV: <strong>{{mssv}}</strong>
                         </p>
                     </div>
                 </div>
-                <div id="headerMenu">
+                <div id="headerOption">
                     <ul>
-                        <!-- <li>
-                            <a href="#/login"><img src="@/../public/icons/notification.png" width="18" height="20" id='notification'> Thông báo</a>
-                        </li> -->
                         <li>
-                            <a href="#/login"><img src="@/../public/icons/change_password.png" width="18" height="18" id='change_password'>  Đổi mật khẩu</a>
+                            <a href="#/password" @click.prevent="changePassword"><img src="@/../public/icons/change_password.png" width="18" height="18" id='change_password'>  Đổi mật khẩu</a>
                         </li>
                         <li id='li_1'>
                             <a href="#/login" @click.prevent="logout"><img src="@/../public/icons/sign_out.png" width="20" height="20" id='logout'> Đăng xuất</a>
@@ -83,7 +80,8 @@ export default {
     },
     methods : {
         getUser: async function(){
-            const data = await axios.getAxios(config.listUrl.getUser);
+            this.dismissCountDown = 0;
+            const data = await axios.getAxios('/user');
             if(!data || !data.success){
                 this.changeTypeAlert(data.message, 'warning');
             }else{
@@ -105,7 +103,12 @@ export default {
 			this.message = message;
 			this.typeAlert = type;
 			this.dismissCountDown = this.timeCountAlert;
-		}
+        },
+        
+        changePassword: function(){
+            this.path = '';
+            this.$router.push("password");
+        }
     },
     mounted: function(){
         this.path = this.$route.path;
@@ -116,7 +119,8 @@ export default {
 <style scoped>
 #dashboard{
     width: 100%;
-    min-height: 600px;
+    min-height: 700px;
+    min-width: 400px;
     overflow: hidden;
 }
 
@@ -124,6 +128,7 @@ export default {
     width: 100%;
     height: 110px;
     border-bottom: 4px double gray;
+    min-width: 900px;
     color: #066c00;
     display: block;
 }
@@ -135,13 +140,15 @@ export default {
 
 #left{
     width: 15%;
-    height: 100%;
+    min-height: 100%;
     display:block;
 }
 #right{
-    width: 80%;
-    height: 100%;
+    width: 100%;
+    min-height: 100%;
+    background-color: #e3e6e5;
     display: inline-block;
+    /* padding-right: 100px; */
 }
 
 #home{
@@ -153,7 +160,7 @@ export default {
     top: 3px;
     left: 25px;
 }
-#header-right{
+#headerRight{
     position: absolute;
     right: 30px;
 }
@@ -163,13 +170,13 @@ export default {
     top: 13px;
 }
 
-#headerWelcome p{
+#headerUsername p{
     text-align: right;
     margin: 0;
     position: relative;
     float: right;
 }
-#headerMenu{
+#headerOption{
     margin-top: 70px;
 }
 
@@ -206,15 +213,17 @@ export default {
 
 .btn_router{
     width: 100%;
-    height: 30px;
+    height: 40px;
+    margin-top:3px;
     text-align: left;
 }
+
 .btn_router_clicked{
     width: 100%;
-    height: 30px;
+    height: 40px;
     text-align: left;
-    transform: scaleY(1.2);
-    box-shadow: gray 0px 2px 2px;
+    transform: scaleY(1.1);
+    box-shadow: gray -1px 2px 5px;
     background-color: #f1f7f0;
 }
 
@@ -257,5 +266,35 @@ button{
     border: none;
     display: block;
     border: 1px solid  #d9d9d9;
+}
+
+@media all and (max-width: 700px){
+    #header{
+        height: 70px;
+    }
+    #headerRight{
+        position: relative;        
+        margin-top: 130px;
+    }
+    #headerUsername{
+        display: flex;
+        margin-left: 50px;
+        margin-right: 10%;
+        float: left;
+    }
+    #headerOption{
+        position: relative;
+        margin-top: 20px;
+    }
+    .btn_router, .btn_router_clicked{
+        height: 90px;
+    }
+    
+}
+
+@media all and (max-width: 1400px){
+    .btn_router, .btn_router_clicked{
+        height: 50px;
+    }
 }
 </style>

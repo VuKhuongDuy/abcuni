@@ -61,7 +61,6 @@
     </div>
     <b-button
       variant="danger"
-      class="btn"
       id="btnDeleteTest"
       @click="removeSubject"
       v-show="listTurnRegisted.length > 0"
@@ -104,6 +103,7 @@ export default {
   methods: {
     loadSubject: async function() {
       try {
+        this.dismissCountDown = 0;
         this.listSubject = [{ value: null, text: "Môn học" }];
         let url = "/subject/" + this.selectedExam;
         let data = await axios.getAxios(url);
@@ -122,6 +122,7 @@ export default {
 
     loadTurn: async function() {
       try {
+        this.dismissCountDown = 0;
         this.listTurn = [];
         this.isEmptyTurn = true;
         let url = "/turn/" + this.selectedExam + "/" + this.selectedSubject;
@@ -152,6 +153,7 @@ export default {
 
     loadTurnRegisted: async function() {
       try {
+        this.dismissCountDown = 0;
         this.Rendergisted = [];
         this.isEmptyTurnRegisted = true;
         let url = "/turn/registed/student/" + this.selectedExam;
@@ -182,6 +184,7 @@ export default {
 
     loadExam: async function() {
       try {
+        this.dismissCountDown = 0;
         this.listExam = [{ value: null, text: "Exam" }];
         let url = "/exam";
         let data = await axios.getAxios(url);
@@ -213,16 +216,19 @@ export default {
         if (!this.turnRegistedChoosed) {
           return;
         }
+        if(!window.confirm('Bạn có muốn xoá môn đã chọn ')){
+          return;
+        }
         let url = "/turn/" + this.turnRegistedChoosed["Id"];
         let data = await axios.deleteAxios(url);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
           return;
         }
+        this.loadTurnRegisted();
 
         this.changeTypeAlert(data.message, "success");
 
-        this.loadTurnRegisted();
       } catch (e) {
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
@@ -287,6 +293,12 @@ export default {
   margin-top: 10px;
 }
 
+#btnDeleteTest {
+  margin-left: 40%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 .inputSearch {
   width: 40%;
   margin-top: 10px;
@@ -296,11 +308,6 @@ export default {
   font-size: 12px;
 }
 
-.btn {
-  margin-left: 40%;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
 
 .breadcrumb {
   margin-left: -60px;

@@ -68,6 +68,7 @@ export default {
   methods: {
     loadExam: async function() {
       try {
+        this.dismissCountDown = 0;
         let url = "/exam";
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -87,6 +88,7 @@ export default {
 
     loadSubjectRegisted: async function() {
       try {
+        this.dismissCountDown = 0;
         this.listSubjectRegisted = [];
         this.isEmptySubjectRegisted = true;
         let url = "/turn/registed/student/" + this.selectedExam;
@@ -119,6 +121,7 @@ export default {
 
     searchSubject: function() {
       try {
+        this.dismissCountDown = 0;
         this.listSubjectRender = [];
         if (this.codeSubjectSearch === "") {
           this.listSubjectRender = this.listSubjectRegisted;
@@ -149,7 +152,9 @@ export default {
           this.changeTypeAlert("Hãy chọn 1 môn", "warning");
           return;
         }
-
+        if(!window.confirm('Bạn có muốn xoá môn đã chọn ')){
+          return;
+        }
         let url = "/turn/" + this.subjectChoosed["Id"];
         let data = await axios.deleteAxios(url);
 
@@ -190,6 +195,12 @@ b-alert {
   display: block;
 }
 
+#registed{
+  width: 100%;
+  padding-left: 50px;
+  min-height: 100%;
+}
+
 .optionExam {
   width: 15%;
   line-height: 20px;
@@ -204,6 +215,7 @@ b-alert {
 }
 
 .wrapper_table {
+  width: 90%;
   margin-top: 20px;
 }
 
@@ -213,9 +225,5 @@ b-alert {
 
 #btnGoToAdd {
   margin-left: 200px;
-}
-
-#registed {
-  padding-left: 10px;
 }
 </style>

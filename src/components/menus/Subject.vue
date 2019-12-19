@@ -1,9 +1,16 @@
 <template>
   <div id="subject">
+    <b-alert :variant="typeAlert" :show="dismissCountDown">{{message}}</b-alert>
     <div class="wrapper_table">
-      <b-alert :variant="typeAlert" :show="dismissCountDown">{{message}}</b-alert>
+      <b-form-select
+        v-model="selectedExam"
+        :options="listExam"
+        id="selectExam"
+        class="select"
+        @change="getListSubjectStudent"
+      ></b-form-select>
       <h3 class="header">Danh sách môn đã học</h3>
-      <b-table striped hover :items="listSubject" :fields="fields"></b-table>
+      <b-table striped hover dark :items="listSubject" :fields="fields"></b-table>
     </div>
   </div>
 </template>
@@ -17,6 +24,7 @@ export default {
       dismissCountDown: 0,
       timeCountAlert: 5,
       typeAlert: "",
+      selectedExam: "",
       fields: [
         {
           key: "Mã môn học"
@@ -34,16 +42,36 @@ export default {
           sortable: true
         }
       ],
-      listSubject: []
+      listSubject: [],
+      listExam: []
     };
   },
   methods: {
+    loadExam: async function() {
+      try {
+        this.dismissCountDown = 0;
+        let url = "/exam";
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+        data.data.forEach(exam => {
+          let obj = { value: exam.exam_id, text: exam.exam_name };
+          this.listExam.push(obj);
+        });
+        if (this.selectedExam === "")
+          this.selectedExam = this.listExam[this.listExam.length - 1].value;
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
+      }
+    },
+
     getListSubjectStudent: async function() {
       try {
+        this.dismissCountDown = 0;
         this.listSubject = [];
-
-        // Duy cmt
-        let url = config.listUrl.getListSubjectStudent + "/" + "1";
+        let url = "/subjectstudent/" + this.selectedExam;
         let data = await axios.getAxios(url);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
@@ -69,8 +97,9 @@ export default {
       this.dismissCountDown = this.timeCountAlert;
     }
   },
-  mounted: function() {
-    this.getListSubjectStudent();
+  mounted: async function() {
+    await this.loadExam();
+    await this.getListSubjectStudent();
   }
 };
 </script>
@@ -84,8 +113,13 @@ export default {
 }
 .wrapper_table {
   width: 80%;
-  margin-left: 30px;
+  margin-left: 100px;
   height: 400px;
   overflow: scroll;
+}
+
+.select {
+  width: 250px;
+  margin-top: 20px;
 }
 </style>

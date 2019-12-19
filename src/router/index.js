@@ -12,11 +12,11 @@ import NotEnough from '@/components/menus_admin/masterdata/NotEnough'
 // not admin
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'
-import Home from '@/components/menus/Home'
 import Subject from '@/components/menus/Subject'
 import RegisterTest from '@/components/menus/RegisterTest'
 import Registed from '@/components/menus/Registed'
 import Print from '@/components/menus/Print'
+import Password from '@/components/menus/Password'
 //admin
 import DashboardAdmin from '@/components/DashboardAdmin'
 import TestExam from '@/components/menus_admin/TestExam'
@@ -38,12 +38,11 @@ export default new Router({
       component: Dashboard,
       redirect: '/registed',
       children: [
-        // {
-        //   path: '/home',
-        //   name: 'Home',
-        //   props: true,
-        //   component: Home,
-        // },
+        {
+          path: '/password',
+          name: 'Password',
+          component: Password,
+        },
         {
           path: '/registertest',
           name: 'Registertest',
