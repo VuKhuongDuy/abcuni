@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // masterdata
-import Infrastructure from '@/components/menus_admin/masterdata/Infrastructure'
+import Room from '@/components/menus_admin/masterdata/Room'
 import Student from '@/components/menus_admin/masterdata/Student'
 import SubjectExam from '@/components/menus_admin/masterdata/SubjectExam'
 import Kar98 from '@/components/menus_admin/masterdata/Kar98'
 import SubjectFull from '@/components/menus_admin/masterdata/SubjectFull'
 import User from '@/components/menus_admin/masterdata/User'
 import NotEnough from '@/components/menus_admin/masterdata/NotEnough'
-// import HomeAdmin from '@/components/menus_admin/Home'
-// not admin
+// SV
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'
 import Subject from '@/components/menus/Subject'
@@ -19,8 +18,12 @@ import Print from '@/components/menus/Print'
 import Password from '@/components/menus/Password'
 //admin
 import DashboardAdmin from '@/components/DashboardAdmin'
-import TestExam from '@/components/menus_admin/TestExam'
+import exam from '@/components/menus_admin/exam'
 import HomeAdmin from '@/components/menus_admin/HomeAdmin'
+//superadmin
+import DashboardSuperAdmin from '@/components/DashboardSuperAdmin'
+import SuperAdmin from '@/components/menu_super_admin/SuperAdmin'
+import ManageAdmin from '@/components/menu_super_admin/ManageAdmin'
 
 
 
@@ -36,7 +39,7 @@ export default new Router({
     {
       path: '/',
       component: Dashboard,
-      redirect: '/registed',
+      redirect: '/subject',
       children: [
         {
           path: '/password',
@@ -45,22 +48,18 @@ export default new Router({
         },
         {
           path: '/registertest',
-          name: 'Registertest',
           component: RegisterTest
         },
         {
           path: '/subject',
-          name: 'Subject',
           component: Subject
         },
         {
           path: '/registed',
-          name: 'Registed',
           component: Registed
         },
         {
           path: '/print',
-          name: 'Print',
           component: Print
         },
       ]
@@ -68,15 +67,15 @@ export default new Router({
     {
       path: '/admin',
       component: DashboardAdmin,
-      redirect: '/testexam',
+      redirect: '/exam',
       children:[
         {
-          path: '/testexam',
-          component: TestExam,
+          path: '/exam',
+          component: exam,
         },
         {
-          path: '/infrastructure',
-          component: Infrastructure,
+          path: '/room',
+          component: Room,
         },
         {
           path: '/subjectexam',
@@ -103,6 +102,21 @@ export default new Router({
           component: User,
         },
 
+      ]
+    },
+    {
+      path: '/sa',
+      component: DashboardSuperAdmin,
+      redirect: '/superadmin',
+      children:[
+        {
+          path: '/superadmin',
+          component: SuperAdmin,
+        },
+        {
+          path: '/manage_admin',
+          component: ManageAdmin,
+        },
       ]
     }
   ]

@@ -39,7 +39,9 @@
       Sắp xếp theo:
       <b>{{ sortBy }}</b>, Thứ tự:
       <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-      <b-button variant="success" class="add_new">Thêm mới</b-button>
+      <div>
+        <b-button variant="success" class="add_new">Thêm mới</b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -268,6 +270,7 @@ export default {
 }
 .add_new {
   position: relative;
-  left: 850px;
+  right: -1170px;
+  top:-20px;
 }
 </style>

@@ -11,7 +11,7 @@
     ></b-form-file>
     <div class="mt-3">
       Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" variant="">Submit</b-button>
+      <b-button id="submit" :variant="variantState">Submit</b-button>
       <i class='title'>
         *Môn thi
       </i>
@@ -46,7 +46,9 @@
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-        <b-button variant="success" class="add_new">Thêm mới</b-button>
+        <div>
+          <b-button variant="success" class="add_new">Thêm mới</b-button>
+        </div>
       </div>
   </div>
 </template>
@@ -60,7 +62,7 @@ export default {
       noCollapse: false,
       sortBy: 'code_subject',
       sortDesc: false,
-      file:'null',
+      file:'',
       fields:[
         {
           key:'index',
@@ -91,7 +93,12 @@ export default {
           {code_subject: 'INT3401', name_subject: 'Trí tuệ nhân tạo'},
       ],
     }
-  }
+  },
+  computed: {
+      variantState(){
+        return this.file!='' ? 'success':''
+      }
+    },
 };
 </script>
 
@@ -114,9 +121,10 @@ export default {
   left:300px;
   bottom:4px;
 }
-.add_new{
-    position: relative;
-    left: 850px;
+.add_new {
+  position: relative;
+  right: -1170px;
+  top:-20px;
 }
 .sort{
     font-style: italic;

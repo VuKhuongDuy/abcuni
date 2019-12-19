@@ -201,6 +201,15 @@ b-alert {
   min-height: 100%;
 }
 
+
+#btnRemove {
+  margin-left: 10px;
+}
+
+#btnGoToAdd {
+  margin-left: 200px;
+}
+
 .optionExam {
   width: 15%;
   line-height: 20px;
@@ -219,11 +228,14 @@ b-alert {
   margin-top: 20px;
 }
 
-#btnRemove {
-  margin-left: 10px;
-}
-
-#btnGoToAdd {
-  margin-left: 200px;
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  /* left: 25%; */
+  z-index: 100;
 }
 </style>

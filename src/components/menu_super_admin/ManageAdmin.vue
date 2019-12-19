@@ -1,25 +1,8 @@
 <template>
-  <div id="student">
-    <!-- import file -->
-    <b-form-file
-      v-model="file"
-      :state="Boolean(file)"
-      placeholder="Choose a file or drop it here and click 'Submit' to import list infratructure..."
-      drop-placeholder="Drop file here..."
-      multiple
-      style="width:630px"
-    ></b-form-file>
-    <div class="mt-3">
-      Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" variant="">Submit</b-button>
-      <i class='title'>
-        *Cơ sở vật chất
-      </i>
-    </div>
-
+  <div id="manageadmin">
     <!-- table -->
-    <b-table striped hover :items="listStudent"
-    id="table-transition-example"
+    <b-table striped hover :items="listAdmin"
+    id="table-admin"
     :fields="fields"
     :head-variant="headVariant"
     :sticky-header="stickyHeader"
@@ -46,7 +29,7 @@
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-        <b-button variant="success" class="add_new">Thêm mới</b-button>
+        <b-button variant="success" class="add_new">Thêm mới admin</b-button>
       </div>
   </div>
 </template>
@@ -58,7 +41,7 @@ export default {
       headVariant:'light',
       stickyHeader: true,
       noCollapse: false,
-      sortBy: 'room',
+      sortBy: 'MSSV',
       sortDesc: false,
       file:'null',
       fields:[
@@ -67,12 +50,19 @@ export default {
           label:"STT",
         },
         {
-          key:"room",
-          label:"Phòng thi",
+          key:'full_name',
+          label: "Tên",
           sortable: true
         },
         {
-          key:"number_of_computer",
+          key:"username",
+          label:"Tài khoản",
+          sortable: true
+        },
+        
+        {
+          key:"password",
+          label:'Mật khẩu',
           sortable: true
         },
         {
@@ -80,12 +70,10 @@ export default {
           label:'Edit'
         }
       ],
-      listStudent: [
-          {room: '101-G2', number_of_computer: 20},
-          {room: '103-G2', number_of_computer: 14},
-          {room: '107-G2', number_of_computer:12},
-          {room: '108-G2', number_of_computer: 16},
-          {room: '102-G2', number_of_computer: 18}
+      listAdmin: [
+          {full_name:"Admin 1",username:'admin1',password: 'ad1', },
+          {full_name:"Admin 2",username:'admin2',password: 'ad2',},
+          {full_name:"Admin 3",username:'admin3', password: 'ad3',},
       ],
     }
   }
@@ -106,14 +94,9 @@ export default {
   position: relative;
   top: 46px;
 }
-#submit{
-  position: relative;
-  left:300px;
-  bottom:4px;
-}
 .add_new{
     position: relative;
-    left: 850px;
+    left: 450px;
 }
 .sort{
     font-style: italic;

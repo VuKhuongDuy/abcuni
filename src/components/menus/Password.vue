@@ -87,16 +87,6 @@ export default {
 </script>
 <style scoped>
 
-.input{
-    width: 200px;
-    margin-left: 42%;
-    margin-top: 15px;
-}
-
-.alert{
-    width: 50%;
-    margin-left: 25%;
-}
 
 #btnSave{
     margin-top: 20px;
@@ -107,5 +97,25 @@ export default {
     text-align: center;
 }
 
+.alert{
+  width: 50%;
+  margin-left: 25%;
+}
 
+.input{
+    width: 200px;
+    margin-left: 42%;
+    margin-top: 15px;
+}
+
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  /* left: 25%; */
+  z-index: 100;
+}
 </style>

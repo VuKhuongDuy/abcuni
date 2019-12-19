@@ -1,6 +1,6 @@
 <template>
-    <div id="homeAdmin">
-        THis is home admin
+    <div id="home">
+        THis is home
     </div>    
 </template>
 <script>

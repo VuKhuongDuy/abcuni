@@ -15,8 +15,10 @@
     ></b-form-file>
     <div class="mt-3">
       Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" variant @click="registUser">Submit</b-button>
-      <i class="title">*Quản lý tài khoản SV</i>
+      <b-button id="submit" :variant="variantState">Submit</b-button>
+      <i class='title'>
+        *Quản lý tài khoản SV
+      </i>
     </div>
 
     <!-- table -->
@@ -38,19 +40,24 @@
         {{ data.index + 1 }}
       </template>
 
-      <template v-slot:cell(crud)="row" class="mr-2">
-        <!--button ở cột crud -->
-        <b-button>Edit</b-button>
-        <b-button>Delete</b-button>
-      </template>
-    </b-table>
-    <!-- head-variant: màu <th>-->
-    <div class="sort">
-      Sắp xếp theo:
-      <b>{{ sortBy }}</b>, Thứ tự:
-      <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-      <b-button variant="success" class="add_new">Thêm mới</b-button>
-    </div>
+        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
+        <b-button>
+          Edit
+        </b-button>
+        <b-button>
+          Delete
+        </b-button>
+        </template>
+
+        
+      </b-table><!-- head-variant: màu <th>-->
+      <div class="sort">
+        Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
+        <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
+        <div>
+          <b-button variant="success" class="add_new">Thêm mới</b-button>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -66,8 +73,8 @@ export default {
       noCollapse: false,
       sortBy: "MSSV",
       sortDesc: false,
-      file: "null",
-      fields: [
+      file:'',
+      fields:[
         {
           key: "index",
           label: "STT"
@@ -144,7 +151,12 @@ export default {
       let body = [listStudentJson];
       let data = await axios.postAxios(url, body);
     }
-  }
+  },
+  computed: {
+      variantState(){
+        return this.file!='' ? 'success':''
+      }
+    },
 };
 </script>
 

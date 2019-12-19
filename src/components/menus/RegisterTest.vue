@@ -14,7 +14,7 @@
       class="select"
       @change="loadTurn"
     ></b-form-select>
-    <b-alert :variant="typeAlert" :show="dismissCountDown">{{message}}</b-alert>
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <div class="wrapper-table wrapper-roomtb">
       <b-table
         striped
@@ -308,6 +308,16 @@ export default {
   font-size: 12px;
 }
 
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  /* left: 25%; */
+  z-index: 100;
+}
 
 .breadcrumb {
   margin-left: -60px;

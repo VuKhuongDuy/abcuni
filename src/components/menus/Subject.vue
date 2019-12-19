@@ -1,6 +1,6 @@
 <template>
   <div id="subject">
-    <b-alert :variant="typeAlert" :show="dismissCountDown">{{message}}</b-alert>
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <div class="wrapper_table">
       <b-form-select
         v-model="selectedExam"
@@ -116,6 +116,17 @@ export default {
   margin-left: 100px;
   height: 400px;
   overflow: scroll;
+}
+
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  /* left: 25%; */
+  z-index: 100;
 }
 
 .select {

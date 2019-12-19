@@ -1,7 +1,7 @@
 <template>
   <div id="login" style="background-image: url(./public/images/bg.png)">
     <div class="loginbox">
-      <b-alert :variant="typeAlert" :show="dismissCountDown">{{message}}</b-alert>
+      <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
       <img src="@/../public/images/avatar.jpg" class="avatar" />
       <h1>Login</h1>
       <div>
@@ -21,7 +21,10 @@
           id="password"
           v-model="password"
         />
-        <input type="submit" name value="Login" @click="click_login" />
+        <input type="submit" variant="success" name value="Login" @click="click_login"/>
+        <!-- <b-form-invalid-feedback id="login">Bạn chưa nhập tài khoản hoặc mật khẩu</b-form-invalid-feedback> -->
+        <!-- <b-button @click="click_login">Login</b-button> -->
+
         <br />
         <a href="#">Quên tài khoản?</a>
       </div>
@@ -57,7 +60,8 @@ export default {
       dismissCountDown: 0,
       timeCountAlert: 4,
       message: "",
-      typeAlert: ""
+      typeAlert: "",
+      check:''
     };
   },
 
@@ -69,6 +73,7 @@ export default {
         let url = '/login';
         let body = { username: this.username, password: this.password };
         let result = await axios.postAxios(url, body);
+        // this.check=this.username!='' && this.password!=''? true: false; 
         if (!result || !result.success) {
           this.changeTypeAlert(result.message, "warning");
           return;
@@ -88,53 +93,25 @@ export default {
       this.typeAlert = type;
       this.dismissCountDown = this.timeCountAlert;
     }
-  }
+  },
+  // computed:{
+  //   loginState(){
+  //     if(this.check==true){
+  //       return true;
+  //     }
+  //     return false;
+  //   }
+  // }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#login {
-  margin: 0px;
-  padding: 0px;
-  /* background-image: url("@/../public/images/bg.png"); */
-  background-size: cover;
-  background-repeat: no-repeat;
-  font-family: sans-serif;
-  width: 100%;
-  height: 700px;
-}
-
-.loginbox {
-  width: 320px;
-  height: 420px;
-  background: #fff;
-  border: 1px solid green;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  box-sizing: border-box;
-  padding: 70px 30px;
-  border-radius: 10px;
-}
-.avatar {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: -50px;
-  left: calc(50% - 50px);
-}
 h1 {
   margin: 0px;
   padding: 0px 0px 20px;
   text-align: center;
   font-size: 22px;
-}
-.loginbox p {
-  margin: 0px;
-  padding: 0px;
-  font-weight: bold;
 }
 .loginbox input[id="username"],
 input[id="password"] {
@@ -147,32 +124,18 @@ input[id="password"] {
   font-size: 16px;
   margin-bottom: 20px;
 }
-.loginbox input[type="submit"] {
-  border: none;
-  outline: none;
-  height: 40px;
-  background: #339933;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 10px;
-  float: right;
-  cursor: pointer;
+
+#login {
+  margin: 0px;
+  padding: 0px;
+  /* background-image: url("@/../public/images/bg.png"); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: sans-serif;
+  width: 100%;
+  height: 700px;
 }
-.loginbox a {
-  color: #339933;
-  text-decoration: none;
-}
-.loginbox a:hover {
-  color: #ff0000;
-  text-decoration: underline;
-}
-.loginbox input:hover {
-  background: #d9d9d9;
-}
-.loginbox input[type="submit"]:hover {
-  background: #066c00;
-  font-weight: bold;
-}
+
 
 /* welcome */
 #welcomeLogo img {
@@ -206,5 +169,69 @@ input[id="password"] {
   text-align: right;
   font-size: 12px;
   font-family: "Courier New";
+}
+
+.loginbox {
+  width: 320px;
+  height: 420px;
+  background: #fff;
+  border: 1px solid green;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+  border-radius: 10px;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+}
+.loginbox p {
+  margin: 0px;
+  padding: 0px;
+  font-weight: bold;
+}
+
+.loginbox input[type="submit"] {
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #339933;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  float: right;
+  cursor: pointer;
+}
+.loginbox a {
+  color: #339933;
+  text-decoration: none;
+}
+.loginbox a:hover {
+  color: #ff0000;
+  text-decoration: underline;
+}
+.loginbox input:hover {
+  background: #d9d9d9;
+}
+.loginbox input[type="submit"]:hover {
+  background: #066c00;
+  font-weight: bold;
+}
+
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  /* left: 25%; */
+  z-index: 100;
 }
 </style>
