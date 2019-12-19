@@ -1,5 +1,6 @@
 <template>
   <div id="student">
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <!-- import file -->
     <b-form-file
       v-model="file"
@@ -9,12 +10,14 @@
       multiple
       style="width:630px"
     ></b-form-file>
-    <div class="mt-3">
-      Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" :variant="variantState">Submit</b-button>
-      <i class='title'>
-        Danh sách SV và các môn SV đã học
-      </i>
+    <b-button id="submit" :variant="variantState">Thêm môn học sinh viên đã học</b-button>
+    <i class='title'>
+        *Danh sách các môn sinh viên đã học
+    </i>
+    <br>
+    <br>
+    <div class="search">
+          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm MSSV..."></b-form-input>
     </div>
 
     <!-- table -->
@@ -34,7 +37,7 @@
 
         <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
         <b-button>
-          Xóa
+          Xóa môn
         </b-button>
         </template>
 
@@ -68,6 +71,7 @@ export default {
         },
         {
           key:'full_name',
+          label:"Họ tên",
           sortable: true
         },
         {
@@ -119,10 +123,13 @@ export default {
   position: relative;
   top: 46px;
 }
+.search{
+  margin-bottom: 4px;
+}
 #submit{
   position: relative;
-  left:300px;
-  bottom:4px;
+  /* left:300px; */
+  bottom:-1px;
 }
 .sort{
     font-style: italic;

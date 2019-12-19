@@ -1,6 +1,7 @@
 <template>
   <div id="student">
     <!-- import file -->
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
@@ -9,7 +10,7 @@
       multiple
       style="width:630px"
     ></b-form-file>
-    <b-button id="submit" :variant="variantState">Submit</b-button>
+    <b-button id="submit" :variant="variantState">Thêm danh sách sinh viên</b-button>
     <i class='title'>
         *Danh sách sinh viên
     </i>
@@ -35,7 +36,7 @@
 
         <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột xóa -->
           <b-button>
-            Xóa
+            Xóa sinh viên
           </b-button>
         </template>
 
@@ -96,19 +97,48 @@ export default {
       ],
     }
   },
-  computed: {
-      variantState(){
-        return this.file!='' ? 'success':''
+
+  methods: {
+    loadExam: async function() {
+      try {
+        this.dismissCountDown = 0;
+        let url = "/student";
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+        data.data.forEach(exam => {
+          let obj = { value: exam.exam_id, text: exam.exam_name };
+          this.listExam.push(obj);
+        });
+        if (this.selectedExam === "")
+          this.selectedExam = this.listExam[this.listExam.length - 1].value;
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
+
+    changeTypeAlert: function(message, type) {
+      this.message = message;
+      this.typeAlert = type;
+      this.dismissCountDown = this.timeCountAlert;
+    }
+  },
+
+  mounted: function() {
+    this.loadExam();
+  },
+  computed: {
+    variantState() {
+      return this.file != "" ? "success" : "";
+    }
+  }
 
 };
 </script>
 
 <style scoped>
-.search{
-  margin-bottom: 4px;
-}
 .title{
   position: relative;
   float: right;
@@ -122,6 +152,9 @@ export default {
   position: relative;
   top: 46px;
 }
+.search{
+  margin-bottom: 4px;
+}
 #submit{
   position: relative;
   /* left:300px; */
@@ -129,5 +162,16 @@ export default {
 }
 .sort{
     font-style: italic;
+}
+
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  /* left: 25%; */
+  z-index: 100;
 }
 </style>

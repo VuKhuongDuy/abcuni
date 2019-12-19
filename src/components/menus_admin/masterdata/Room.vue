@@ -16,18 +16,17 @@
       drop-placeholder="Drop file here..."
       multiple
       id="inputFileRoom"
-      style="width:400px"
+      style="width:630px"
     ></b-form-file>
-    <b-button id="btnSubmit" :variant="variantState">Submit</b-button>
-    <!-- <div class="mt-3">
-      Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" :variant="variantState">Submit</b-button>
-      <i class='title'>
-        *Cơ sở vật chất
-      </i>
-    </div>-->
-
-    <!-- table -->
+    <b-button id="submit" :variant="variantState">Thêm phòng thi</b-button>
+    <i class='title'>
+        *Danh sách các phòng thi
+    </i>
+    <br>
+    <br>
+    <div class="search">
+          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm phòng thi..."></b-form-input>
+    </div>
     <b-table
       striped
       hover
@@ -46,9 +45,9 @@
         {{ data.index + 1 }}
       </template>
 
-        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
+        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
         <b-button>
-          Delete
+          Xóa phòng thi
         </b-button>
         </template>
 
@@ -90,10 +89,11 @@ export default {
         },
         {
           key: "number_of_computer",
+          label:'Số lượng máy tính',
           sortable: true
         },
         {
-          key: "crud",
+          key: "delete",
           label: "Edit"
         }
       ],
@@ -180,10 +180,13 @@ export default {
   position: relative;
   top: 46px;
 }
-.add_new {
+.search{
+  margin-bottom: 4px;
+}
+#submit{
   position: relative;
-  right: -1170px;
-  top: -20px;
+  /* left:300px; */
+  bottom:-1px;
 }
 .sort {
   font-style: italic;

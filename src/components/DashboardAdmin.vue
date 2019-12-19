@@ -87,7 +87,7 @@ export default {
 /* body */
 #body{
     margin: 0;
-    height: 557px;
+    height: 560px;
 }
 
 #menu{
@@ -168,10 +168,14 @@ button{
     top: 3px;
 }
 #content{ 
-    width:calc(100% - 210px);
-    margin-left: 10px;
+    width:calc(100% - 200px);
+    padding-left:10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    margin: 0px;
     min-height: 100%;
     float:left;
+    background-color: #e3e6e5;
 }
 
 
