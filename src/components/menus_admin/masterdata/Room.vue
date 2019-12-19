@@ -7,31 +7,28 @@
       class="optionExam mt-3"
       :options="listExam"
       size="sm"
-      @change="loadSubjectRegisted"
+      @change="loadRoom"
     ></b-form-select>
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
+      id="fileListUser"
+      @change="importData"
       placeholder="Choose a file or drop it here"
       drop-placeholder="Drop file here..."
       multiple
-      id="inputFileRoom"
-      style="width:400px"
+      style="width:630px"
     ></b-form-file>
-    <b-button id="btnSubmit" :variant="variantState">Submit</b-button>
-    <!-- <div class="mt-3">
-      Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" :variant="variantState">Submit</b-button>
-      <i class='title'>
-        *Cơ sở vật chất
-      </i>
-    </div>-->
-
-    <!-- table -->
+    <b-button id="submit" @click="addRoom" :variant="variantState">Thêm phòng thi</b-button>
+    <i class='title'>
+        *Danh sách các phòng thi
+    </i>
+    <br>
+    <br>
     <b-table
       striped
       hover
-      :items="listStudent"
+      :items="listRoom"
       id="tableTransitionExample"
       :fields="fields"
       :head-variant="headVariant"
@@ -46,9 +43,9 @@
         {{ data.index + 1 }}
       </template>
 
-        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
-        <b-button>
-          Delete
+        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
+        <b-button @click="deleteRoom(row.value)">
+          Xóa phòng thi
         </b-button>
         </template>
 
@@ -62,22 +59,26 @@
 </template>
 
 <script>
+import * as axios from '../../../../config/axios';
+import readXlsxFile from "read-excel-file";
 export default {
   data() {
     return {
       listExam: [{ value: null, text: "Please select an exam" }],
       selectedExam: "",
+      listRoom: [],
       message: "",
       dismissCountDown: 0,
       timeCountAlert: 5,
       typeAlert: "",
+      dataXml: [],
+      file:'',
 
       headVariant: "light",
       stickyHeader: true,
       noCollapse: false,
       sortBy: "room",
       sortDesc: false,
-      file: "",
       fields: [
         {
           key: "index",
@@ -89,21 +90,15 @@ export default {
           sortable: true
         },
         {
-          key: "number_of_computer",
+          key: "count_of_computer",
+          label:'Số lượng máy tính',
           sortable: true
         },
         {
-          key: "crud",
+          key: "delete",
           label: "Edit"
         }
       ],
-      listStudent: [
-        { room: "101-G2", number_of_computer: 20 },
-        { room: "103-G2", number_of_computer: 14 },
-        { room: "107-G2", number_of_computer: 12 },
-        { room: "108-G2", number_of_computer: 16 },
-        { room: "102-G2", number_of_computer: 18 }
-      ]
     };
   },
 
@@ -128,15 +123,85 @@ export default {
       }
     },
 
+    loadRoom: async function(){
+      try {
+        this.dismissCountDown = 0;
+        this.listRoom = [];
+        let url = "/room/" + this.selectedExam;
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+        data.data.forEach((room, index) => {
+          let obj = {
+            room_id: room.room_id,
+            index: index,
+            room: room.room_name,
+            count_of_computer: room.count_computer,
+            delete: index
+          };
+          this.listRoom.push(obj);
+        });
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
+      }
+    },
+
     changeTypeAlert: function(message, type) {
       this.message = message;
       this.typeAlert = type;
       this.dismissCountDown = this.timeCountAlert;
-    }
+    },
+
+    addRoom: async function(){
+      this.dismissCountDown = 0;
+      let listRoomJson = JSON.stringify(this.dataXml);
+      let url = '/admin/room/add';
+      let body = {listRoom: listRoomJson, exam_id:  this.selectedExam};
+      let data = await axios.postAxios(url, body);
+      if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+      }else this.changeTypeAlert(data.message, "success");
+    },
+
+    deleteRoom: async function(index){
+      this.dismissCountDown = 0;
+      console.log(this.listRoom[index]);
+      let url = '/admin/room/' + this.selectedExam + '/' + this.listRoom[index].room_id;
+
+      let data = await axios.deleteAxios(url);
+      if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+      }else this.changeTypeAlert(data.message, "success");
+    },
+
+    importData: async function(){      
+      const input = document.getElementById("fileListUser");
+      this.dataXml = await this.xlsxToArray(input.files[0]);
+    },
+
+    xlsxToArray: function(file) {      
+      return new Promise((resolve, reject) => {
+        readXlsxFile(file).then((rows, err) => {
+          if(err) reject(err);
+          let arrayObject = [];
+          for(let i=1;i<rows.length;i++){
+            let user = {};
+            rows[0].forEach((field, index) => {
+              user[field] = rows[i][index];
+            });
+            arrayObject.push(user);
+          }
+          resolve(arrayObject);
+        });
+      })
+    },
   },
 
-  mounted: function() {
-    this.loadExam();
+  mounted: async function() {
+    await this.loadExam();
+    await this.loadRoom();
   },
   computed: {
     variantState() {
@@ -180,10 +245,13 @@ export default {
   position: relative;
   top: 46px;
 }
-.add_new {
+.search{
+  margin-bottom: 4px;
+}
+#submit{
   position: relative;
-  right: -1170px;
-  top: -20px;
+  /* left:300px; */
+  bottom:-1px;
 }
 .sort {
   font-style: italic;

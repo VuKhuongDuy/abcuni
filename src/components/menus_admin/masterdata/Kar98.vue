@@ -9,12 +9,14 @@
       multiple
       style="width:630px"
     ></b-form-file>
-    <div class="mt-3">
-      Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" :variant="variantState">Submit</b-button>
+    <b-button id="submit" :variant="variantState">Thêm ca thi</b-button>
       <i class='title'>
         *Ca thi
       </i>
+    <br>
+    <br>
+    <div class="search">
+          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm tên môn thi..."></b-form-input>
     </div>
 
     <!-- table -->
@@ -34,7 +36,7 @@
 
         <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
         <b-button>
-          Xóa
+          Xóa ca thi
         </b-button>
         </template>
 
@@ -107,11 +109,15 @@ export default {
   position: relative;
   top: 46px;
 }
+.search{
+  margin-bottom: 4px;
+}
 #submit{
   position: relative;
-  left:300px;
-  bottom:4px;
+  /* left:300px; */
+  bottom:-1px;
 }
+
 .sort{
     font-style: italic;
 }

@@ -1,13 +1,20 @@
 <template>
   <div id="home">
-    <b-form-select v-model="selected_1" :options="options_subject" id="subject"></b-form-select>
-    <b-form-select v-model="selected_2" :options="options_day" id="day" class="date"></b-form-select>/
-    <b-form-select v-model="selected_3" :options="options_month" id="month" class="date"></b-form-select>/
-    <b-form-select v-model="selected_4" :options="options_year" id="year" class="date"></b-form-select>
-    <b-form-select v-model="selected_5" :options="options_time" id="time"></b-form-select>
-    <b-form-select v-model="selected_6" :options="options_room" id="room"></b-form-select>
-    <b-form-select v-model="selected_7" :options="options_number" id="number"></b-form-select>
-    <b-button variant="success" id="add">Thêm ca thi</b-button>
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
+    <b-form-select v-model="subject" :options="options_subject" id="subject"></b-form-select>
+    <b-form-input  v-model="day" id="date" type="date"></b-form-input>
+    <b-form-select v-model="time" :options="options_time" id="time"></b-form-select>
+    <b-form-select v-model="room" :options="options_room" id="room"></b-form-select>
+    <b-form-select v-model="number" :options="options_number" id="number"></b-form-select>
+    <b-button id="submit" :variant="variantState">Thêm lịch thi</b-button>
+    <i class='title'>
+        *Danh sách các phòng thi
+    </i>
+    <br>
+    <br>
+    <div class="search">
+          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm phòng thi..."></b-form-input>
+    </div>
     <!-- table -->
     <b-table
       striped
@@ -27,11 +34,9 @@
         {{ data.index + 1 }}
       </template>
 
-      <template v-slot:cell(crud)="row" class="mr-2">
-        <!--button ở cột crud -->
-        <b-button>Edit</b-button>
-        <b-button>Delete</b-button>
-        <b-button>Details</b-button>
+      <template v-slot:cell(delete)="row" class="mr-2">
+        <!--button ở cột delete -->
+        <b-button @mouseover="mouseOver" :variant="variant_delete">Xóa ca thi</b-button>
       </template>
     </b-table>
     <!-- head-variant: màu <th>-->
@@ -46,19 +51,18 @@
 export default {
   data() {
     return {
-      selected_1: null,
-      selected_2: null,
-      selected_3: null,
-      selected_4: null,
-      selected_5: null,
-      selected_6: null,
-      selected_7: null,
+      subject: null,
+      time: null,
+      day: null,
+      room: null,
+      number: null,
       headVariant: "light",
       stickyHeader: true,
       noCollapse: false,
       sortBy: "name_subject",
       sortDesc: false,
       file: "null",
+      variant_delete:'',
       fields: [
         {
           key: "index",
@@ -90,8 +94,8 @@ export default {
           sortable: true
         },
         {
-          key: "crud",
-          label: "Edit"
+          key: "delete",
+          label: "Xóa"
         }
       ],
       listStudent: [
@@ -124,64 +128,6 @@ export default {
         { value: "INT3115", text: "Thiết kế giao diện người dùng" },
         { value: "INT3202", text: "Hệ quản trị cơ sở dữ liệu" },
         { value: "INT3401", text: "Trí tuệ nhân tạo" }
-      ],
-      options_day: [
-        { value: null, text: "Ngày", disabled: true },
-        { value: "1", text: "01" },
-        { value: "2", text: "02" },
-        { value: "3", text: "03" },
-        { value: "4", text: "04" },
-        { value: "5", text: "05" },
-        { value: "6", text: "06" },
-        { value: "7", text: "07" },
-        { value: "8", text: "08" },
-        { value: "9", text: "09" },
-        { value: "10", text: "10" },
-        { value: "11", text: "11" },
-        { value: "12", text: "12" },
-        { value: "13", text: "13" },
-        { value: "14", text: "14" },
-        { value: "15", text: "15" },
-        { value: "16", text: "16" },
-        { value: "17", text: "17" },
-        { value: "18", text: "18" },
-        { value: "19", text: "19" },
-        { value: "20", text: "20" },
-        { value: "21", text: "21" },
-        { value: "22", text: "22" },
-        { value: "23", text: "23" },
-        { value: "24", text: "24" },
-        { value: "25", text: "25" },
-        { value: "26", text: "26" },
-        { value: "27", text: "27" },
-        { value: "28", text: "28" },
-        { value: "29", text: "29" },
-        { value: "30", text: "30" },
-        { value: "31", text: "31" }
-      ],
-      options_month: [
-        { value: null, text: "Tháng", disabled: true },
-        { value: "1", text: "01" },
-        { value: "2", text: "02" },
-        { value: "3", text: "03" },
-        { value: "4", text: "04" },
-        { value: "5", text: "05" },
-        { value: "6", text: "06" },
-        { value: "7", text: "07" },
-        { value: "8", text: "08" },
-        { value: "9", text: "09" },
-        { value: "10", text: "10" },
-        { value: "11", text: "11" },
-        { value: "12", text: "12" }
-      ],
-      options_year: [
-        { value: null, text: "Năm", disabled: true },
-        { value: "2019", text: "2019" },
-        { value: "2020", text: "2020" },
-        { value: "2021", text: "2021" },
-        { value: "2022", text: "2022" },
-        { value: "2023", text: "2023" },
-        { value: "2024", text: "2024" }
       ],
       options_time: [
         { value: null, text: "Ca thi", disabled: true },
@@ -242,15 +188,25 @@ export default {
         }
       ]
     };
-  }
+  },
+  computed: {
+      variantState(){
+        return this.number!=null && this.subject!=null && this.time!=null && this.day!=null && this.room!=null ? 'success':''
+      },
+      mouseOver(){
+        
+      }
+    },
 };
 </script>
 <style scoped>
 #subject {
   width: 400px;
 }
-.date {
-  width: 90px;
+
+#date {
+  width: 180px;
+  position: relative;
 }
 #time {
   width: 140px;
@@ -265,9 +221,24 @@ export default {
   position: relative;
   top: -1px;
 }
-.add_new {
+#submit{
   position: relative;
-  right: -1170px;
-  top:-20px;
+  /* left:300px; */
+  bottom:-1px;
+}
+/* #delete:hover{
+  background-color: brown;
+} */
+.search{
+  margin-bottom: 4px;
+}
+.title{
+  position: relative;
+  float: right;
+  right: 30px;
+}
+.sort{
+    font-style: italic;
 }
 </style>
+

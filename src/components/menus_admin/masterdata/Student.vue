@@ -1,6 +1,7 @@
 <template>
   <div id="student">
     <!-- import file -->
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
@@ -8,18 +9,20 @@
       drop-placeholder="Drop file here..."
       multiple
       style="width:630px"
+      id="fileListStudent"
+      @change="importData"
     ></b-form-file>
-    <b-button id="submit" :variant="variantState">Submit</b-button>
-    <i class='title'>
+    <b-button id="submit" :variant="variantState"  @click="registStudent">Thêm sinh viên</b-button>
+    <!-- <i class='title'>
         *Danh sách sinh viên
-    </i>
+    </i> -->
     <br>
     <br>
     <div class="search">
-          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm MSSV..."></b-form-input>
+          <b-form-input id="search_MSSV" v-model="keySearch" v-on:keyup.enter="searchStudent" type="search" style="width: 230px" placeholder="Tìm kiếm MSSV..."></b-form-input>
     </div>
     <!-- table -->
-    <b-table striped hover :items="listStudent"
+    <b-table striped hover :items="listStudentRender"
     id="table"
     :fields="fields"
     :head-variant="headVariant"
@@ -29,12 +32,8 @@
     :sort-desc.sync="sortDesc"
     caption-top
     >
-      <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
         <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột xóa -->
-          <b-button>
+          <b-button @click="deleteStudent(row.value)">
             Xóa
           </b-button>
         </template>
@@ -49,9 +48,18 @@
 </template>
 
 <script>
+import readXlsxFile from "read-excel-file";
+import * as axios from '../../../../config/axios';
 export default {
   data(){
     return{
+      dataXml: [],
+      message: "",
+      keySearch: '',
+      dismissCountDown: 0,
+      timeCountAlert: 5,
+      typeAlert: "",
+
       headVariant:'light',
       stickyHeader: true,
       noCollapse: false,
@@ -64,16 +72,16 @@ export default {
           label:"STT",
         },
         {
-          key:"MSSV",
+          key:"mssv",
           sortable: true
         },
         {
-          key:"full_name",
+          key:"fullName",
           label:'Họ và tên',
           sortable: true
         },
         {
-          key:'birth_day',
+          key:'birthDay',
           sortable: true,
           label:"Ngày sinh",
         },
@@ -87,28 +95,116 @@ export default {
           label:'Xóa'
         }
       ],
-      listStudent: [
-          {MSSV: 17021119, full_name: 'Nguyễn Xuân Tự', birth_day: '01/01/1999', sex:'Nam'},
-          {MSSV: 17021120, full_name: 'Nguyễn Ngọc Nhi', birth_day: '02/05/1999', sex:'Nữ'},
-          {MSSV: 17021121, full_name: 'Nguyễn Xuân Long', birth_day: '01/01/1999', sex:'Nam'},
-          {MSSV: 17021121, full_name: 'Phan Bá Phước', birth_day: '07/01/1999', sex:'Nam'},
-          {MSSV: 17021122, full_name: 'Phạm Văn Mạnh', birth_day: '21/01/1999', sex:'Nam'},
-      ],
+      listStudent: [],
+      listStudentRender: []
     }
+  },
+  methods: {
+    getListStudent: async function(){
+      try {
+        this.dismissCountDown = 0;
+        let url = "/student";
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+        data.data.forEach((student, index) => {
+          let obj = {
+            index: index+1,
+            mssv: student.mssv,
+            fullName: student.name_student,
+            birthDay: student.birthday,
+            sex: student.sex,
+            delete: index
+          };
+          this.listStudent.push(obj);
+        });
+        if(this.listStudentRender.length === 0) this.listStudentRender = this.listStudent;
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
+      }
+    },
+
+    importData: async function(){      
+      const input = document.getElementById("fileListStudent");
+      this.dataXml = await this.xlsxToArray(input.files[0]);
+    },
+
+    xlsxToArray: function(file) {      
+      return new Promise((resolve, reject) => {
+        readXlsxFile(file).then((rows, err) => {
+          if(err) reject(err);
+          let arrayObject = [];
+          for(let i=1;i<rows.length;i++){
+            let student = {};
+            rows[0].forEach((field, index) => {
+              student[field] = rows[i][index];
+            });
+            arrayObject.push(student);
+          }
+          resolve(arrayObject);
+        });
+      })
+    },
+
+    registStudent: async function(){
+      let listStudentJson = JSON.stringify(this.dataXml);
+      let url = '/admin/student/add';
+      let body = [listStudentJson];
+      let data = await axios.postAxios(url, body);
+      if(!data.success){
+        this.changeTypeAlert(data.message, 'warning');
+      }
+      this.changeTypeAlert(data.message, 'success');
+    },
+
+    changeTypeAlert: function(message, type) {
+      this.message = message;
+      this.typeAlert = type;
+      this.dismissCountDown = this.timeCountAlert;
+    },
+
+    searchStudent: function(){
+      if(this.keySearch) this.listStudentRender = [];
+      else {
+        this.listStudentRender = this.listStudent;
+        return;
+      }
+      
+      this.listStudent.forEach(student => {
+        if(student.mssv.indexOf(this.keySearch) >= 0){
+          this.listStudentRender.push(student);
+        }
+      });
+    },
+
+    deleteStudent: async function(index){
+      if(!window.confirm("Bạn có muốn xoá sinh viên này ?")){return}
+
+      let url = '/admin/student/delete/' + this.listStudentRender[index].mssv;
+      let data = await axios.deleteAxios(url);
+      if(!data.success){
+        this.changeTypeAlert(data.message, 'warning');
+        return;
+      }
+      this.changeTypeAlert(data.message, 'success');
+      this.getListStudent();
+    }
+  },
+  mounted: function(){
+    this.getListStudent();
   },
   computed: {
       variantState(){
         return this.file!='' ? 'success':''
-      }
-    },
+      }    
+  },
 
 };
 </script>
 
 <style scoped>
-.search{
-  margin-bottom: 4px;
-}
 .title{
   position: relative;
   float: right;
@@ -122,6 +218,9 @@ export default {
   position: relative;
   top: 46px;
 }
+.search{
+  margin-bottom: 4px;
+}
 #submit{
   position: relative;
   /* left:300px; */
@@ -129,5 +228,16 @@ export default {
 }
 .sort{
     font-style: italic;
+}
+
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  /* left: 25%; */
+  z-index: 100;
 }
 </style>

@@ -9,12 +9,14 @@
       multiple
       style="width:630px"
     ></b-form-file>
-    <div class="mt-3">
-      Selected file: {{ file ? file.name : '' }}
-      <b-button id="submit" :variant="variantState">Submit</b-button>
-      <i class='title'>
-        *Môn thi
-      </i>
+    <b-button id="submit" :variant="variantState">Thêm môn thi</b-button>
+      <!-- <i class='title'>
+        *Quản lý môn thi
+      </i> -->
+    <br>
+    <br>
+    <div class="search">
+          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm tên môn thi..."></b-form-input>
     </div>
 
     <!-- table -->
@@ -28,16 +30,14 @@
     :sort-desc.sync="sortDesc"
     caption-top
     >
-      <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
+      <template v-slot:cell(index)="data">
+        <!--STT không bị thay đổi khi sort-->
         {{ data.index + 1 }}
       </template>
 
-        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
+        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
         <b-button>
-          Edit
-        </b-button>
-        <b-button>
-          Delete
+          Xóa tài khoản sinh viên
         </b-button>
         </template>
 
@@ -54,6 +54,14 @@
 export default {
   data(){
     return{
+      selectedExam: "",
+      listRoom: [],
+      dismissCountDown: 0,
+      timeCountAlert: 5,
+      typeAlert: "",
+      dataXml: [],
+      file:'',
+
       headVariant:'light',
       stickyHeader: true,
       noCollapse: false,
@@ -76,8 +84,8 @@ export default {
           sortable: true
         },
         {
-          key:'crud',
-          label:'Edit'
+          key:'delete',
+          label:'Xóa'
         }
       ],
       listStudent: [
@@ -113,15 +121,13 @@ export default {
   position: relative;
   top: 46px;
 }
+.search{
+  margin-bottom: 4px;
+}
 #submit{
   position: relative;
-  left:300px;
-  bottom:4px;
-}
-.add_new {
-  position: relative;
-  right: -1170px;
-  top:-20px;
+  /* left:300px; */
+  bottom:-1px;
 }
 .sort{
     font-style: italic;
