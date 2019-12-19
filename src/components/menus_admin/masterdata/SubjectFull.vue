@@ -32,12 +32,9 @@
         {{ data.index + 1 }}
       </template>
 
-        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
+        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
         <b-button>
-          Edit
-        </b-button>
-        <b-button>
-          Delete
+          Xóa
         </b-button>
         </template>
 
@@ -46,9 +43,6 @@
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-       <div>
-          <b-button variant="success" class="add_new">Thêm mới</b-button>
-        </div>
       </div>
   </div>
 </template>
@@ -87,14 +81,19 @@ export default {
           label:"Tên môn",
         },
         {
-          key:'crud',
-          label:'Edit'
+          key:'enough',
+          sortable: true,
+          label:"Đủ điều kiện thi",
+        },
+        {
+          key:'delete',
+          label:'Xóa'
         }
       ],
       listStudent: [
-          {MSSV: 17021119, full_name:"Nguyễn Xuân Tự",code_subject: 'INT3306', name_subject: 'Phát triển ứng dụng web'},
-          {MSSV: 17021119, full_name:"Nguyễn Xuân Tự",code_subject: 'INT3115',name_subject: 'Thiết kế giao diện người dùng'},
-          {MSSV: 17021119, full_name:"Nguyễn Xuân Tự", code_subject: 'INT3202',name_subject: 'Hệ quản trị cơ sở dữ liệu'},
+          {MSSV: 17021119, full_name:"Nguyễn Xuân Tự",code_subject: 'INT3306', name_subject: 'Phát triển ứng dụng web', enough:'Có'},
+          {MSSV: 17021119, full_name:"Nguyễn Xuân Tự",code_subject: 'INT3115',name_subject: 'Thiết kế giao diện người dùng',  enough:'Có'},
+          {MSSV: 17021119, full_name:"Nguyễn Xuân Tự", code_subject: 'INT3202',name_subject: 'Hệ quản trị cơ sở dữ liệu',  enough:'Có'},
       ],
     }
   },
@@ -124,11 +123,6 @@ export default {
   position: relative;
   left:300px;
   bottom:4px;
-}
-.add_new {
-  position: relative;
-  right: -1170px;
-  top:-20px;
 }
 .sort{
     font-style: italic;

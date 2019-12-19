@@ -46,21 +46,18 @@
         {{ data.index + 1 }}
       </template>
 
-      <template v-slot:cell(crud)="row" class="mr-2">
-        <!--button ở cột crud -->
-        <b-button>Edit</b-button>
-        <b-button>Delete</b-button>
-      </template>
-    </b-table>
-    <!-- head-variant: màu <th>-->
-    <div class="sort">
-      Sắp xếp theo:
-      <b>{{ sortBy }}</b>, Thứ tự:
-      <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-      <!-- <div>
-          <b-button variant="success" class="add_new">Thêm mới</b-button>
-      </div>-->
-    </div>
+        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
+        <b-button>
+          Delete
+        </b-button>
+        </template>
+
+        
+      </b-table><!-- head-variant: màu <th>-->
+      <div class="sort">
+        Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
+        <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
+      </div>
   </div>
 </template>
 

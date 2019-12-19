@@ -40,10 +40,7 @@
         {{ data.index + 1 }}
       </template>
 
-        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
-        <b-button>
-          Edit
-        </b-button>
+        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
         <b-button>
           Delete
         </b-button>
@@ -54,9 +51,6 @@
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-        <div>
-          <b-button variant="success" class="add_new">Thêm mới</b-button>
-        </div>
       </div>
   </div>
 </template>
@@ -93,8 +87,8 @@ export default {
           sortable: true
         },
         {
-          key: "crud",
-          label: "Edit"
+          key:'delete',
+          label:'Xóa'
         }
       ],
       listStudent: [
@@ -179,11 +173,7 @@ export default {
   left: 300px;
   bottom: 4px;
 }
-.add_new {
-  position: relative;
-  left: 850px;
-}
-.sort {
-  font-style: italic;
+.sort{
+    font-style: italic;
 }
 </style>
