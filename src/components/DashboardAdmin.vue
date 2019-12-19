@@ -9,20 +9,20 @@
             <div id="menu">
                 <div id="components-menu">
                     <tbody>
-                        <button @click="check2 = !check2" class="button_menu"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý sinh viên<img v-if="check2" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check2" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <button @click="check2 = !check2" :class="check2?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý sinh viên<img v-if="check2" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check2" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check2" class="transition_menu">
                             <button class="btn" type="button" @click="activeBtn = 'btn1'" :class="{active: activeBtn === 'btn1' }"><router-link to='/student' class="btn_router"><img src="@/../public/icons/right_1.png" class="icon_right">Sinh Viên</router-link></button>
                             <button class="btn" type="button" @click="activeBtn = 'btn2'" :class="{active: activeBtn === 'btn2' }"><router-link to='/user' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Tài khoản sinh viên</router-link></button>
                             <button class="btn" type="button" @click="activeBtn = 'btn3'" :class="{active: activeBtn === 'btn3' }"><router-link to='/subjectfull' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Môn học SV đã học</router-link></button>
                             <button class="btn" type="button" @click="activeBtn = 'btn4'" :class="{active: activeBtn === 'btn4' }"><router-link to='/notenough' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">SV không đủ điều kiện</router-link></button>
                         </template>
-                        <button @click="check0 = !check0" class="button_menu"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý khách quan<img v-if="check0" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check0" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <button @click="check0 = !check0"  :class="check0?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý khách quan<img v-if="check0" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check0" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check0" class="transition_menu">
-                            <button class="btn" type="button" @click="activeBtn = 'btn5'" :class="{active: activeBtn === 'btn5' }"><router-link to='/infrastructure' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Cơ sở vật chất</router-link></button>
+                            <button class="btn" type="button" @click="activeBtn = 'btn5'" :class="{active: activeBtn === 'btn5' }"><router-link to='/room' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Cơ sở vật chất</router-link></button>
                             <button class="btn" type="button" @click="activeBtn = 'btn6'" :class="{active: activeBtn === 'btn6' }"><router-link to='/subjectexam' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Môn thi</router-link></button>
                             <button class="btn" type="button" @click="activeBtn = 'btn7'" :class="{active: activeBtn === 'btn7' }"><router-link to='/ca' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Ca thi</router-link></button>
                         </template>
-                        <button @click="check1 = !check1" class="button_menu"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý lịch thi<img v-if="check1" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check1" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <button @click="check1 = !check1" :class="check1?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý lịch thi<img v-if="check1" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check1" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check1"  class="transition_menu">
                             <button class="btn" type="button"  @click="activeBtn = 'btn8'" :class="{active: activeBtn === 'btn8' }"><router-link to='/exam' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Lịch thi</router-link></button>
                         </template>
@@ -56,6 +56,9 @@ export default {
                 name: 'Admin',
             },
             activeBtn:'btn8',
+            isActive: 'b3',
+            noshadow:'button_menu',
+            shadow:'button_menu_shadow'
             // backgroundImage: './public/images/logo.png',
         }   
     },
@@ -92,6 +95,7 @@ export default {
     width: 200px;
     float: left;
     min-height: 100%;
+    border-right: 1px solid #e6e6e6;
 }
 tbody {
     display: table-row-group;
@@ -104,7 +108,14 @@ button{
     display: block;
 }
 .button_menu{
-    background-color: #4da6ff;
+    /* background-color: #4da6ff; */
+    background-color: #f5f5f0;
+    height: 35px;
+}
+.button_menu_shadow{
+    /* background-color: #4da6ff; */
+    background-color: #f5f5f0;
+    box-shadow: gray 0px 2px 5px;
     height: 35px;
 }
 .btn_router{
@@ -124,11 +135,11 @@ button{
     padding: 0px;
 }
 .btn:hover{
-    background-color: #e6e6e6;
+    background-color: #8cd98c;
     display: block;
 }
 .active, .active:hover{
-    background: #33ff33;
+    background-image: linear-gradient(to right, white, #b3ffb3 );
     width: 100%;
     text-align: left;
     border: none;

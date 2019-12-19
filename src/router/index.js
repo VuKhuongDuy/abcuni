@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // masterdata
-import Infrastructure from '@/components/menus_admin/masterdata/Infrastructure'
+import Room from '@/components/menus_admin/masterdata/Room'
 import Student from '@/components/menus_admin/masterdata/Student'
 import SubjectExam from '@/components/menus_admin/masterdata/SubjectExam'
 import Kar98 from '@/components/menus_admin/masterdata/Kar98'
@@ -11,6 +11,7 @@ import NotEnough from '@/components/menus_admin/masterdata/NotEnough'
 // SV
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'
+import LoginTest from '@/components/menus/LoginTest'
 import Subject from '@/components/menus/Subject'
 import RegisterTest from '@/components/menus/RegisterTest'
 import Registed from '@/components/menus/Registed'
@@ -34,6 +35,10 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path:'/lt',
+      component:LoginTest,
     },
     {
       path: '/',
@@ -74,8 +79,8 @@ export default new Router({
           component: exam,
         },
         {
-          path: '/infrastructure',
-          component: Infrastructure,
+          path: '/room',
+          component: Room,
         },
         {
           path: '/subjectexam',
