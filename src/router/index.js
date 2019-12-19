@@ -7,7 +7,6 @@ import SubjectExam from '@/components/menus_admin/masterdata/SubjectExam'
 import Kar98 from '@/components/menus_admin/masterdata/Kar98'
 import SubjectFull from '@/components/menus_admin/masterdata/SubjectFull'
 import User from '@/components/menus_admin/masterdata/User'
-import NotEnough from '@/components/menus_admin/masterdata/NotEnough'
 // SV
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'
@@ -89,10 +88,6 @@ export default new Router({
         {
           path: '/student',
           component: Student,
-        },
-        {
-          path: '/notenough',
-          component: NotEnough,
         },
         {
           path: '/ca',

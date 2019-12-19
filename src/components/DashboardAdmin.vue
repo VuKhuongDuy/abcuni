@@ -14,7 +14,6 @@
                             <button class="btn" type="button" @click="activeBtn = 'btn1'" :class="{active: activeBtn === 'btn1' }"><router-link to='/student' class="btn_router"><img src="@/../public/icons/right_1.png" class="icon_right">Sinh Viên</router-link></button>
                             <button class="btn" type="button" @click="activeBtn = 'btn2'" :class="{active: activeBtn === 'btn2' }"><router-link to='/user' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Tài khoản sinh viên</router-link></button>
                             <button class="btn" type="button" @click="activeBtn = 'btn3'" :class="{active: activeBtn === 'btn3' }"><router-link to='/subjectfull' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Môn học SV đã học</router-link></button>
-                            <button class="btn" type="button" @click="activeBtn = 'btn4'" :class="{active: activeBtn === 'btn4' }"><router-link to='/notenough' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">SV không đủ điều kiện</router-link></button>
                         </template>
                         <button @click="check0 = !check0"  :class="check0?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý khách quan<img v-if="check0" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check0" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check0" class="transition_menu">
@@ -169,8 +168,8 @@ button{
     top: 3px;
 }
 #content{ 
-    width:calc(100% - 205px);
-    margin-left: 5px;
+    width:calc(100% - 210px);
+    margin-left: 10px;
     min-height: 100%;
     float:left;
 }

@@ -46,9 +46,6 @@
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-        <div>
-          <b-button variant="success" class="add_new">Thêm mới</b-button>
-        </div>
       </div>
   </div>
 </template>
