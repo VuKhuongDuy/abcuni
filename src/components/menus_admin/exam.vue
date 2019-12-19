@@ -1,61 +1,69 @@
 <template>
   <div id="home">
-    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
-    <b-form-select v-model="subject" :options="options_subject" id="subject"></b-form-select>
-    <b-form-input  v-model="day" id="date" type="date"></b-form-input>
-    <b-form-select v-model="time" :options="options_time" id="time"></b-form-select>
-    <b-form-select v-model="room" :options="options_room" id="room"></b-form-select>
-    <b-form-select v-model="number" :options="options_number" id="number"></b-form-select>
-    <b-button id="submit" :variant="variantState">Thêm lịch thi</b-button>
-    <i class='title'>
-        *Danh sách các phòng thi
-    </i>
-    <br>
-    <br>
+    <b-button @click="check=!check" v-show='!check' id='add' variant="success">
+      Thêm lịch thi
+    </b-button>
+    <div v-show="check">
+      <b-form-select v-model="turn" :options="options_turn" id="turn"></b-form-select>
+      <b-form-select v-model="subject" :options="options_subject" id="subject"></b-form-select>
+      <b-form-input  v-model="day" id="date" type="date"></b-form-input>
+      <b-form-select v-model="time" :options="options_time" id="time"></b-form-select>
+      <b-form-select v-model="room" :options="options_room" id="room"></b-form-select>
+      <b-button id="submit" :variant="variantState" v-show='check' class='add_and_close'>Thêm lịch thi</b-button>
+      <b-button variant='danger' @click="check=!check" class='add_and_close'>Đóng</b-button>
+    </div>
     <div class="search">
           <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm phòng thi..."></b-form-input>
     </div>
     <!-- table -->
-    <b-table
-      striped
-      hover
-      :items="listAll"
-      id="table-transition-example"
-      :fields="fields"
-      :head-variant="headVariant"
-      :sticky-header="stickyHeader"
-      :no-border-collapse="noCollapse"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      caption-top
-    >
-      <template v-slot:cell(index)="data">
-        <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
+    <div class="wapper_table">
+      <b-table
+        striped
+        hover
+        :items="listAll"
+        class = "table"
+        id="table-transition-example"
+        :fields="fields"
+        :head-variant="headVariant"
+        :sticky-header="stickyHeader"
+        :no-border-collapse="noCollapse"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        small
+        :tbody-tr-class="rowClass"
+        caption-top
+      >
+        <template v-slot:cell(index)="data">
+          <!--STT không bị thay đổi khi sort-->
+          {{ data.index + 1 }}
+        </template>
 
-      <template v-slot:cell(delete)="row" class="mr-2">
-        <!--button ở cột delete -->
-        <b-button @mouseover="mouseOver" :variant="variant_delete">Xóa ca thi</b-button>
-      </template>
-    </b-table>
+        <template v-slot:cell(delete)="row" class="mr-2">
+          <!--button ở cột delete -->
+          <b-button>Xóa lịch thi</b-button>
+        </template>
+      </b-table>
+    </div>
+    
     <!-- head-variant: màu <th>-->
     <div class="sort">
       Sắp xếp theo:
       <b>{{ sortBy }}</b>, Thứ tự:
       <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
     </div>
+    
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      check:false,
       subject: null,
       time: null,
       day: null,
       room: null,
-      number: null,
+      turn: null,
       headVariant: "light",
       stickyHeader: true,
       noCollapse: false,
@@ -71,6 +79,11 @@ export default {
         {
           key: "name_subject",
           label: "Tên môn học",
+          sortable: true
+        },
+        {
+          key: "credit",
+          label: "Số tín chỉ",
           sortable: true
         },
         {
@@ -90,7 +103,7 @@ export default {
         },
         {
           key: "number_of_computer",
-          label: "Số lượng sinh viên tối đa",
+          label: "Số lượng đã đăng kí",
           sortable: true
         },
         {
@@ -148,14 +161,9 @@ export default {
         { value: "108-G2", text: "108-G2" },
         { value: "109-G2", text: "109-G2" }
       ],
-      options_number: [
-        { value: null, text: "Số lượng sinh viên", disabled: true },
-        { value: "10", text: "10" },
-        { value: "12", text: "12" },
-        { value: "14", text: "14" },
-        { value: "16", text: "16" },
-        { value: "18", text: "18" },
-        { value: "20", text: "20" }
+      options_turn: [
+        { value: null, text: "Chọn kì thi", disabled: true },
+        { value: "HKI_19-20", text: "Học kì I. Năm học 2019-2020" },
       ],
       listAll: [
         {
@@ -163,7 +171,7 @@ export default {
           date: "24/12/2019",
           time: "07:30",
           room: "101-G2",
-          number_of_computer: 20
+          number_of_computer: '1/20'
         },
         {
           name_subject: "Các vấn đề hiện đại của Công nghệ thông tin",
@@ -189,9 +197,18 @@ export default {
       ]
     };
   },
+  methods:{
+    rowClass(item, type) {
+        if (!item) return
+        if (item.status === 'awesome') return 'row'
+      }
+  },
   computed: {
       variantState(){
-        return this.number!=null && this.subject!=null && this.time!=null && this.day!=null && this.room!=null ? 'success':''
+        return this.turn!=null && this.subject!=null && this.time!=null && this.day!=null && this.room!=null ? 'success':''
+      },
+      checkFunction(){
+        this.check=!check;
       },
       mouseOver(){
         
@@ -200,13 +217,17 @@ export default {
 };
 </script>
 <style scoped>
-#subject {
-  width: 400px;
+#turn {
+  width: 338px;
 }
-
+#subject {
+  width: 330px;
+}
 #date {
   width: 180px;
   position: relative;
+  display: inline-block;
+  top: 1px;
 }
 #time {
   width: 140px;
@@ -214,21 +235,22 @@ export default {
 #room {
   width: 120px;
 }
-#number {
-  width: 180px;
-}
 #add {
   position: relative;
-  top: -1px;
+  float: right;
+  right:10px;
 }
 #submit{
   position: relative;
-  /* left:300px; */
   bottom:-1px;
 }
-/* #delete:hover{
-  background-color: brown;
-} */
+.add_and_close{
+  position: relative;
+  top:-1px;
+}
+.table{
+  position: relative;
+}
 .search{
   margin-bottom: 4px;
 }
@@ -239,6 +261,17 @@ export default {
 }
 .sort{
     font-style: italic;
+}
+.row{
+  background-color: blue;
+}
+.wapper_table{
+  height: 450px;
+  border: 1px solid gray;
+  overflow: auto;
+}
+*{
+  font-size: 14px;
 }
 </style>
 

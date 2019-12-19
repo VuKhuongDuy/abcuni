@@ -1,14 +1,15 @@
 <template>
-  <div id="student">
+  <div id="room">
     <!-- import file -->
     <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
-    <b-form-select
+    <b-form-select v-model="turn" :options="options_turn" id="turn"></b-form-select>
+    <!-- <b-form-select
       v-model="selectedExam"
       class="optionExam mt-3"
       :options="listExam"
       size="sm"
       @change="loadSubjectRegisted"
-    ></b-form-select>
+    ></b-form-select> -->
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
@@ -27,32 +28,36 @@
     <div class="search">
           <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm phòng thi..."></b-form-input>
     </div>
-    <b-table
-      striped
-      hover
-      :items="listStudent"
-      id="tableTransitionExample"
-      :fields="fields"
-      :head-variant="headVariant"
-      :sticky-header="stickyHeader"
-      :no-border-collapse="noCollapse"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      caption-top
-    >
-      <template v-slot:cell(index)="data">
-        <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
-        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
-        <b-button>
-          Xóa phòng thi
-        </b-button>
+    <div class="wapper_table">
+      <b-table
+        striped
+        hover
+        :items="listStudent"
+        id="tableTransitionExample"
+        :fields="fields"
+        :head-variant="headVariant"
+        :sticky-header="stickyHeader"
+        :no-border-collapse="noCollapse"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        caption-top
+        small
+      >
+        <template v-slot:cell(index)="data">
+          <!--STT không bị thay đổi khi sort-->
+          {{ data.index + 1 }}
         </template>
 
-        
-      </b-table><!-- head-variant: màu <th>-->
+          <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
+          <b-button>
+            Xóa phòng thi
+          </b-button>
+          </template>
+
+          
+        </b-table><!-- head-variant: màu <th>-->
+    </div>
+    
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
@@ -70,7 +75,7 @@ export default {
       dismissCountDown: 0,
       timeCountAlert: 5,
       typeAlert: "",
-
+      turn: null,
       headVariant: "light",
       stickyHeader: true,
       noCollapse: false,
@@ -94,7 +99,7 @@ export default {
         },
         {
           key: "delete",
-          label: "Edit"
+          label: "Xóa"
         }
       ],
       listStudent: [
@@ -103,7 +108,11 @@ export default {
         { room: "107-G2", number_of_computer: 12 },
         { room: "108-G2", number_of_computer: 16 },
         { room: "102-G2", number_of_computer: 18 }
-      ]
+      ],
+      options_turn: [
+        { value: null, text: "Chọn kì thi", disabled: true },
+        { value: "HKI_19-20", text: "Học kì I. Năm học 2019-2020" },
+      ],
     };
   },
 
@@ -140,7 +149,7 @@ export default {
   },
   computed: {
     variantState() {
-      return this.file != "" ? "success" : "";
+      return this.file!='' && this.turn!=null ? 'success':''
     }
   }
 };
@@ -171,7 +180,11 @@ export default {
   float: right;
   right: 30px;
 }
-
+.wapper_table{
+  height: 400px;
+  border: 1px solid gray;
+  overflow: auto;
+}
 .form {
   position: relative;
   float: right;
@@ -182,6 +195,11 @@ export default {
 }
 .search{
   margin-bottom: 4px;
+}
+#turn{
+  width: 480px;
+  position: relative;
+  top: 1px;
 }
 #submit{
   position: relative;
@@ -201,5 +219,8 @@ export default {
   width: 300px;
   /* left: 25%; */
   z-index: 100;
+}
+*{
+  font-size: 14px;
 }
 </style>

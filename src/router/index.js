@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // masterdata
+import Turn from '@/components/menus_admin/masterdata/Turn'
 import Room from '@/components/menus_admin/masterdata/Room'
 import Student from '@/components/menus_admin/masterdata/Student'
 import SubjectExam from '@/components/menus_admin/masterdata/SubjectExam'
 import Kar98 from '@/components/menus_admin/masterdata/Kar98'
 import SubjectFull from '@/components/menus_admin/masterdata/SubjectFull'
 import User from '@/components/menus_admin/masterdata/User'
+
 // SV
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'
@@ -18,7 +20,6 @@ import Password from '@/components/menus/Password'
 //admin
 import DashboardAdmin from '@/components/DashboardAdmin'
 import exam from '@/components/menus_admin/exam'
-import HomeAdmin from '@/components/menus_admin/HomeAdmin'
 //superadmin
 import DashboardSuperAdmin from '@/components/DashboardSuperAdmin'
 import SuperAdmin from '@/components/menu_super_admin/SuperAdmin'
@@ -68,6 +69,10 @@ export default new Router({
       component: DashboardAdmin,
       redirect: '/exam',
       children:[
+        {
+          path: '/turn',
+          component: Turn,
+        },
         {
           path: '/exam',
           component: exam,

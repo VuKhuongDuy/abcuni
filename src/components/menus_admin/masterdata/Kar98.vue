@@ -1,6 +1,7 @@
 <template>
   <div id="student">
     <!-- import file -->
+    <b-form-select v-model="turn" :options="options_turn" id="turn"></b-form-select>
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
@@ -20,28 +21,32 @@
     </div>
 
     <!-- table -->
-    <b-table striped hover :items="listStudent"
-    id="table-transition-example"
-    :fields="fields"
-    :head-variant="headVariant"
-    :sticky-header="stickyHeader"
-    :no-border-collapse="noCollapse" 
-    :sort-by.sync="sortBy"
-    :sort-desc.sync="sortDesc"
-    caption-top
-    >
-      <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
-        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
-        <b-button>
-          Xóa ca thi
-        </b-button>
+    <div class="wapper_table">
+      <b-table striped hover :items="listStudent"
+      id="table-transition-example"
+      :fields="fields"
+      :head-variant="headVariant"
+      :sticky-header="stickyHeader"
+      :no-border-collapse="noCollapse" 
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      small
+      caption-top
+      >
+        <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
+          {{ data.index + 1 }}
         </template>
 
-        
-      </b-table><!-- head-variant: màu <th>-->
+          <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
+          <b-button>
+            Xóa ca thi
+          </b-button>
+          </template>
+
+          
+        </b-table>
+    </div>
+    <!-- head-variant: màu <th>-->
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
@@ -58,6 +63,7 @@ export default {
       noCollapse: false,
       sortBy: 'number',
       sortDesc: false,
+      turn: null,
       file:'',
       fields:[
         {
@@ -85,11 +91,15 @@ export default {
           {number: 3, time: "13:00"},
           {number: 4, time: "15:30"},
       ],
+      options_turn: [
+        { value: null, text: "Chọn kì thi", disabled: true },
+        { value: "HKI_19-20", text: "Học kì I. Năm học 2019-2020" },
+      ],
     }
   },
   computed: {
       variantState(){
-        return this.file!='' ? 'success':''
+        return this.file!='' && this.turn!=null ? 'success':''
       }
     },
 };
@@ -117,8 +127,21 @@ export default {
   /* left:300px; */
   bottom:-1px;
 }
+#turn{
+  width: 480px;
+  position: relative;
+  top: 1px;
+}
 
 .sort{
     font-style: italic;
+}
+*{
+  font-size: 14px;
+}
+.wapper_table{
+  height: 400px;
+  border: 1px solid gray;
+  overflow: auto;
 }
 </style>

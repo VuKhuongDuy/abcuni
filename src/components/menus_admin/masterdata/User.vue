@@ -12,49 +12,9 @@
       style="width:630px"
     ></b-form-file>
       <b-button id="submit" :variant="variantState">Thêm tài khoản sinh viên</b-button>
-      <i class='title'>
-        *Quản lý tài khoản SV
-      </i>
     <br>
     <br>
-    <div class="search">
-          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm MSSV..."></b-form-input>
-    </div>
-
-    <!-- table -->
-    <b-table
-      striped
-      hover
-      :items="listStudent"
-      id="table-transition-example"
-      :fields="fields"
-      :head-variant="headVariant"
-      :sticky-header="stickyHeader"
-      :no-border-collapse="noCollapse"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      caption-top
-    >
-      <template v-slot:cell(index)="data">
-        <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
-        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
-        <b-button>
-          Xóa tài khoản sinh viên
-        </b-button>
-        <b-button>
-            Đổi mật khẩu
-          </b-button>
-        </template>
-
-        
-      </b-table><!-- head-variant: màu <th>-->
-      <div class="sort">
-        Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
-        <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-      </div>
+    <b-button variant="success">Thay đổi mật khẩu sinh viên</b-button>
   </div>
 </template>
 
@@ -65,41 +25,7 @@ export default {
   data() {
     return {
       dataXml: [],
-      headVariant: "light",
-      stickyHeader: true,
-      noCollapse: false,
-      sortBy: "MSSV",
-      sortDesc: false,
       file:'',
-      fields:[
-        {
-          key: "index",
-          label: "STT"
-        },
-        {
-          key: "MSSV",
-          sortable: true
-        },
-        {
-          key: "full_name",
-          label:"Họ tên",
-          sortable: true
-        },
-        {
-          key: "password",
-          label: "Mật khẩu",
-          sortable: true
-        },
-        {
-          key:'delete',
-          label:'Xóa'
-        }
-      ],
-      listStudent: [
-        { MSSV: 17021119, full_name: "Nguyễn Xuân Tự", password: "demo1" },
-        { MSSV: 17021120, full_name: "Nguyễn Ngọc Nhi", password: "zz123" },
-        { MSSV: 17021121, full_name: "Nguyễn Xuân Long", password: "31231" }
-      ]
     };
   },
   methods: {
@@ -159,28 +85,18 @@ export default {
 </script>
 
 <style scoped>
-.title {
+#student{
+  text-align: center;
+  margin: auto;
   position: relative;
-  float: right;
-  right: 30px;
-}
-.form {
-  position: relative;
-  float: right;
-}
-.list {
-  position: relative;
-  top: 46px;
-}
-.search{
-  margin-bottom: 4px;
+  top: 142px;
 }
 #submit{
   position: relative;
-  /* left:300px; */
-  bottom:-1px;
+  top:1px;
 }
-.sort{
-    font-style: italic;
+*{
+  font-size: 14px;
 }
+
 </style>

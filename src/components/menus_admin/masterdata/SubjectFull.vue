@@ -21,28 +21,32 @@
     </div>
 
     <!-- table -->
-    <b-table striped hover :items="listStudent"
-    id="table-transition-example"
-    :fields="fields"
-    :head-variant="headVariant"
-    :sticky-header="stickyHeader"
-    :no-border-collapse="noCollapse" 
-    :sort-by.sync="sortBy"
-    :sort-desc.sync="sortDesc"
-    caption-top
-    >
-      <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
-        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
-        <b-button>
-          Xóa môn
-        </b-button>
+    <div class="wapper_table">
+      <b-table striped hover :items="listStudent"
+      id="table-transition-example"
+      :fields="fields"
+      :head-variant="headVariant"
+      :sticky-header="stickyHeader"
+      :no-border-collapse="noCollapse" 
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      caption-top
+      small
+      >
+        <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
+          {{ data.index + 1 }}
         </template>
 
-        
-      </b-table><!-- head-variant: màu <th>-->
+          <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
+          <b-button>
+            Xóa môn
+          </b-button>
+          </template>
+
+          
+        </b-table>
+    </div>
+    <!-- head-variant: màu <th>-->
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
@@ -133,5 +137,13 @@ export default {
 }
 .sort{
     font-style: italic;
+}
+*{
+  font-size: 14px;
+}
+.wapper_table{
+  height: 400px;
+  border: 1px solid gray;
+  overflow: auto;
 }
 </style>
