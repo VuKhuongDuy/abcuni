@@ -52,7 +52,6 @@ export default {
         { key: "Phòng thi", sortable: true },
         { key: "Ngày thi", sortable: true },
         { key: "Thời gian bắt đầu" },
-        { key: "Thời gian kết thúc" },
         { key: "Số lượng đăng kí", sortable: true }
       ],
       listSubjectRegisted: [],
@@ -91,7 +90,7 @@ export default {
         this.dismissCountDown = 0;
         this.listSubjectRegisted = [];
         this.isEmptySubjectRegisted = true;
-        let url = "/turn/registed/student/" + this.selectedExam;
+        let url = "/regist/" + this.selectedExam + '/student';
 
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -102,14 +101,13 @@ export default {
         if (data.data.length === 0) this.isEmptySubjectRegisted = false;
         data.data.forEach(turn => {
           let obj = {
-            Id: turn.turn_id,
+            Id: turn.registed_id,
             "Mã môn": turn.subject_code,
             "Tên môn": turn.subject_name,
             "Phòng thi": turn.room_name,
             "Ngày thi": turn.date,
             "Thời gian bắt đầu": turn.time_begin,
-            "Thời gian kết thúc": turn.time_end,
-            "Số lượng đăng kí": turn.registed + "/" + turn.count_computer
+            "Số lượng đăng kí": turn.count_registed + "/" + turn.count_computer
           };
           this.listSubjectRegisted.push(obj);
         });
@@ -128,8 +126,8 @@ export default {
           return;
         }
         this.listSubjectRegisted.forEach(subjetc => {
-          if (subjetc["Mã môn"] === this.codeSubjectSearch) {
-            this.listSubjectRender.push(subjetc["Mã môn"]);
+          if (subjetc["Mã môn"].indexOf(this.codeSubjectSearch) >= 0) {
+            this.listSubjectRender.push(subjetc);
           }
         });
         if (this.listSubjectRender.length === 0) {
@@ -147,23 +145,21 @@ export default {
     removeSubject: async function() {
       try {
         this.dismissCountDown = 0;
-
         if (!this.subjectChoosed) {
-          this.changeTypeAlert("Hãy chọn 1 môn", "warning");
           return;
         }
         if(!window.confirm('Bạn có muốn xoá môn đã chọn ')){
           return;
         }
-        let url = "/turn/" + this.subjectChoosed["Id"];
-        let data = await axios.deleteAxios(url);
+        let url = "/student/" + this.subjectChoosed.Id;
 
+        let data = await axios.deleteAxios(url);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
           return;
         }
         this.changeTypeAlert(data.message, "success");
-        this.loadSubjectRegisted();
+
       } catch (e) {
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
@@ -186,6 +182,11 @@ export default {
     await this.loadSubjectRegisted();
     if (this.listSubjectRender.length === 0) {
       this.message = "Không có môn nào";
+    }
+  },
+  computed: {
+    selectedExam: function(){
+      this.$emit('updateExam', this.selectedExam);
     }
   }
 };

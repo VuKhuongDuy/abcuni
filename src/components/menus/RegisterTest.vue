@@ -125,7 +125,7 @@ export default {
         this.dismissCountDown = 0;
         this.listTurn = [];
         this.isEmptyTurn = true;
-        let url = "/turn/" + this.selectedExam + "/" + this.selectedSubject;
+        let url = "/regist/" + this.selectedExam + "/" + this.selectedSubject;
 
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -135,18 +135,19 @@ export default {
         if (data.data.length > 0) this.isEmptyTurn = false;
         data.data.forEach(turn => {
           let obj = {
-            Id: turn.turn_id,
+            Id: turn.registed_id,
             "Mã môn": turn.subject_code,
             "Tên môn": turn.subject_name,
             "Phòng thi": turn.room_name,
             "Ngày thi": turn.date,
             "Thời gian bắt đầu": turn.time_begin,
-            "Thời gian kết thúc": turn.time_end,
-            "Số lượng đăng kí": turn.registed + "/" + turn.count_computer
+            "Số lượng đăng kí": turn.count_registed + "/" + turn.count_computer,
+            'count_registed': turn.count_registed
           };
           this.listTurn.push(obj);
         });
       } catch (e) {
+        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
@@ -154,9 +155,9 @@ export default {
     loadTurnRegisted: async function() {
       try {
         this.dismissCountDown = 0;
-        this.Rendergisted = [];
+        this.listTurnRegisted = [];
         this.isEmptyTurnRegisted = true;
-        let url = "/turn/registed/student/" + this.selectedExam;
+        let url = "/regist/" + this.selectedExam + '/student';
 
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -165,20 +166,20 @@ export default {
         }
         data.data.forEach(turn => {
           let obj = {
-            Id: turn.turn_id,
+            Id: turn.registed_id,
             "Mã môn": turn.subject_code,
             "Tên môn": turn.subject_name,
             "Phòng thi": turn.room_name,
             "Ngày thi": turn.date,
             "Thời gian bắt đầu": turn.time_begin,
-            "Thời gian kết thúc": turn.time_end,
-            "Số lượng đăng kí": turn.registed + "/" + turn.count_computer
+            "Số lượng đăng kí": turn.count_registed + "/" + turn.count_computer,
+            'count_registed': turn.count_registed
           };
           this.listTurnRegisted.push(obj);
         });
         if (data.data.length === 0) this.isEmptyTurnRegisted = false;
       } catch (e) {
-        this.changeTypeAlert("SERVER gặp sự cố", "warning");
+        // this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
 
@@ -219,14 +220,13 @@ export default {
         if(!window.confirm('Bạn có muốn xoá môn đã chọn ')){
           return;
         }
-        let url = "/turn/" + this.turnRegistedChoosed["Id"];
+        let url = "/student/" + this.turnRegistedChoosed.Id;
         let data = await axios.deleteAxios(url);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
           return;
         }
         this.loadTurnRegisted();
-
         this.changeTypeAlert(data.message, "success");
 
       } catch (e) {
@@ -236,8 +236,8 @@ export default {
 
     clickRegist: async function() {
       try {
-        let url = "/turn/register";
-        let body = { turn: this.turnRegistChoosed };
+        let url = "/student/registSubject";
+        let body = { subject: this.turnRegistChoosed };
         this.dismissCountDown = 0;
         let data = await axios.postAxios(url, body);
         if (!data.success) {
@@ -265,6 +265,11 @@ export default {
   beforeUpdate: function() {
     if (this.listTurnRegisted.length === 0) {
       this.isEmptyTurnRegisted = true;
+    }
+  },
+  computed: {
+    selectedExam: function(){
+      this.$emit('updateExam', this.selectedExam);
     }
   }
 };

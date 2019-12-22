@@ -97,10 +97,10 @@ export default {
     text-align: center;
 }
 
-.alert{
+/* .alert{
   width: 50%;
   margin-left: 25%;
-}
+} */
 
 .input{
     width: 200px;

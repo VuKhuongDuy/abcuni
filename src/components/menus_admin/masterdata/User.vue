@@ -1,6 +1,7 @@
 <template>
   <div id="student">
     <!-- import file -->
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
@@ -11,47 +12,10 @@
       multiple
       style="width:630px"
     ></b-form-file>
-      <b-button id="submit" :variant="variantState">Thêm tài khoản sinh viên</b-button>
-      <i class='title'>
-        *Quản lý tài khoản SV
-      </i>
+      <b-button id="submit" :variant="variantState" @click="registUser">Thêm tài khoản sinh viên</b-button>
     <br>
     <br>
-    <div class="search">
-          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm MSSV..."></b-form-input>
-    </div>
-
-    <!-- table -->
-    <b-table
-      striped
-      hover
-      :items="listStudent"
-      id="table-transition-example"
-      :fields="fields"
-      :head-variant="headVariant"
-      :sticky-header="stickyHeader"
-      :no-border-collapse="noCollapse"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      caption-top
-    >
-      <template v-slot:cell(index)="data">
-        <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
-        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
-        <b-button>
-          Xóa tài khoản sinh viên
-        </b-button>
-        </template>
-
-        
-      </b-table><!-- head-variant: màu <th>-->
-      <div class="sort">
-        Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
-        <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-      </div>
+    <b-button variant="success" @click="changePassword">Thay đổi mật khẩu sinh viên</b-button>
   </div>
 </template>
 
@@ -62,44 +26,36 @@ export default {
   data() {
     return {
       dataXml: [],
-      headVariant: "light",
-      stickyHeader: true,
-      noCollapse: false,
-      sortBy: "MSSV",
-      sortDesc: false,
       file:'',
-      fields:[
-        {
-          key: "index",
-          label: "STT"
-        },
-        {
-          key: "MSSV",
-          sortable: true
-        },
-        {
-          key: "full_name",
-          label:"Họ tên",
-          sortable: true
-        },
-        {
-          key: "password",
-          label: "Mật khẩu",
-          sortable: true
-        },
-        {
-          key:'delete',
-          label:'Xóa'
-        }
-      ],
-      listStudent: [
-        { MSSV: 17021119, full_name: "Nguyễn Xuân Tự", password: "demo1" },
-        { MSSV: 17021120, full_name: "Nguyễn Ngọc Nhi", password: "zz123" },
-        { MSSV: 17021121, full_name: "Nguyễn Xuân Long", password: "31231" }
-      ]
+      typeAlert: "info",
+      message: "",
+      dismissCountDown: 0,
+      timeCountAlert: 5,
     };
   },
   methods: {
+    changePassword: function(){
+      this.$router.push('/admin/password');
+    },
+
+    registUser: async function(){
+      let listUserJson = JSON.stringify(this.dataXml);
+      let url = '/admin/user/add';
+      let body = [listUserJson];
+      let data = await axios.postAxios(url, body);
+      if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+        this.changeTypeAlert(data.message, "success");
+    },
+
+    changeTypeAlert: function(message, type) {
+      this.message = message;
+      this.typeAlert = type;
+      this.dismissCountDown = this.timeCountAlert;
+    },
+
     importData: async function(){      
       const input = document.getElementById("fileListUser");
       this.dataXml = await this.xlsxToArray(input.files[0]);
@@ -121,31 +77,6 @@ export default {
         });
       })
     },
-
-
-
-    registUser: async function(){
-      let listUserJson = JSON.stringify(this.dataXml);
-      let url = '/user/add';
-      let body = [listUserJson];
-      let data = await axios.postAxios(url, body);
-    },
-
-    addSubject: async function(){
-      let listSubjectJson = JSON.stringify(this.dataXml);
-      let url = '/admin/subject/add';
-      let body = [listSubjectJson];
-      console.log(listStudentJson);
-      let data = await axios.postAxios(url, body);
-      console.log(addSubject);
-    },
-
-    addStudent: async function(){
-      let listStudentJson = JSON.stringify(this.dataXml);
-      let url = '/admin/student/add';
-      let body = [listStudentJson];
-      let data = await axios.postAxios(url, body);
-    }
   },
   computed: {
       variantState(){
@@ -156,28 +87,18 @@ export default {
 </script>
 
 <style scoped>
-.title {
+#student{
+  text-align: center;
+  margin: auto;
   position: relative;
-  float: right;
-  right: 30px;
-}
-.form {
-  position: relative;
-  float: right;
-}
-.list {
-  position: relative;
-  top: 46px;
-}
-.search{
-  margin-bottom: 4px;
+  top: 142px;
 }
 #submit{
   position: relative;
-  /* left:300px; */
-  bottom:-1px;
+  top:1px;
 }
-.sort{
-    font-style: italic;
+*{
+  font-size: 14px;
 }
+
 </style>

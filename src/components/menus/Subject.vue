@@ -71,7 +71,7 @@ export default {
       try {
         this.dismissCountDown = 0;
         this.listSubject = [];
-        let url = "/subjectstudent/" + this.selectedExam;
+        let url = "/subject/student/" + this.selectedExam;
         let data = await axios.getAxios(url);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
@@ -100,6 +100,11 @@ export default {
   mounted: async function() {
     await this.loadExam();
     await this.getListSubjectStudent();
+  },
+  computed: {
+    selectedExam: function(){
+      this.$emit('updateExam', this.selectedExam);
+    }
   }
 };
 </script>

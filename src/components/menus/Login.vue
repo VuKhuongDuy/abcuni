@@ -22,8 +22,6 @@
           v-model="password"
         />
         <input type="submit" variant="success" name value="Login" @click="click_login"/>
-        <!-- <b-form-invalid-feedback id="login">Bạn chưa nhập tài khoản hoặc mật khẩu</b-form-invalid-feedback> -->
-        <!-- <b-button @click="click_login">Login</b-button> -->
 
         <br />
         <a href="#">Quên tài khoản?</a>

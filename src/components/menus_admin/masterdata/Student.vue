@@ -22,24 +22,32 @@
           <b-form-input id="search_MSSV" v-model="keySearch" v-on:keyup.enter="searchStudent" type="search" style="width: 230px" placeholder="Tìm kiếm MSSV..."></b-form-input>
     </div>
     <!-- table -->
-    <b-table striped hover :items="listStudentRender"
-    id="table"
-    :fields="fields"
-    :head-variant="headVariant"
-    :sticky-header="stickyHeader"
-    :no-border-collapse="noCollapse" 
-    :sort-by.sync="sortBy"
-    :sort-desc.sync="sortDesc"
-    caption-top
-    >
-        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột xóa -->
-          <b-button @click="deleteStudent(row.value)">
-            Xóa
-          </b-button>
+    <div class="wapper_table">
+      <b-table striped hover :items="listStudentRender"
+      id="table"
+      :fields="fields"
+      :head-variant="headVariant"
+      :sticky-header="stickyHeader"
+      :no-border-collapse="noCollapse" 
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      caption-top
+      small
+      >
+        <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
+          {{ data.index + 1 }}
         </template>
 
-        
-      </b-table><!-- head-variant: màu <th>-->
+          <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột xóa -->
+            <b-button @click="deleteStudent(row.value)">
+              Xóa sinh viên
+            </b-button>
+          </template>
+
+          
+        </b-table>
+    </div>
+    <!-- head-variant: màu <th>-->
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
@@ -103,7 +111,8 @@ export default {
     getListStudent: async function(){
       try {
         this.dismissCountDown = 0;
-        let url = "/student";
+        this.listStudent = [];
+        let url = "/admin/student";
         let data = await axios.getAxios(url);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
@@ -180,6 +189,7 @@ export default {
     },
 
     deleteStudent: async function(index){
+      this.dismissCountDown = 0;
       if(!window.confirm("Bạn có muốn xoá sinh viên này ?")){return}
 
       let url = '/admin/student/delete/' + this.listStudentRender[index].mssv;
@@ -189,18 +199,16 @@ export default {
         return;
       }
       this.changeTypeAlert(data.message, 'success');
-      this.getListStudent();
     }
   },
-  mounted: function(){
-    this.getListStudent();
+  mounted: async function(){
+    await this.getListStudent();
   },
   computed: {
       variantState(){
         return this.file!='' ? 'success':''
       }    
   },
-
 };
 </script>
 
@@ -239,5 +247,13 @@ export default {
   width: 300px;
   /* left: 25%; */
   z-index: 100;
+}
+*{
+  font-size: 14px;
+}
+.wapper_table{
+  height: 400px;
+  border: 1px solid gray;
+  overflow: auto;
 }
 </style>

@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // masterdata
+import Turn from '@/components/menus_admin/masterdata/Turn'
 import Room from '@/components/menus_admin/masterdata/Room'
 import Student from '@/components/menus_admin/masterdata/Student'
 import SubjectExam from '@/components/menus_admin/masterdata/SubjectExam'
-import Kar98 from '@/components/menus_admin/masterdata/Kar98'
+import Regist from '@/components/menus_admin/masterdata/Regist'
 import SubjectFull from '@/components/menus_admin/masterdata/SubjectFull'
 import User from '@/components/menus_admin/masterdata/User'
+
 // SV
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/menus/Login'
@@ -14,11 +16,11 @@ import Subject from '@/components/menus/Subject'
 import RegisterTest from '@/components/menus/RegisterTest'
 import Registed from '@/components/menus/Registed'
 import Print from '@/components/menus/Print'
+import LayoutPrint from '@/components/menus/LayoutPrint'
 import Password from '@/components/menus/Password'
 //admin
 import DashboardAdmin from '@/components/DashboardAdmin'
-import exam from '@/components/menus_admin/exam'
-import HomeAdmin from '@/components/menus_admin/HomeAdmin'
+import Exam from '@/components/menus_admin/masterdata/Exam'
 //superadmin
 import DashboardSuperAdmin from '@/components/DashboardSuperAdmin'
 import SuperAdmin from '@/components/menu_super_admin/SuperAdmin'
@@ -58,8 +60,8 @@ export default new Router({
           component: Registed
         },
         {
-          path: '/print',
-          component: Print
+          path: '/user/print',
+          component: LayoutPrint
         },
       ]
     },
@@ -70,7 +72,11 @@ export default new Router({
       children:[
         {
           path: '/exam',
-          component: exam,
+          component: Exam,
+        },
+        {
+          path: '/turn',
+          component: Turn,
         },
         {
           path: '/room',
@@ -85,8 +91,8 @@ export default new Router({
           component: Student,
         },
         {
-          path: '/ca',
-          component: Kar98,
+          path: '/regist',
+          component: Regist,
         },
         {
           path: '/subjectfull',
@@ -96,8 +102,16 @@ export default new Router({
           path: '/user',
           component: User,
         },
-
+        {
+          path: '/admin/password',
+          name: 'Password',
+          component: Password,
+        },
       ]
+    },
+    {
+      path: '/print/:exam_id',
+      component: Print
     },
     {
       path: '/sa',

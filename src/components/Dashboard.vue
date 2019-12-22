@@ -15,7 +15,7 @@
                     <img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi
                     <img src="@/../public/icons/right.png" class="icon_right">
                 </router-link>
-                <router-link to='/print' @click.native="changePath" tag='button' v-bind:class="[path==='/print'? 'btn_router_clicked' : 'btn_router']" >
+                <router-link to='/user/print' @click.native="changePath" tag='button' v-bind:class="[path==='/print'? 'btn_router_clicked' : 'btn_router']" >
                     <img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách
                     <img src="@/../public/icons/right.png" class="icon_right">
                 </router-link>

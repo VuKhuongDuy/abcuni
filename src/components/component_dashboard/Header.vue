@@ -85,7 +85,10 @@ export default {
 
     changePassword: function() {
       this.path = "";
-      this.$router.push("password");
+      if(this.isAdmin === 'sinh viên'){
+        this.$router.push("/password");
+      }else 
+        this.$router.push("/admin/password");
     }
   },
   mounted: function() {

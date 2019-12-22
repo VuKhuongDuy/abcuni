@@ -1,15 +1,25 @@
 <template>
   <div id="student">
     <!-- import file -->
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
+    <b-form-select
+      v-model="selectedExam"
+      class="optionExam"
+      :options="listExam"
+      size="sm"
+      @change="loadSubject"
+    ></b-form-select>
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
       placeholder="Choose a file or drop it here and click 'Submit' to import list subject exam..."
       drop-placeholder="Drop file here..."
       multiple
-      style="width:630px"
+      id="fileImport"
+      @change="importData"
+      style="width:630px;"
     ></b-form-file>
-    <b-button id="submit" :variant="variantState">Thêm môn thi</b-button>
+    <b-button id="submit" @click="addSubject" :variant="variantState">Thêm môn thi</b-button>
       <!-- <i class='title'>
         *Quản lý môn thi
       </i> -->
@@ -20,54 +30,52 @@
     </div>
 
     <!-- table -->
-    <b-table striped hover :items="listStudent"
-    id="table-transition-example"
-    :fields="fields"
-    :head-variant="headVariant"
-    :sticky-header="stickyHeader"
-    :no-border-collapse="noCollapse" 
-    :sort-by.sync="sortBy"
-    :sort-desc.sync="sortDesc"
-    caption-top
-    >
-      <template v-slot:cell(index)="data">
-        <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
-        <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
-        <b-button>
-          Xóa tài khoản sinh viên
-        </b-button>
+    <div class="wapper_table">
+      <b-table striped hover :items="listSubject"
+      id="table"
+      :fields="fields"
+      head-variant="light"
+      sticky-header="false"
+      no-border-collapse="false" 
+      sort-by.sync="code_subject"
+      sort-desc.sync="false"
+      caption-top
+      small
+      >
+        <template v-slot:cell(index)="data">
+          <!--STT không bị thay đổi khi sort-->
+          {{ data.index + 1 }}
         </template>
 
-        
-      </b-table><!-- head-variant: màu <th>-->
-      <div class="sort">
-        Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
-        <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-      </div>
+          <template v-slot:cell(delete)="row" class="mr-2"> <!--button ở cột delete -->
+          <b-button @click="deleteSubject(row.value)">
+            Xóa môn thi
+          </b-button>
+          </template>
+
+          
+        </b-table><!-- head-variant: màu <th>-->
+    </div>
   </div>
 </template>
 
 <script>
+import * as axios from '../../../../config/axios'
+import readXlsxFile from "read-excel-file";
 export default {
   data(){
     return{
       selectedExam: "",
-      listRoom: [],
+      message: '',
       dismissCountDown: 0,
       timeCountAlert: 5,
       typeAlert: "",
       dataXml: [],
-      file:'',
 
-      headVariant:'light',
-      stickyHeader: true,
-      noCollapse: false,
-      sortBy: 'code_subject',
-      sortDesc: false,
+      turn:null,
       file:'',
+      listExam: [{ value: null, text: "Kì thi" }],
+      listSubject: [],
       fields:[
         {
           key:'index',
@@ -84,24 +92,121 @@ export default {
           sortable: true
         },
         {
+          key:"credit",
+          label:'Số tín chỉ',
+          sortable: true
+        },
+        {
           key:'delete',
           label:'Xóa'
         }
       ],
-      listStudent: [
-          {code_subject: 'ELT2028', name_subject: 'Chuyên nghiệp trong công nghệ'},
-          {code_subject: 'INT3507', name_subject: 'Các vấn đề hiện đại của Công nghệ thông tin'},
-          {code_subject: 'INT3307', name_subject:'An toàn và an ninh mạng'},
-          {code_subject: 'INT3306', name_subject: 'Phát triển ứng dụng Web'},
-          {code_subject: 'INT3115', name_subject: 'Thiết kế giao diện người dùng'},
-          {code_subject: 'INT3202', name_subject: 'Hệ quản trị cơ sở dữ liệu'},
-          {code_subject: 'INT3401', name_subject: 'Trí tuệ nhân tạo'},
-      ],
     }
+  },
+  methods: {
+    loadExam: async function() {
+      try {
+        this.dismissCountDown = 0;
+        this.listExam = [{ value: null, text: "Exam" }];
+        let url = "/exam";
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+        data.data.forEach(exam => {
+          let obj = { value: exam.exam_id, text: exam.exam_name };
+          this.listExam.push(obj);
+        });
+        this.selectedExam = this.listExam[this.listExam.length - 1].value;
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
+      }
+    },
+
+    loadSubject: async function() {
+      try {
+        this.dismissCountDown = 0;
+        this.listSubject = [];
+        let url = "/subject/" + this.selectedExam;
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+          return;
+        }
+        data.data.forEach((subject, index) => {
+          let obj = { 
+            index: index,
+            code_subject: subject.subject_code,
+            name_subject: subject.subject_name,
+            credit: subject.credit,
+            delete: index
+          };
+          this.listSubject.push(obj);
+        });
+      } catch (e) {
+        this.changeTypeAlert("SERVER gặp sự cố", "warning");
+      }
+    },
+
+    addSubject: async function(){
+      this.dismissCountDown = 0;
+      let listSubjectJson = JSON.stringify(this.dataXml);
+      let url = '/admin/subject/add';
+      let body = {listRoom: listSubjectJson, exam_id:  this.selectedExam};
+      let data = await axios.postAxios(url, body);
+      if (!data.success) {
+          this.changeTypeAlert(data.message, "warning");
+      }else this.changeTypeAlert(data.message, "success");
+    },
+
+    deleteSubject:async function(index){
+      if(!window.confirm('Bạn có muốn xoá môn học này, nếu bạn xoá, tất cả danh sách sinh viên đã đăng kí thi môn học này sẽ bị xoá ?')
+      ){return;}
+      this.dismissCountDown = 0;
+      let url = '/admin/subject/delete/' + this.selectedExam + '/' + this.listSubject[index].code_subject;
+      let result = await axios.deleteAxios(url);
+      if (!result.success) {
+          this.changeTypeAlert(result.message, "warning");
+      }else this.changeTypeAlert(result.message, "success");
+    },
+
+    importData: async function(){      
+      const input = document.getElementById("fileImport");
+      this.dataXml = await this.xlsxToArray(input.files[0]);
+    },
+
+    xlsxToArray: function(file) {      
+      return new Promise((resolve, reject) => {
+        readXlsxFile(file).then((rows, err) => {
+          if(err) reject(err);
+          let arrayObject = [];
+          for(let i=1;i<rows.length;i++){
+            let user = {};
+            rows[0].forEach((field, index) => {
+              user[field] = rows[i][index];
+            });
+            arrayObject.push(user);
+          }
+          resolve(arrayObject);
+        });
+      })
+    },
+
+    changeTypeAlert: function(message, type) {
+      this.message = message;
+      this.typeAlert = type;
+      this.dismissCountDown = this.timeCountAlert;
+    }
+
+  },
+  mounted: async function(){
+    await this.loadExam();
+    await this.loadSubject();
   },
   computed: {
       variantState(){
-        return this.file!='' ? 'success':''
+        return this.file!='' && this.turn!=null ? 'success':''
       }
     },
 };
@@ -129,7 +234,20 @@ export default {
   /* left:300px; */
   bottom:-1px;
 }
+.optionExam{
+  width: 480px;
+  position: relative;
+  top: 1px;
+}
 .sort{
     font-style: italic;
+}
+.wapper_table{
+  height: 415px;
+  border: 1px solid gray;
+  overflow: auto;
+}
+*{
+  font-size: 14px;
 }
 </style>
