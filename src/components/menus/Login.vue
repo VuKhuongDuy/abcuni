@@ -77,7 +77,7 @@ export default {
           this.changeTypeAlert(result.message, "warning");
           return;
         }
-
+  
         cookie.setCookie(result.token, this.username);
         if (result.isAdmin) {
           this.$router.push("/admin");

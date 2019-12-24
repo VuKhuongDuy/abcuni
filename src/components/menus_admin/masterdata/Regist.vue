@@ -162,8 +162,9 @@ export default {
     },
 
     eventLoadExam: async function(){
-      this.loadSubject();
-      this.loadRoom();
+      await this.loadSubject();
+      await this.loadRoom();
+      await this.loadSubjectRegisted();
     },
 
     loadSubject: async function() {
