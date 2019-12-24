@@ -252,7 +252,7 @@ export default {
 }
 .wapper_table{
   height: 438px;
-  border: 1px solid gray;
+  border: 1px solid #cccccc;
   overflow: auto;
 }
 </style>

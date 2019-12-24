@@ -179,7 +179,7 @@ export default {
 .wapper_table{
   height: 485px;
   margin-top: 4px;
-  border: 1px solid gray;
+  border: 1px solid #cccccc;
   overflow: auto;
 }
 .title{
