@@ -27,7 +27,6 @@
       id="table"
       :fields="fields"
       :head-variant="headVariant"
-      :sticky-header="stickyHeader"
       :no-border-collapse="noCollapse" 
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
@@ -69,7 +68,6 @@ export default {
       typeAlert: "",
 
       headVariant:'light',
-      stickyHeader: true,
       noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
@@ -228,6 +226,7 @@ export default {
 }
 .search{
   margin-bottom: 4px;
+  margin-top: -8px;
 }
 #submit{
   position: relative;
@@ -252,7 +251,7 @@ export default {
   font-size: 14px;
 }
 .wapper_table{
-  height: 400px;
+  height: 438px;
   border: 1px solid gray;
   overflow: auto;
 }

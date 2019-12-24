@@ -74,7 +74,6 @@ export default {
         appHeader:Header,
         appFooter:Footer
     },
-    
 }
 </script>
 <style scoped>
@@ -82,7 +81,7 @@ export default {
 /* body */
 #body{
     margin: 0;
-    height: 528px;
+    height: 560px;
 }
 
 #menu{

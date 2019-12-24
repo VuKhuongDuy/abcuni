@@ -20,9 +20,6 @@
       style="width:630px"
     ></b-form-file>
     <b-button id="submit" @click="addRoom" :variant="variantState">Thêm phòng thi</b-button>
-    <i class='title'>
-        *Danh sách các phòng thi
-    </i>
     <br>
     <br>
     <div class="search">
@@ -36,7 +33,6 @@
         id="tableTransitionExample"
         :fields="fields"
         :head-variant="headVariant"
-        :sticky-header="stickyHeader"
         :no-border-collapse="noCollapse"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
@@ -71,7 +67,7 @@ import readXlsxFile from "read-excel-file";
 export default {
   data() {
     return {
-      listExam: [{ value: null, text: "Please select an exam" }],
+      listExam: [{ value: null, text: "Please select an exam", disabled: true  }],
       selectedExam: "",
       listRoom: [],
       message: "",
@@ -83,7 +79,6 @@ export default {
 
       turn: null,
       headVariant: "light",
-      stickyHeader: true,
       noCollapse: false,
       sortBy: "room",
       sortDesc: false,
@@ -106,10 +101,6 @@ export default {
           key: "delete",
           label: "Xóa"
         }
-      ],
-      options_turn: [
-        { value: null, text: "Chọn kì thi", disabled: true },
-        { value: "HKI_19-20", text: "Học kì I. Năm học 2019-2020" },
       ],
     };
   },
@@ -216,46 +207,26 @@ export default {
   },
   computed: {
     variantState() {
-      return this.file!='' && this.turn!=null ? 'success':''
+      return this.file!='' && this.selectedExam!=null ? 'success':''
     }
   }
 };
 </script>
 
 <style scoped>
-
-#btnSubmit {
-  margin-left: 50px;  
+#room{
+  margin-top: -17px;
 }
-
-#tableTransitionExample{
-  margin-top: 20px;
-  color: red;
-}
-
 .optionExam{
   width: 300px;
   display:block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
-.title {
-  position: relative;
-  float: right;
-  right: 30px;
-}
 .wapper_table{
-  height: 400px;
-  border: 1px solid gray;
+  height: 395px;
+  border: 1px solid #cccccc;
   overflow: auto;
-}
-.form {
-  position: relative;
-  float: right;
-}
-.list {
-  position: relative;
-  top: 46px;
 }
 .search{
   margin-bottom: 4px;
