@@ -14,7 +14,7 @@
     ></b-form-file>
     <b-button id="submit" :variant="variantState" @click="addTurn">Thêm ca thi</b-button>
     <br>
-    <div class="wapper_table">
+    <div class="wrapper_table">
       <b-table striped hover :items="listTurn"
       id="table-transition-example"
       :fields="fields"
@@ -177,16 +177,11 @@ export default {
 </script>
 
 <style scoped>
-.wapper_table{
+.wrapper_table{
   height: 485px;
   margin-top: 4px;
   border: 1px solid #cccccc;
   overflow: auto;
-}
-.title{
-  position: relative;
-  float: right;
-  right: 30px;
 }
 #submit{
   position: relative;

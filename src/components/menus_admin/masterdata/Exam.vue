@@ -4,7 +4,7 @@
     <b-form-input v-model="exam" placeholder="Nhập tên kỳ thi" id="name"></b-form-input>
     <br />
     <b-button variant="success" @click="addExam">Thêm kỳ thi</b-button>
-    <div class="wapper_table">
+    <div class="wrapper_table">
       <b-table
         striped
         hover
@@ -130,7 +130,7 @@ export default {
   /* top: 142px; */
 }
 
-.wapper_table {
+.wrapper_table {
   height: 350px;
   width: 600px;
   /* border: 1px solid gray; */

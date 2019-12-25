@@ -1,31 +1,34 @@
 <template>
   <div id="manageadmin">
     <!-- table -->
-    <b-table striped hover :items="listAdmin"
-    id="table-admin"
-    :fields="fields"
-    :head-variant="headVariant"
-    :sticky-header="stickyHeader"
-    :no-border-collapse="noCollapse" 
-    :sort-by.sync="sortBy"
-    :sort-desc.sync="sortDesc"
-    caption-top
-    >
-      <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
-        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
-        <b-button>
-          Edit
-        </b-button>
-        <b-button>
-          Delete
-        </b-button>
+    <div class="wrapper_table">
+      <b-table striped hover :items="listAdmin"
+      id="table-admin"
+      :fields="fields"
+      :head-variant="headVariant"
+      :no-border-collapse="noCollapse" 
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      caption-top
+      small
+      >
+        <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
+          {{ data.index + 1 }}
         </template>
 
-        
-      </b-table><!-- head-variant: màu <th>-->
+          <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
+          <b-button>
+            Sửa
+          </b-button>
+          <b-button>
+            Xóa
+          </b-button>
+          </template>
+
+          
+        </b-table>
+    </div>
+    <!-- head-variant: màu <th>-->
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
@@ -39,7 +42,6 @@ export default {
   data(){
     return{
       headVariant:'light',
-      stickyHeader: true,
       noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
@@ -97,8 +99,17 @@ export default {
 .add_new{
     position: relative;
     left: 450px;
+    top: 5px;
 }
 .sort{
     font-style: italic;
+}
+* {
+  font-size: 14px;
+}
+.wrapper_table {
+  height: 500px;
+  border: 1px solid #cccccc;
+  overflow: auto;
 }
 </style>

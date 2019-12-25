@@ -61,6 +61,7 @@
     </div>
     <b-button
       variant="danger"
+      class="btn"
       id="btnDeleteTest"
       @click="removeSubject"
       v-show="listTurnRegisted.length > 0"
@@ -297,10 +298,14 @@ export default {
 #subjectRegisted {
   margin-top: 10px;
 }
-
+#btnRegisterTest  {
+  margin-left: 88.5%;
+  margin-top: -8px;
+  margin-bottom: 20px;
+}
 #btnDeleteTest {
-  margin-left: 40%;
-  margin-top: 10px;
+  margin-left:90.6%;
+  margin-top: -8px;
   margin-bottom: 20px;
 }
 
@@ -323,25 +328,20 @@ export default {
   /* left: 25%; */
   z-index: 100;
 }
-
-.breadcrumb {
-  margin-left: -60px;
-  width: 105%;
-}
-
 .wrapper-table {
-  margin-top: 10px;
   width: 90%;
-  min-height: 150px;
-  overflow: scroll;
+  margin: auto;
+  overflow: auto;
 }
 
 .wrapper-roomtb {
   max-height: 400px;
+  overflow: auto;
 }
 
 .wrapper-subjectRegistedTb {
   max-height: 300px;
+  overflow: auto;
 }
 
 .select {

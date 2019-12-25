@@ -58,10 +58,17 @@ export default {
     width: 300px;
     margin: auto;
 }
+#superadmin{
+    position: relative;
+    top: 85px;
+}
 #save{
     position: relative;
     float:right;
     top: 10px;
+}
+* {
+  font-size: 14px;
 }
 </style>
 

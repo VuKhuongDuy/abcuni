@@ -4,7 +4,7 @@
         <div id = 'body'>
             <div id = "left">                    
                 <router-link to='/subject' @click.native="changePath" tag='button' v-bind:class="[path==='/subject'? 'btn_router_clicked' : 'btn_router']" > 
-                    <img src="@/../public/icons/stack.png" class="icon_stack"> Môn học
+                    <img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã học
                     <img src="@/../public/icons/right.png" class="icon_right">
                 </router-link>
                 <router-link to='/registertest' @click.native="changePath" tag='button' v-bind:class="[path==='/registertest'? 'btn_router_clicked' : 'btn_router']" >
@@ -12,10 +12,10 @@
                     <img src="@/../public/icons/right.png" class="icon_right">
                 </router-link>
                 <router-link to='/registed' @click.native="changePath" tag='button' v-bind:class="[path==='/registed'? 'btn_router_clicked' : 'btn_router']" >
-                    <img src="@/../public/icons/stack.png" class="icon_stack"> Môn đã đăng kí thi
+                    <img src="@/../public/icons/stack.png" class="icon_stack"> Ca đã đăng kí thi
                     <img src="@/../public/icons/right.png" class="icon_right">
                 </router-link>
-                <router-link to='/user/print' @click.native="changePath" tag='button' v-bind:class="[path==='/print'? 'btn_router_clicked' : 'btn_router']" >
+                <router-link to='/user/print' @click.native="changePath" tag='button' v-bind:class="[path==='/user/print'? 'btn_router_clicked' : 'btn_router']" >
                     <img src="@/../public/icons/stack.png" class="icon_stack"> In danh sách
                     <img src="@/../public/icons/right.png" class="icon_right">
                 </router-link>
@@ -85,7 +85,7 @@ export default {
     min-height: 100%;
     background-color: #e3e6e5;
     display: inline-block;
-    /* padding-right: 100px; */
+    margin-top: 3px;
 }
 
 .btn:hover{
