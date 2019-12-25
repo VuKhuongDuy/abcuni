@@ -110,6 +110,7 @@ export default {
       try {
         this.dismissCountDown = 0;
         this.listStudent = [];
+        this.listStudentRender = [];
         let url = "/admin/student";
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -164,7 +165,10 @@ export default {
       if(!data.success){
         this.changeTypeAlert(data.message, 'warning');
       }
-      else this.changeTypeAlert(data.message, 'success');
+      else {
+        await this.getListStudent();
+        this.changeTypeAlert(data.message, 'success');
+      }
     },
 
     changeTypeAlert: function(message, type) {
@@ -196,7 +200,8 @@ export default {
       if(!data.success){
         this.changeTypeAlert(data.message, 'warning');
         return;
-      }
+      }  
+      await this.getListStudent();
       this.changeTypeAlert(data.message, 'success');
     }
   },

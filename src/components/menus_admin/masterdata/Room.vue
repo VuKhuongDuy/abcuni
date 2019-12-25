@@ -22,9 +22,9 @@
     <b-button id="submit" @click="addRoom" :variant="variantState">Thêm phòng thi</b-button>
     <br>
     <br>
-    <div class="search">
+    <!-- <div class="search">
           <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm phòng thi..."></b-form-input>
-    </div>
+    </div> -->
     <div class="wapper_table">
       <b-table
         striped
@@ -166,6 +166,7 @@ export default {
       if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
       }else this.changeTypeAlert(data.message, "success");
+      await this.loadRoom();
     },
 
     deleteRoom: async function(index){
@@ -175,7 +176,10 @@ export default {
       let data = await axios.deleteAxios(url);
       if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
-      }else this.changeTypeAlert(data.message, "success");
+      }else {
+        await this.loadRoom();
+        this.changeTypeAlert(data.message, "success");
+      }
     },
 
     importData: async function(){      
