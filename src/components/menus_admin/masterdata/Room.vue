@@ -22,15 +22,7 @@
     <b-button id="submit" @click="addRoom" :variant="variantState">Thêm phòng thi</b-button>
     <br>
     <br>
-    <!-- <div class="search">
-          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm phòng thi..."></b-form-input>
-<<<<<<< HEAD
-    </div>
     <div class="wrapper_table">
-=======
-    </div> -->
-    <div class="wapper_table">
->>>>>>> 01a3265d46e2fb0cd4afb5d88aedb6e375ab048d
       <b-table
         striped
         hover
@@ -233,7 +225,7 @@ export default {
 }
 
 .wrapper_table{
-  height: 395px;
+  max-height: 395px;
   border: 1px solid #cccccc;
   overflow: auto;
 }

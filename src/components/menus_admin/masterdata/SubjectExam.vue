@@ -33,13 +33,8 @@
     </div>
 
     <!-- table -->
-<<<<<<< HEAD
     <div class="wrapper_table">
       <b-table striped hover :items="listSubject"
-=======
-    <div class="wapper_table">
-      <b-table striped hover :items="listSubjectRender"
->>>>>>> 01a3265d46e2fb0cd4afb5d88aedb6e375ab048d
       id="table"
       :fields="fields"
       head-variant="light"
