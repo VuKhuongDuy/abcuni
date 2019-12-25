@@ -29,12 +29,17 @@
     <br>
     <br>
     <div class="search">
-          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm tên môn thi..."></b-form-input>
+          <b-form-input id="search_MSSV" v-model="keySearch" v-on:keyup.enter="searchSubjetc" type="search" style="width: 230px" placeholder="Tìm kiếm tên môn thi..."></b-form-input>
     </div>
 
     <!-- table -->
+<<<<<<< HEAD
     <div class="wrapper_table">
       <b-table striped hover :items="listSubject"
+=======
+    <div class="wapper_table">
+      <b-table striped hover :items="listSubjectRender"
+>>>>>>> 01a3265d46e2fb0cd4afb5d88aedb6e375ab048d
       id="table"
       :fields="fields"
       head-variant="light"
@@ -74,10 +79,12 @@ export default {
       typeAlert: "",
       dataXml: [],
 
+      keySearch: null,
       turn:null,
       file:'',
       listExam: [{ value: null, text: "Kì thi" }],
       listSubject: [],
+      listSubjectRender: [],
       fields:[
         {
           key:'index',
@@ -130,6 +137,7 @@ export default {
       try {
         this.dismissCountDown = 0;
         this.listSubject = [];
+        this.listSubjectRender = [];
         let url = "/subject/" + this.selectedExam;
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -145,6 +153,7 @@ export default {
             delete: index
           };
           this.listSubject.push(obj);
+          this.listSubjectRender = this.listSubject;
         });
       } catch (e) {
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
@@ -159,7 +168,23 @@ export default {
       let data = await axios.postAxios(url, body);
       if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
-      }else this.changeTypeAlert(data.message, "success");
+      }else {
+        await this.loadSubject();
+        this.changeTypeAlert(data.message, "success");
+      }
+    },
+
+    searchSubjetc: async function(){
+      this.dismissCountDown = 0;
+      if(this.keySearch.length === 0){
+        this.listSubjectRender = this.listSubject;
+        return;
+      }
+      this.listSubjectRender = [];
+      this.listSubject.forEach(subject => {
+        if(subject.name_subject.indexOf(this.keySearch) >= 0)
+          this.listSubjectRender.push(subject);
+      })
     },
 
     deleteSubject:async function(index){
@@ -170,7 +195,10 @@ export default {
       let result = await axios.deleteAxios(url);
       if (!result.success) {
           this.changeTypeAlert(result.message, "warning");
-      }else this.changeTypeAlert(result.message, "success");
+      }else {
+        await this.loadSubject();
+        this.changeTypeAlert(result.message, "success");
+      }
     },
 
     importData: async function(){      

@@ -217,7 +217,10 @@ export default {
       let data = await axios.postAxios(url, body);
       if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
-      }else this.changeTypeAlert(data.message, "success");
+      }else {
+        await this.loadStudentSubject();
+        this.changeTypeAlert(data.message, "success");
+      }
     },
 
     searchStudent: function(){

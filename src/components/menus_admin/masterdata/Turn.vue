@@ -121,8 +121,10 @@ export default {
       if (!data.success) {
         this.changeTypeAlert(data.message, "warning");
         return;
-      }else this.changeTypeAlert(data.message, "success");
-      this.loadTurn();
+      }else {
+        await this.loadTurn();
+        this.changeTypeAlert(data.message, "success");
+      }
     },
 
     deleteTurn: async function(turn_id){
@@ -133,8 +135,10 @@ export default {
       if (!result.success) {
         this.changeTypeAlert(result.message, "warning");
         return;
-      }else this.changeTypeAlert(result.message, "success");
-      this.loadTurn();
+      }else {
+        await this.loadTurn();
+        this.changeTypeAlert(result.message, "success");
+      }
     },
 
     importData: async function(){      

@@ -267,7 +267,10 @@ export default {
         let data = await axios.postAxios(url ,body);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
-        }else this.changeTypeAlert(data.message, "success");
+        }else {
+          await this.loadSubjectRegisted();
+          this.changeTypeAlert(data.message, "success");
+        }
       }catch (e) {
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
@@ -293,7 +296,10 @@ export default {
         let data = await axios.deleteAxios(url);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
-        }else this.changeTypeAlert(data.message, "success");
+        }else{
+          await this.loadSubjectRegisted();
+          this.changeTypeAlert(data.message, "success");
+        }
       }catch (e) {
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
