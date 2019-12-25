@@ -135,7 +135,7 @@ export default {
   width: 600px;
   /* border: 1px solid gray; */
   overflow: auto;
-  margin-left: 357px;
+  margin-left: 311px;
   margin-top: 10px;
   background-color: white;
   box-shadow: #d9d2ba 0px 0px 7px;
