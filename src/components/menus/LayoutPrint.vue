@@ -26,6 +26,7 @@ export default {
     methods: {
         loadExam: async function() {
             try {
+                this.dismissCountDown = 0;
                 let url = "/exam";
                 let data = await axios.getAxios(url);
                 if (!data.success) {
@@ -48,7 +49,6 @@ export default {
                 this.changeTypeAlert("Haỹ chọn 1 kì thi bạn muốn in đăng kí học", "warning");
                 return;
             }
-            console.log(this.selectedExam);
             this.$router.push('/print/' + this.selectedExam);
         },
 

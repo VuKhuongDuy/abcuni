@@ -39,6 +39,7 @@ export default {
     },
 
     registUser: async function(){
+      this.dismissCountDown = 0;
       let listUserJson = JSON.stringify(this.dataXml);
       let url = '/admin/user/add';
       let body = [listUserJson];

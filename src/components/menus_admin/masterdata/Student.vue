@@ -158,6 +158,7 @@ export default {
     },
 
     registStudent: async function(){
+      this.dismissCountDown = 0;
       let listStudentJson = JSON.stringify(this.dataXml);
       let url = '/admin/student/add';
       let body = [listStudentJson];
@@ -165,7 +166,7 @@ export default {
       if(!data.success){
         this.changeTypeAlert(data.message, 'warning');
       }
-      this.changeTypeAlert(data.message, 'success');
+      else this.changeTypeAlert(data.message, 'success');
     },
 
     changeTypeAlert: function(message, type) {

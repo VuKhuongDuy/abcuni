@@ -132,6 +132,7 @@ export default {
     },
 
     deleteTurn: async function(turn_id){
+      this.dismissCountDown = 0;
       if(!window.confirm(' Bạn có muốn xoá ca thi này không ? ')) return;
       let url = "/admin/turn/" + turn_id;
       let result = await axios.deleteAxios(url);

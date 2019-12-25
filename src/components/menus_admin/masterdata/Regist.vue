@@ -185,7 +185,6 @@ export default {
           this.listSubject.push(obj);
         });
       } catch (e) {
-        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
@@ -239,7 +238,6 @@ export default {
           this.listTurn.push(obj);
         });        
       } catch (e) {
-        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
@@ -259,7 +257,6 @@ export default {
           this.listRoom.push(obj);
         });
       } catch (e) {
-        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
@@ -274,7 +271,6 @@ export default {
           this.changeTypeAlert(data.message, "warning");
         }else this.changeTypeAlert(data.message, "success");
       }catch (e) {
-        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
@@ -301,7 +297,6 @@ export default {
           this.changeTypeAlert(data.message, "warning");
         }else this.changeTypeAlert(data.message, "success");
       }catch (e) {
-        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
