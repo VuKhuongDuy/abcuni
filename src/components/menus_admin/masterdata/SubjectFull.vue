@@ -8,14 +8,18 @@
       id="selectExam"
       class="select"
       @change="loadSubject"
+      style="width:400px; margin-bottom: 4px;"
     ></b-form-select>
-    <b-form-select
+    <div>
+      <b-form-select
       v-model="selectedSubject"
       :options="listSubject"
       id="selectSubject"
       class="select"
       @change="loadStudentSubject"
+      style="width:500px; margin-bottom: 4px;"
     ></b-form-select>
+    </div>
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
@@ -39,7 +43,6 @@
       id="table-transition-example"
       :fields="fields"
       :head-variant="headVariant"
-      :sticky-header="stickyHeader"
       :no-border-collapse="noCollapse" 
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
@@ -74,11 +77,10 @@ export default {
   data(){
     return{
       headVariant:'light',
-      stickyHeader: true,
       noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
-      file:null,
+      file:'',
       dataXml: null,
       fields:[
         {
@@ -138,7 +140,7 @@ export default {
     loadExam: async function() {
       try {
         this.dismissCountDown = 0;
-        this.listExam = [{ value: null, text: "Exam" }];
+        this.listExam = [{ value: null, text: "Exam", disabled: true }];
         let url = "/exam";
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -303,8 +305,8 @@ export default {
   font-size: 14px;
 }
 .wapper_table{
-  height: 400px;
-  border: 1px solid gray;
+  height: 363px;
+  border: 1px solid #cccccc;
   overflow: auto;
 }
 </style>

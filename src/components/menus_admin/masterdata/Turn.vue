@@ -14,17 +14,12 @@
     ></b-form-file>
     <b-button id="submit" :variant="variantState" @click="addTurn">Thêm ca thi</b-button>
     <br>
-    <!-- <div class="search">
-          <b-form-input id="search_MSSV" type="search" style="width: 230px" placeholder="Tìm kiếm tên môn thi..."></b-form-input>
-    </div> -->
-
-    <!-- table -->
     <div class="wapper_table">
       <b-table striped hover :items="listTurn"
       id="table-transition-example"
       :fields="fields"
       :head-variant="headVariant"
-      :no-border-collapse="noCollapse" 
+      :no-border-collapse="noCollapse"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       small
@@ -65,7 +60,6 @@ export default {
       file:'',
       listTurn: [],
       headVariant:'light',
-      stickyHeader: true,
       noCollapse: false,
       sortBy: 'number',
       sortDesc: false,
@@ -176,49 +170,34 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file!='' && this.turn!=null ? 'success':''
+        return this.file!=''? 'success':''
       }
     },
 };
 </script>
 
 <style scoped>
+.wapper_table{
+  height: 485px;
+  margin-top: 4px;
+  border: 1px solid #cccccc;
+  overflow: auto;
+}
 .title{
   position: relative;
   float: right;
   right: 30px;
-}
-.form{
-  position: relative;
-  float: right;
-}
-.list{
-  position: relative;
-  top: 46px;
-}
-.search{
-  margin-bottom: 4px;
 }
 #submit{
   position: relative;
   /* left:300px; */
   bottom:-1px;
 }
-#turn{
-  width: 480px;
-  position: relative;
-  top: 1px;
-}
-
 .sort{
     font-style: italic;
 }
 *{
   font-size: 14px;
 }
-.wapper_table{
-  height: 400px;
-  border: 1px solid gray;
-  overflow: auto;
-}
+
 </style>

@@ -2,8 +2,8 @@
   <div id="home">
     <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <b-button @click="check=!check" v-show="!check" id="add" variant="success">Thêm lịch thi</b-button>
-      <b-form-select v-model="selectedExam" :options="listExam" id="exam" @change="eventLoadExam"></b-form-select>
-    <div v-show="check">
+    <b-form-select v-model="selectedExam" :options="listExam" id="exam" @change="eventLoadExam"></b-form-select>
+    <div v-show="check" class='add'>
       <b-form-select v-model="selectedSubject" :options="listSubject" id="subject"></b-form-select>
       <b-form-input v-model="selectedDate" id="date" type="date"></b-form-input>
       <b-form-select v-model="selectedTurn" :options="listTurn" id="turn"></b-form-select>
@@ -37,7 +37,6 @@
         id="table-transition-example"
         :fields="fields"
         :head-variant="headVariant"
-        :sticky-header="stickyHeader"
         :no-border-collapse="noCollapse"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
@@ -84,7 +83,6 @@ export default {
       listSubjectRegistedRender: [],
 
       headVariant: "light",
-      stickyHeader: true,
       noCollapse: false,
       sortBy: "name_subject",
       sortDesc: false,
@@ -145,7 +143,7 @@ export default {
     loadExam: async function() {
       try {
         this.dismissCountDown = 0;
-        this.listExam = [{ value: null, text: "Exam" }];
+        this.listExam = [{ value: null, text: "Exam", disabled: true }];
         let url = "/exam";
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -321,11 +319,11 @@ export default {
   },
   computed: {
     variantState() {
-      return this.turn != null &&
-        this.subject != null &&
-        this.time != null &&
-        this.day != null &&
-        this.room != null
+      return this.selectedExam != null &&
+        this.selectedSubject != null &&
+        this.selectedDate != null &&
+        this.selectedTurn != null &&
+        this.selectedRoom != null
         ? "success"
         : "";
     },
@@ -364,6 +362,9 @@ export default {
   position: relative;
   bottom: -1px;
 }
+.add{
+  position: absolute;
+}
 .add_and_close {
   position: relative;
   top: -1px;
@@ -387,7 +388,7 @@ export default {
 }
 .wapper_table {
   height: 450px;
-  border: 1px solid gray;
+  border: 1px solid #cccccc;
   overflow: auto;
 }
 * {

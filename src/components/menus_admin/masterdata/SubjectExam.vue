@@ -2,13 +2,16 @@
   <div id="student">
     <!-- import file -->
     <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
-    <b-form-select
+    <div>
+      <b-form-select
       v-model="selectedExam"
       class="optionExam"
       :options="listExam"
       size="sm"
       @change="loadSubject"
+      style="margin-bottom:4px;"
     ></b-form-select>
+    </div>
     <b-form-file
       v-model="file"
       :state="Boolean(file)"
@@ -35,7 +38,6 @@
       id="table"
       :fields="fields"
       head-variant="light"
-      sticky-header="false"
       no-border-collapse="false" 
       sort-by.sync="code_subject"
       sort-desc.sync="false"
@@ -206,7 +208,7 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file!='' && this.turn!=null ? 'success':''
+        return this.file!='' && this.selectedExam!=null ? 'success':''
       }
     },
 };
@@ -243,8 +245,8 @@ export default {
     font-style: italic;
 }
 .wapper_table{
-  height: 415px;
-  border: 1px solid gray;
+  height: 408px;
+  border: 1px solid #cccccc;
   overflow: auto;
 }
 *{

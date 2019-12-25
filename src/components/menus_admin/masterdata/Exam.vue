@@ -12,7 +12,6 @@
         id="tableExam"
         :fields="fields"
         head-variant="light"
-        sticky-header="true"
         no-border-collapse="false"
         sort-by.sync="room"
         sort-desc.sync="false"
@@ -26,7 +25,7 @@
 
         <template v-slot:cell(delete)="row" class="mr-2">
           <!--button ở cột delete -->
-          <b-button @click="deleteExam(row.value)">Xóa phòng thi</b-button>
+          <b-button @click="deleteExam(row.value)">Xóa kì thi</b-button>
         </template>
       </b-table>
       <!-- head-variant: màu <th>-->
@@ -136,7 +135,7 @@ export default {
   width: 600px;
   /* border: 1px solid gray; */
   overflow: auto;
-  margin-left: 300px;
+  margin-left: 357px;
   margin-top: 10px;
   background-color: white;
   box-shadow: #d9d2ba 0px 0px 7px;
