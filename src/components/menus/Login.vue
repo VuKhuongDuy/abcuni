@@ -71,7 +71,6 @@ export default {
         let url = '/login';
         let body = { username: this.username, password: this.password };
         let result = await axios.postAxios(url, body);
-        console.log(result);
         // this.check=this.username!='' && this.password!=''? true: false; 
         if (!result || !result.success) {
           this.changeTypeAlert(result.message, "warning");

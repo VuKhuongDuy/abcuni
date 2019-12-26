@@ -178,6 +178,16 @@ export default {
     text-align: left;
     font-weight: initial
 }
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  /* left: 25%; */
+  z-index: 100;
+}
 #bottom{
     padding:20px 0 0;
 }
