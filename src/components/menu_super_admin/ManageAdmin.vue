@@ -1,31 +1,31 @@
 <template>
   <div id="manageadmin">
     <!-- table -->
-    <b-table striped hover :items="listAdmin"
-    id="table-admin"
-    :fields="fields"
-    :head-variant="headVariant"
-    :sticky-header="stickyHeader"
-    :no-border-collapse="noCollapse" 
-    :sort-by.sync="sortBy"
-    :sort-desc.sync="sortDesc"
-    caption-top
-    >
-      <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
-        {{ data.index + 1 }}
-      </template>
-
-        <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
-        <b-button>
-          Edit
-        </b-button>
-        <b-button>
-          Delete
-        </b-button>
+    <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
+    <div class="wrapper_table">
+      <b-table striped hover :items="listAdmin"
+      id="table-admin"
+      :fields="fields"
+      :head-variant="headVariant"
+      :no-border-collapse="noCollapse" 
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      caption-top
+      small
+      >
+        <template v-slot:cell(index)="data"> <!--STT không bị thay đổi khi sort-->
+          {{ data.index + 1 }}
         </template>
 
-        
-      </b-table><!-- head-variant: màu <th>-->
+          <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
+          <b-button variant="danger">
+            Xóa
+          </b-button>
+          </template>
+          
+        </b-table>
+    </div>
+    <!-- head-variant: màu <th>-->
       <div class="sort">
         Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
         <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
@@ -35,34 +35,29 @@
 </template>
 
 <script>
+import * as axios from "@/../config/axios.js";
 export default {
   data(){
     return{
       headVariant:'light',
-      stickyHeader: true,
       noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
       file:'null',
+
+      message: "",
+      dismissCountDown: 0,
+      timeCountAlert: 5,
+      typeAlert: "",
+
       fields:[
         {
           key:'index',
           label:"STT",
         },
         {
-          key:'full_name',
-          label: "Tên",
-          sortable: true
-        },
-        {
-          key:"username",
-          label:"Tài khoản",
-          sortable: true
-        },
-        
-        {
-          key:"password",
-          label:'Mật khẩu',
+          key:"email",
+          label:"Email",
           sortable: true
         },
         {
@@ -70,12 +65,38 @@ export default {
           label:'Edit'
         }
       ],
-      listAdmin: [
-          {full_name:"Admin 1",username:'admin1',password: 'ad1', },
-          {full_name:"Admin 2",username:'admin2',password: 'ad2',},
-          {full_name:"Admin 3",username:'admin3', password: 'ad3',},
-      ],
+      listAdmin: [],
     }
+  },
+  methods: {
+    loadAdmin: async function(){
+      this.listAdmin = [];
+      this.dismissCountDown = 0;
+      let url = '/admin/list';
+      let data = await axios.getAxios(url);
+      if(!data.success){
+        this.changeTypeAlert(data.message, 'warning');
+        return;
+      }
+      data.data.forEach((admin, index) => {
+        let obj = {
+          index: index,
+          email: admin.email
+        }
+        this.listAdmin.push(obj);
+      });
+    },
+
+
+
+    changeTypeAlert: function(message, type) {
+      this.message = message;
+      this.typeAlert = type;
+      this.dismissCountDown = this.timeCountAlert;
+    }
+  },
+  mounted: function(){
+    this.loadAdmin();
   }
 };
 </script>
@@ -97,8 +118,17 @@ export default {
 .add_new{
     position: relative;
     left: 450px;
+    top: 5px;
 }
 .sort{
     font-style: italic;
+}
+* {
+  font-size: 14px;
+}
+.wrapper_table {
+  height: 500px;
+  border: 1px solid #cccccc;
+  overflow: auto;
 }
 </style>
