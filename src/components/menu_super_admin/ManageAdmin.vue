@@ -14,7 +14,7 @@
           <tr>
             <td>
               <b-form-input v-model="email" type='email' :state="emailState" placeholder="Nhập email" class="add_new_admin"></b-form-input>
-              <b-form-invalid-feedback id="name">Bạn chưa nhập email</b-form-invalid-feedback>
+              <b-form-invalid-feedback id="name">Mail không hợp lệ</b-form-invalid-feedback>
             </td>
             <td>
               <b-form-input v-model="password" type='password' :state="passwordState" placeholder="Nhập mật khẩu" class="add_new_admin"></b-form-input>
@@ -24,7 +24,7 @@
               <b-form-input v-model="repassword" type='password' :state="rePasswordState" placeholder="Nhập lại mật khẩu" class="add_new_admin"></b-form-input>
               <b-form-invalid-feedback id="name">Bạn cần nhập lại mật khẩu đúng</b-form-invalid-feedback>
             </td>
-            <td><b-button :variant="variantState" id="button_add" style="width: 104px">Thêm admin</b-button></td>
+            <td><b-button :variant="variantState" @click="addAdmin" id="button_add" style="width: 104px">Thêm admin</b-button></td>
           </tr>
         </table>
         <!-- <b-button :variant="variantState" id="button_add">Thêm admin</b-button> -->
@@ -48,7 +48,7 @@
         </template>
 
           <template v-slot:cell(crud)="row" class="mr-2"> <!--button ở cột crud -->
-          <b-button variant="danger">
+          <b-button variant="danger" @click="deleteAdmin(row.value)">
             Xóa
           </b-button>
           </template>
@@ -73,7 +73,7 @@ export default {
       file:'null',
       message: "",
       dismissCountDown: 0,
-      timeCountAlert: 5,
+      timeCountAlert: 5,  
       typeAlert: "",
 
       fields:[
@@ -107,11 +107,47 @@ export default {
       data.data.forEach((admin, index) => {
         let obj = {
           index: index,
-          email: admin.email
+          email: admin.email,
+          crud: index
         }
         this.listAdmin.push(obj);
       });
     },
+
+    addAdmin: async function(){
+      try{
+        this.dismissCountDown = 0;
+        if(this.password != this.repassword){
+          this.changeTypeAlert('Mật khẩu xác nhận không khớp với mật khẩu', 'warning');
+          return;
+        }
+        let url = '/admin/add';
+        let body = {email: this.email, password: this.password};
+        let data = await axios.postAxios(url, body);
+        if(!data.success){
+          this.changeTypeAlert(data.message, 'warning');
+          return;
+        }
+        await this.loadAdmin();
+        this.changeTypeAlert(data.message, 'success');
+      }catch(err){
+        this.changeTypeAlert('Có vấn đề xảy ra', 'warming');
+      }
+    },
+
+    deleteAdmin: async function(index){
+      this.dismissCountDown = 0;
+      let url = '/admin/' + this.listAdmin[index].email;
+      console.log(url);
+      let data = await axios.deleteAxios(url);
+      if(!data.success){
+          this.changeTypeAlert(data.message, 'warning');
+          return;
+        }
+        await this.loadAdmin();
+        this.changeTypeAlert(data.message, 'success');
+    },
+
     changeTypeAlert: function(message, type) {
       this.message = message;
       this.typeAlert = type;
@@ -123,7 +159,12 @@ export default {
   },
   computed:{
     emailState() {
-      return this.email.length > 0 ? true : false
+      if(this.email.length === 0)
+        return false;
+      this.email = this.email.trim();
+      let regex = /^[a-z0-9_\.]{1,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/gm;
+      let isEmail = regex.test(this.email);
+      return isEmail;
     },
     passwordState() {
       return this.password.length > 0 ? true : false
@@ -188,6 +229,17 @@ td{
 }
 .div_add{
   min-height: 100px;
+}
+
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  /* left: 25%; */
+  z-index: 100;
 }
 
 .wrapper_table {

@@ -51,7 +51,7 @@
                         </template>
                         <button @click="check3 = !check3" :class="check3?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Super Admin<img v-if="check3" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check3" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check3"  class="transition_menu">
-                            <router-link to='/superadmin' @click.native="changePath" tag='button' v-bind:class="[path==='/superadmin'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Thông tin</router-link>
+                            <!-- <router-link to='/superadmin' @click.native="changePath" tag='button' v-bind:class="[path==='/superadmin'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Thông tin</router-link> -->
                             <router-link to='/manage_admin' @click.native="changePath" tag='button' v-bind:class="[path==='/manage_admin'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Quản lý admin</router-link>
                         </template>
                     </tbody>
@@ -154,6 +154,18 @@ button{
     margin: 0px;
     padding:4px;
 }
+
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  /* left: 25%; */
+  z-index: 100;
+}
+
 /* .btn{
     display: block;
     width: 200px;

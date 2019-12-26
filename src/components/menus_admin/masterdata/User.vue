@@ -98,6 +98,18 @@ export default {
   position: relative;
   top:1px;
 }
+
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  /* left: 25%; */
+  z-index: 100;
+}
+
 *{
   font-size: 14px;
 }
