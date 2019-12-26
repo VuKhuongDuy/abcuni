@@ -1,6 +1,29 @@
 <template>
   <div id="manageadmin">
     <!-- table -->
+    <div class='div_add'>
+      <b-button variant="success" class="add_new" v-show="check" @click="check=!check">Thêm admin</b-button>
+      <div v-show="!check" class='add_new_admin'>
+        <div>
+          <label for="email">Email:</label>
+          <b-button class="" id="button_exit" @click='check=!check'>x</b-button>
+          <b-form-input v-model="email" type='email' :state="emailState" placeholder="Nhập email" class="add_new_admin"></b-form-input>
+          <b-form-invalid-feedback id="name">Bạn chưa nhập email</b-form-invalid-feedback>
+        </div>
+        <div>
+          <label for="password">Mật khẩu:</label>
+          <b-form-input v-model="password" type='password' :state="passwordState" placeholder="Nhập mật khẩu" class="add_new_admin"></b-form-input>
+          <b-form-invalid-feedback id="name">Bạn chưa nhập mật khẩu</b-form-invalid-feedback>
+        </div>
+        <div>
+          <label for="repassword">Nhập lại mật khẩu:</label>
+          <b-form-input v-model="repassword" type='password' :state="rePasswordState" placeholder="Nhập lại mật khẩu" class="add_new_admin"></b-form-input>
+          <b-form-invalid-feedback id="name">Bạn cần nhập lại mật khẩu đúng</b-form-invalid-feedback>
+        </div>
+        <b-button :variant="variantState" id="button_add">Thêm admin</b-button>
+    </div>
+    </div>
+    
     <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <div class="wrapper_table">
       <b-table striped hover :items="listAdmin"
@@ -26,11 +49,6 @@
         </b-table>
     </div>
     <!-- head-variant: màu <th>-->
-      <div class="sort">
-        Sắp xếp theo: <b>{{ sortBy }}</b>, Thứ tự:
-        <b>{{ sortDesc ? 'giảm dần' : 'tăng dần' }}</b>
-        <b-button variant="success" class="add_new">Thêm mới admin</b-button>
-      </div>
   </div>
 </template>
 
@@ -39,12 +57,13 @@ import * as axios from "@/../config/axios.js";
 export default {
   data(){
     return{
+      email:'admin@gmail.com',
+      password: 'a',
+      repassword:'a',
+      check:true,
       headVariant:'light',
       noCollapse: false,
-      sortBy: 'MSSV',
-      sortDesc: false,
       file:'null',
-
       message: "",
       dismissCountDown: 0,
       timeCountAlert: 5,
@@ -86,17 +105,29 @@ export default {
         this.listAdmin.push(obj);
       });
     },
-
-
-
     changeTypeAlert: function(message, type) {
       this.message = message;
       this.typeAlert = type;
       this.dismissCountDown = this.timeCountAlert;
-    }
+    },
   },
   mounted: function(){
     this.loadAdmin();
+  },
+  computed:{
+    emailState() {
+      return this.email.length > 0 ? true : false
+    },
+    passwordState() {
+      return this.password.length > 0 ? true : false
+    },
+    rePasswordState() {
+      return (this.repassword == this.password && this.password.length > 0) || this.password.length==0 ? true : false
+    },
+    variantState(){
+        return this.email.length > 0  && this.password.length > 0 && 
+        ((this.repassword == this.password && this.password.length > 0) || this.password.length==0 ) ? 'success':''
+    },
   }
 };
 </script>
@@ -115,10 +146,18 @@ export default {
   position: relative;
   top: 46px;
 }
+.form_add_new_admin{
+  margin: center;
+  width: 300px;
+}
 .add_new{
-    position: relative;
-    left: 450px;
-    top: 5px;
+  position: relative;
+  left: 45%;
+  margin-top:100px;
+}
+.add_new_admin{
+  width: 300px;
+  margin:auto;
 }
 .sort{
     font-style: italic;
@@ -126,9 +165,29 @@ export default {
 * {
   font-size: 14px;
 }
+.div_add{
+  min-height: 295px;
+}
+
 .wrapper_table {
-  height: 500px;
+  height: 245px;
   border: 1px solid #cccccc;
   overflow: auto;
+}
+#wrapper_button_add{
+  margin: center;
+}
+#button_exit{
+  position: relative;
+  right:-268px;
+  margin-top:-30xp;
+}
+#button_exit:hover{
+  background-color: #e60000;
+}
+#button_add{
+  position: relative;
+  right: -180px;
+  margin-top: 10px;
 }
 </style>
