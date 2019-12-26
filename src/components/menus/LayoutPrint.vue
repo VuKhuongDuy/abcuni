@@ -5,7 +5,7 @@
         v-model="selectedExam"
         class="optionExam mt-3"
         :options="listExam"
-        size="sm"
+        small
         ></b-form-select>
         <b-button variant="success" id="btnPrint" @click="printf" >Printf</b-button>
     </div>    
@@ -15,7 +15,7 @@ import * as axios from "../../../config/axios";
 export default {
     data: function(){
         return {
-            listExam: [{ value: null, text: "Please select an exam" }],
+            listExam: [{ value: null, text: "Please select an exam"}],
             selectedExam: null,
             message: "",
             dismissCountDown: 0,
@@ -66,10 +66,14 @@ export default {
 <style scoped>
 #layoutPrint{
     text-align: center;
+    position: relative;
+    top:100px;
 }
 
 #btnPrint{
     margin-top: 20px;
+    position: relative;
+    top: -2px;
 }
 
 .optionExam{

@@ -38,7 +38,7 @@
     </div>
 
     <!-- table -->
-    <div class="wapper_table">
+    <div class="wrapper_table">
       <b-table striped hover :items="listStudentRender"
       id="table-transition-example"
       :fields="fields"
@@ -289,10 +289,6 @@ export default {
   position: relative;
   float: right;
 }
-.list{
-  position: relative;
-  top: 46px;
-}
 .search{
   margin-bottom: 4px;
 }
@@ -307,7 +303,7 @@ export default {
 *{
   font-size: 14px;
 }
-.wapper_table{
+.wrapper_table{
   height: 363px;
   border: 1px solid #cccccc;
   overflow: auto;

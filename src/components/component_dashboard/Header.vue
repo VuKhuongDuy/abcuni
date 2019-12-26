@@ -22,15 +22,14 @@
       </div>
       <div id="header-right">
         <div id="headerWelcome">
-          <div>
+          <p>
             Xin chào:
             <strong>{{username}}</strong>
-            <br />
-          </div>
-        <div v-show="mssv != null">
-            MSSV:
-              <strong>{{mssv}}</strong>
-        </div>
+          </p>
+          <p v-show="mssv != null">
+              MSSV:
+                <strong>{{mssv}}</strong>
+          </p>
         </div>
 
         <div id="headerMenu">
@@ -127,11 +126,14 @@ export default {
   top: 14px;
   left: 120px;
 }
-#headerWelcome p {
-  text-align: right;
-  margin: 0;
+#headerWelcome{
+    min-height: 48px;
+}
+#headerWelcome p{
   position: relative;
-  float: right;
+  text-align: right;
+  margin-bottom:0px;
+  right:10px;
 }
 #headerMenu {
   margin-top: 10px;

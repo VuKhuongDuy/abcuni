@@ -117,10 +117,10 @@ export default {
   margin-bottom: 20px;
 }
 .wrapper_table {
-  width: 80%;
-  margin-left: 100px;
-  height: 400px;
-  overflow: scroll;
+  width: 90%;
+  margin: auto;
+  height: 696px;
+  overflow: auto;
 }
 
 .alert {

@@ -13,16 +13,13 @@
       @change="importData"
     ></b-form-file>
     <b-button id="submit" :variant="variantState"  @click="registStudent">Thêm sinh viên</b-button>
-    <!-- <i class='title'>
-        *Danh sách sinh viên
-    </i> -->
     <br>
     <br>
     <div class="search">
           <b-form-input id="search_MSSV" v-model="keySearch" v-on:keyup.enter="searchStudent" type="search" style="width: 230px" placeholder="Tìm kiếm MSSV..."></b-form-input>
     </div>
     <!-- table -->
-    <div class="wapper_table">
+    <div class="wrapper_table">
       <b-table striped hover :items="listStudentRender"
       id="table"
       :fields="fields"
@@ -226,10 +223,6 @@ export default {
   position: relative;
   float: right;
 }
-.list{
-  position: relative;
-  top: 46px;
-}
 .search{
   margin-bottom: 4px;
   margin-top: -8px;
@@ -256,7 +249,7 @@ export default {
 *{
   font-size: 14px;
 }
-.wapper_table{
+.wrapper_table{
   height: 438px;
   border: 1px solid #cccccc;
   overflow: auto;

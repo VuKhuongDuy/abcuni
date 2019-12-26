@@ -28,7 +28,7 @@
       ></b-form-input>
     </div>
     <!-- table -->
-    <div class="wapper_table">
+    <div class="wrapper_table">
       <b-table
         striped
         hover
@@ -392,7 +392,7 @@ export default {
 .row {
   background-color: blue;
 }
-.wapper_table {
+.wrapper_table {
   height: 450px;
   border: 1px solid #cccccc;
   overflow: auto;

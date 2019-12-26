@@ -9,7 +9,7 @@
             <div id="menu">
                 <div id="components-menu">
                     <tbody>
-                        <button @click="check2 = !check2" :class="check2?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý sinh viên<img v-if="check2" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check2" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <!-- <button @click="check2 = !check2" :class="check2?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý sinh viên<img v-if="check2" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check2" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check2" class="transition_menu">
                             <button class="btn" type="button" @click="activeBtn = 'btn1'" :class="{active: activeBtn === 'btn1' }"><router-link to='/student' class="btn_router"><img src="@/../public/icons/right_1.png" class="icon_right">Sinh Viên</router-link></button>
                             <button class="btn" type="button" @click="activeBtn = 'btn2'" :class="{active: activeBtn === 'btn2' }"><router-link to='/user' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Tài khoản sinh viên</router-link></button>
@@ -25,6 +25,34 @@
                         <button @click="check1 = !check1" :class="check1?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý lịch thi<img v-if="check1" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check1" src="@/../public/icons/down.png" class="icon_down"></button>
                         <template v-if="check1"  class="transition_menu">
                             <button class="btn" type="button"  @click="activeBtn = 'btn8'" :class="{active: activeBtn === 'btn8' }"><router-link to='/regist' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Lịch thi</router-link></button>
+                        </template>
+                        <button @click="check3 = !check3" :class="check3?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Super Admin<img v-if="check3" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check3" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <template v-if="check3"  class="transition_menu">
+                            <button class="btn" type="button"  @click="activeBtn = 'btn9'" :class="{active: activeBtn === 'btn9' }"><router-link to='/superadmin' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Thông tin</router-link></button>
+                            <button class="btn" type="button"  @click="activeBtn = 'btn10'" :class="{active: activeBtn === 'btn10' }"><router-link to='/manage_admin' class="btn_router" ><img src="@/../public/icons/right_1.png" class="icon_right">Quản lý admin</router-link></button>
+                        </template> -->
+                        <!-- @click.native="changePath" tag='button' v-bind:class="[path==='/subject'? 'active' : '']" -->
+                        <button @click="check2 = !check2" :class="check2?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý sinh viên<img v-if="check2" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check2" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <template v-if="check2" class="transition_menu">
+                            <router-link to='/student' @click.native="changePath" tag='button' v-bind:class="[path==='/student'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Sinh Viên</router-link>
+                            <router-link to='/user' @click.native="changePath" tag='button' v-bind:class="[path==='/user'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Tài khoản sinh viên</router-link>
+                            <router-link to='/subjectfull' @click.native="changePath" tag='button' v-bind:class="[path==='/subjectfull'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Môn học SV đã học</router-link>
+                        </template>
+                        <button @click="check0 = !check0"  :class="check0?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý khách quan<img v-if="check0" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check0" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <template v-if="check0" class="transition_menu">
+                            <router-link to='/exam' @click.native="changePath" tag='button' v-bind:class="[path==='/exam'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Tạo kì thi</router-link>
+                            <router-link to='/room' @click.native="changePath" tag='button' v-bind:class="[path==='/room'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Cơ sở vật chất</router-link>
+                            <router-link to='/subjectexam' @click.native="changePath" tag='button' v-bind:class="[path==='/subjectexam'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Môn thi</router-link>
+                            <router-link to='/turn' @click.native="changePath" tag='button' v-bind:class="[path==='/turn'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Ca thi</router-link>
+                        </template>
+                        <button @click="check1 = !check1" :class="check1?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý lịch thi<img v-if="check1" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check1" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <template v-if="check1"  class="transition_menu">
+                            <router-link to='/regist' @click.native="changePath" tag='button' v-bind:class="[path==='/regist'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Lịch thi</router-link>
+                        </template>
+                        <button @click="check3 = !check3" :class="check3?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Super Admin<img v-if="check3" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check3" src="@/../public/icons/down.png" class="icon_down"></button>
+                        <template v-if="check3"  class="transition_menu">
+                            <router-link to='/superadmin' @click.native="changePath" tag='button' v-bind:class="[path==='/superadmin'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Thông tin</router-link>
+                            <router-link to='/manage_admin' @click.native="changePath" tag='button' v-bind:class="[path==='/manage_admin'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Quản lý admin</router-link>
                         </template>
                     </tbody>
                 </div>
@@ -47,13 +75,14 @@ import Footer from './component_dashboard/Footer.vue'
 export default {
     data(){
         return{
-            check0:false,
+            check0:true,
             check1:true,
-            check2:false,            
-            activeBtn:'btn8',
-            isActive: 'b3',
+            check3:true,
+            check2:true,            
+            // activeBtn:'btn8',
             noshadow:'button_menu',
-            shadow:'button_menu_shadow'
+            shadow:'button_menu_shadow',
+            path:'/regist',
             // backgroundImage: './public/images/logo.png',
         }   
     },
@@ -65,10 +94,14 @@ export default {
                 cookie.clearCookie();
                 this.$router.push("/login");	  
             }
-        }
+        },
+        changePath: function(){
+            this.path = this.$route.path;    
+        },
     },
     mounted: function(){
         this.checkUser();
+        this.path = this.$route.path;
     },
     components:{
         appHeader:Header,
@@ -121,7 +154,7 @@ button{
     margin: 0px;
     padding:4px;
 }
-.btn{
+/* .btn{
     display: block;
     width: 200px;
     margin:0px;
@@ -130,12 +163,24 @@ button{
 .btn:hover{
     background-color: #8cd98c;
     display: block;
-}
+} */
 .active, .active:hover{
     background-image: linear-gradient(to right, white, #b3ffb3 );
     width: 100%;
     text-align: left;
     border: none;
+    height: 32px;
+}
+
+.no_active{
+    background: #ffffff;
+    width: 100%;
+    text-align: left;
+    border: none;
+    height: 32px;
+}
+.no_active:hover{
+    background-image: linear-gradient(to right, white, #e6ffe6 );
 }
 
 .icon_stack{

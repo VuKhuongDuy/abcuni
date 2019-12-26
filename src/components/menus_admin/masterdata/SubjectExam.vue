@@ -33,8 +33,8 @@
     </div>
 
     <!-- table -->
-    <div class="wapper_table">
-      <b-table striped hover :items="listSubjectRender"
+    <div class="wrapper_table">
+      <b-table striped hover :items="listSubject"
       id="table"
       :fields="fields"
       head-variant="light"
@@ -247,10 +247,6 @@ export default {
   position: relative;
   float: right;
 }
-.list{
-  position: relative;
-  top: 46px;
-}
 .search{
   margin-bottom: 4px;
 }
@@ -267,7 +263,7 @@ export default {
 .sort{
     font-style: italic;
 }
-.wapper_table{
+.wrapper_table{
   height: 408px;
   border: 1px solid #cccccc;
   overflow: auto;
