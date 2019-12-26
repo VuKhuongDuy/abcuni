@@ -42,8 +42,8 @@
       <b-table striped hover :items="listStudentRender"
       id="table-transition-example"
       :fields="fields"
-      :head-variant="headVariant"
-      :no-border-collapse="noCollapse" 
+      head-variant="light"
+      :no-border-collapse="false" 
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       caption-top
@@ -76,8 +76,6 @@ import readXlsxFile from "read-excel-file";
 export default {
   data(){
     return{
-      headVariant:'light',
-      noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
       file:'',

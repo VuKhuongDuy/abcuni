@@ -3,20 +3,11 @@
 <div>
   <hr class="hr_footer">
   <div id="footer">
-    <div id="footerLeft">
-                <span>Số người đang online </span>
-                <br>
-                <span class="numberOnline" id="numUserOnline">999  </span>
-                <br>
-                
-            </div>
-            <div id="footerSep">
-            </div>
-            <div id="footerRight">
-                Cổng thông tin đăng kí dự thi trường đại học ABC <br>
-                Phát triển bởi team DTT<br>
-                144 Xuân Thủy, Cầu Giấy, Hà Nội <br>
-            </div>
+        <div id="footerRight">
+            Cổng thông tin đăng kí dự thi trường đại học ABC <br>
+            Phát triển bởi team DTT<br>
+            144 Xuân Thủy, Cầu Giấy, Hà Nội <br>
+        </div>
   </div>
 </div>
 </template>
@@ -28,7 +19,7 @@ export default {
 
 <style scoped>
 .hr_footer{
-    border-top: 1px solid #2196f3;
+    border-top: 1px solid #80dfff;
     margin-bottom: 0px;
 }
 #footer{
@@ -39,25 +30,12 @@ export default {
   font-family: "Courier New";
   font-weight: bold;
   margin:0;
-  background-color: #aaf2ab;
-}
-#footerLeft{
-    float: left;
-    height: 100%;
-}
-#footerSep{
-    margin-left:3px;
-    border-left: 2px solid #066c00;
-    float: left;
-    height: 100%;
-    left: 206px;
-}
-#numUserOnline{
-    color:#ff0000;
-    float:right;
+  /* background-color: #aaf2ab; */
+  background-image :linear-gradient(to right, #ffffff, #b3ffb3 );
 }
 #footerRight{
     position: absolute;
-    left:208px;
+    right: 0px;
+    text-align: right;
 }
 </style>

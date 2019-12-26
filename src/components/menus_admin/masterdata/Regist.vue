@@ -36,8 +36,8 @@
         class="table"
         id="table-transition-example"
         :fields="fields"
-        :head-variant="headVariant"
-        :no-border-collapse="noCollapse"
+        head-variant="light"
+        :no-border-collapse="false"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
         small
@@ -81,9 +81,6 @@ export default {
       typeAlert: "",
       listSubjectRegisted: [],
       listSubjectRegistedRender: [],
-
-      headVariant: "light",
-      noCollapse: false,
       sortBy: "name_subject",
       sortDesc: false,
       variant_delete: "",

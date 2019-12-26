@@ -107,6 +107,7 @@ export default {
   height: 105px;
   margin-bottom: 0px;
   display: block;
+  background-image :linear-gradient(to left, #ffffff, #ccffcc );
 }
 #logo {
   position: absolute;

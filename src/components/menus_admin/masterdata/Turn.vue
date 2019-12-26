@@ -18,8 +18,8 @@
       <b-table striped hover :items="listTurn"
       id="table-transition-example"
       :fields="fields"
-      :head-variant="headVariant"
-      :no-border-collapse="noCollapse"
+      head-variant="light"
+      :no-border-collapse="false"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       small
@@ -59,8 +59,6 @@ export default {
       dataXml: [],
       file:'',
       listTurn: [],
-      headVariant:'light',
-      noCollapse: false,
       sortBy: 'number',
       sortDesc: false,
       turn: null,

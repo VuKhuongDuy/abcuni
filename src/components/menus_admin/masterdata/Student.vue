@@ -23,8 +23,8 @@
       <b-table striped hover :items="listStudentRender"
       id="table"
       :fields="fields"
-      :head-variant="headVariant"
-      :no-border-collapse="noCollapse" 
+      head-variant="light"
+      :no-border-collapse="false" 
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       caption-top
@@ -64,8 +64,6 @@ export default {
       timeCountAlert: 5,
       typeAlert: "",
 
-      headVariant:'light',
-      noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
       file:'',
