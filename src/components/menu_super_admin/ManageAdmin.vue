@@ -4,23 +4,30 @@
     <div class='div_add'>
       <b-button variant="success" class="add_new" v-show="check" @click="check=!check">Thêm admin</b-button>
       <div v-show="!check" class='add_new_admin'>
-        <div>
-          <label for="email">Email:</label>
-          <b-button class="" id="button_exit" @click='check=!check'>x</b-button>
-          <b-form-input v-model="email" type='email' :state="emailState" placeholder="Nhập email" class="add_new_admin"></b-form-input>
-          <b-form-invalid-feedback id="name">Bạn chưa nhập email</b-form-invalid-feedback>
-        </div>
-        <div>
-          <label for="password">Mật khẩu:</label>
-          <b-form-input v-model="password" type='password' :state="passwordState" placeholder="Nhập mật khẩu" class="add_new_admin"></b-form-input>
-          <b-form-invalid-feedback id="name">Bạn chưa nhập mật khẩu</b-form-invalid-feedback>
-        </div>
-        <div>
-          <label for="repassword">Nhập lại mật khẩu:</label>
-          <b-form-input v-model="repassword" type='password' :state="rePasswordState" placeholder="Nhập lại mật khẩu" class="add_new_admin"></b-form-input>
-          <b-form-invalid-feedback id="name">Bạn cần nhập lại mật khẩu đúng</b-form-invalid-feedback>
-        </div>
-        <b-button :variant="variantState" id="button_add">Thêm admin</b-button>
+        <table id="table_add">
+          <tr>
+            <td><label for="email">Email:</label></td>
+            <td><label for="password">Mật khẩu:</label></td>
+            <td><label for="repassword">Nhập lại mật khẩu:</label></td>
+            <td><b-button class="" id="button_exit" @click='check=!check' style='margin-top:-19px;'>x</b-button></td>
+          </tr>
+          <tr>
+            <td>
+              <b-form-input v-model="email" type='email' :state="emailState" placeholder="Nhập email" class="add_new_admin"></b-form-input>
+              <b-form-invalid-feedback id="name">Bạn chưa nhập email</b-form-invalid-feedback>
+            </td>
+            <td>
+              <b-form-input v-model="password" type='password' :state="passwordState" placeholder="Nhập mật khẩu" class="add_new_admin"></b-form-input>
+              <b-form-invalid-feedback id="name">Bạn chưa nhập mật khẩu</b-form-invalid-feedback>
+            </td>
+            <td>
+              <b-form-input v-model="repassword" type='password' :state="rePasswordState" placeholder="Nhập lại mật khẩu" class="add_new_admin"></b-form-input>
+              <b-form-invalid-feedback id="name">Bạn cần nhập lại mật khẩu đúng</b-form-invalid-feedback>
+            </td>
+            <td><b-button :variant="variantState" id="button_add" style="width: 104px">Thêm admin</b-button></td>
+          </tr>
+        </table>
+        <!-- <b-button :variant="variantState" id="button_add">Thêm admin</b-button> -->
     </div>
     </div>
     
@@ -133,6 +140,18 @@ export default {
 </script>
 
 <style scoped>
+#table_add{
+  border-spacing: 0px;
+  position: relative;
+  left: 160px;
+  margin-top:3px;
+}
+td{
+  padding: 0px;
+}
+.input_ad td{
+  min-height: 58px;
+}
 .title{
   position: relative;
   float: right;
@@ -153,11 +172,13 @@ export default {
 .add_new{
   position: relative;
   left: 45%;
-  margin-top:100px;
+  margin-top:25px;
 }
 .add_new_admin{
+  position: relative;
+  padding: -4px;
+  margin-top: -3px;
   width: 300px;
-  margin:auto;
 }
 .sort{
     font-style: italic;
@@ -166,11 +187,11 @@ export default {
   font-size: 14px;
 }
 .div_add{
-  min-height: 295px;
+  min-height: 100px;
 }
 
 .wrapper_table {
-  height: 245px;
+  height: 438px;
   border: 1px solid #cccccc;
   overflow: auto;
 }
@@ -179,15 +200,14 @@ export default {
 }
 #button_exit{
   position: relative;
-  right:-268px;
-  margin-top:-30xp;
+  right:-34px;
 }
 #button_exit:hover{
   background-color: #e60000;
 }
-#button_add{
+/* #button_add{
   position: relative;
   right: -180px;
   margin-top: 10px;
-}
+} */
 </style>
