@@ -2,6 +2,8 @@
   <div id="home">
     <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <b-button @click="check=!check" v-show="!check" id="add" variant="success">Thêm lịch thi</b-button>
+    <b-button id="print" variant="primary">In danh sách SV theo phòng</b-button>
+    
     <b-form-select v-model="selectedExam" :options="listExam" id="exam" @change="eventLoadExam"></b-form-select>
     <div v-show="check" class='add'>
       <b-form-select v-model="selectedSubject" :options="listSubject" id="subject"></b-form-select>
@@ -362,6 +364,11 @@ export default {
 #submit {
   position: relative;
   bottom: -1px;
+}
+#print{
+  position: absolute;
+  right: 19px;
+  top: 151px;
 }
 .add{
   position: absolute;

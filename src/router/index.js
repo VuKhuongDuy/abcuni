@@ -23,7 +23,6 @@ import DashboardAdmin from '@/components/DashboardAdmin'
 import Exam from '@/components/menus_admin/masterdata/Exam'
 import PrintStudentOfSubject from '@/components/menus_admin/masterdata/PrintStudentOfSubject'
 //superadmin
-import InfoSuperAdmin from '@/components/menu_super_admin/InfoSuperAdmin'
 import ManageAdmin from '@/components/menu_super_admin/ManageAdmin'
 
 
@@ -106,10 +105,6 @@ export default new Router({
           path: '/admin/password',
           name: 'Password',
           component: Password,
-        },
-        {
-          path: '/superadmin',
-          component: InfoSuperAdmin,
         },
         {
           path: '/manage_admin',
