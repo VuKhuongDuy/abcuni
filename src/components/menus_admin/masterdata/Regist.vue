@@ -37,9 +37,9 @@
         id="table-transition-example"
         :fields="fields"
         head-variant="light"
-        :no-border-collapse="false"
+        :no-border-collapse="noCollapse"
         :sort-by.sync="sortBy"
-        :sort-desc.sync="sortDesc"
+        :sort-dsc.sync="sortDesc"
         small
         :tbody-tr-class="rowClass"
         caption-top
@@ -81,6 +81,7 @@ export default {
       typeAlert: "",
       listSubjectRegisted: [],
       listSubjectRegistedRender: [],
+      noCollapse: false,
       sortBy: "name_subject",
       sortDesc: false,
       variant_delete: "",
@@ -153,7 +154,6 @@ export default {
         });
         this.selectedExam = this.listExam[this.listExam.length - 1].value;
       } catch (e) {
-        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
@@ -191,7 +191,6 @@ export default {
         this.listSubjectRegistedRender = [];
         let url = '/regist/' + this.selectedExam;
         let data = await axios.getAxios(url);
-        console.log( data);
         if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
           return;
@@ -213,7 +212,6 @@ export default {
         });
         this.listSubjectRegistedRender = this.listSubjectRegisted;
       } catch (e) {
-        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },

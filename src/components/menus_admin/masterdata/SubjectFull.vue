@@ -43,7 +43,7 @@
       id="table-transition-example"
       :fields="fields"
       head-variant="light"
-      :no-border-collapse="false" 
+      :no-border-collapse="noCollapse" 
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       caption-top
@@ -78,7 +78,7 @@ export default {
     return{
       sortBy: 'MSSV',
       sortDesc: false,
-      file:'',
+      file:[],
       dataXml: null,
       fields:[
         {
@@ -120,6 +120,7 @@ export default {
         //   label:'Xóa'
         // }
       ],
+      noCollapse: false,
       keySearch: '',
       selectedExam: '',
       selectedSubject: '',
@@ -271,7 +272,7 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file!='' ? 'success':''
+        return this.file ? 'success':''
       }
     },
 };

@@ -24,7 +24,7 @@
       id="table"
       :fields="fields"
       head-variant="light"
-      :no-border-collapse="false" 
+      :no-border-collapse="noCollapse" 
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       caption-top
@@ -64,9 +64,10 @@ export default {
       timeCountAlert: 5,
       typeAlert: "",
 
+      noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
-      file:'',
+      file:[],
       fields:[
         {
           key:'index',
@@ -136,16 +137,42 @@ export default {
 
     xlsxToArray: function(file) {      
       return new Promise((resolve, reject) => {
-        readXlsxFile(file).then((rows, err) => {
+        const schema = {
+          'mssv': {
+            prop: 'mssv',
+            type: String,
+            required: true
+          },
+          'name': {
+            prop: 'name',
+            type: String
+          },
+          'birthday': {
+            prop: 'birthday',
+            type: Date
+          },
+          'sex': {
+            prop: 'sex',
+            required: true,
+            type: String
+          }
+        };
+        readXlsxFile(file, {schema}).then(({rows, err}) => {
           if(err) reject(err);
           let arrayObject = [];
-          for(let i=1;i<rows.length;i++){
+          for(let i=0;i<rows.length;i++){
             let student = {};
-            rows[0].forEach((field, index) => {
-              student[field] = rows[i][index];
-            });
+            if(!rows[i].birthday){
+              continue;
+            }
+            student['mssv'] = rows[i].mssv;
+            student['name'] = rows[i].name;
+            let date = new Date(rows[i].birthday);
+            student['birthday'] = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            student['sex'] = rows[i].sex;
             arrayObject.push(student);
           }
+          console.log(arrayObject);
           resolve(arrayObject);
         });
       })
@@ -205,7 +232,7 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file!='' ? 'success':''
+        return this.file ? 'success':''
       }    
   },
 };

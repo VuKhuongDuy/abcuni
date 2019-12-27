@@ -7,7 +7,6 @@
       class="optionExam mt-3"
       :options="listExam"
       size="sm"
-      @change="loadSubjectRegisted"
     ></b-form-select>
     <b-form-file
       v-model="file"
@@ -30,7 +29,7 @@
         id="tableTransitionExample"
         :fields="fields"
         head-variant="light"
-        :no-border-collapse="false"
+        :no-border-collapse="noCollapse"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
         caption-top
@@ -72,8 +71,9 @@ export default {
       timeCountAlert: 5,
       typeAlert: "",
       dataXml: [],
-      file:'',
+      file:[],
 
+      noCollapse: false,
       turn: null,
       sortBy: "room",
       sortDesc: false,
@@ -146,12 +146,6 @@ export default {
       }
     },
 
-    changeTypeAlert: function(message, type) {
-      this.message = message;
-      this.typeAlert = type;
-      this.dismissCountDown = this.timeCountAlert;
-    },
-
     addRoom: async function(){
       this.dismissCountDown = 0;
       let listRoomJson = JSON.stringify(this.dataXml);
@@ -160,6 +154,7 @@ export default {
       let data = await axios.postAxios(url, body);
       if (!data.success) {
           this.changeTypeAlert(data.message, "warning");
+          return;
       }else this.changeTypeAlert(data.message, "success");
       await this.loadRoom();
     },
@@ -175,6 +170,12 @@ export default {
         await this.loadRoom();
         this.changeTypeAlert(data.message, "success");
       }
+    },
+
+    changeTypeAlert: function(message, type) {
+      this.message = message;
+      this.typeAlert = type;
+      this.dismissCountDown = this.timeCountAlert;
     },
 
     importData: async function(){      
@@ -206,7 +207,7 @@ export default {
   },
   computed: {
     variantState() {
-      return this.file!='' && this.selectedExam!=null ? 'success':''
+      return this.file && this.selectedExam!=null ? 'success':''
     }
   }
 };

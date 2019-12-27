@@ -38,7 +38,7 @@
       id="table"
       :fields="fields"
       head-variant="light"
-      no-border-collapse="false" 
+      :no-border-collapse="noCollapse" 
       sort-by.sync="code_subject"
       sort-desc.sync="false"
       caption-top
@@ -73,10 +73,10 @@ export default {
       timeCountAlert: 5,
       typeAlert: "",
       dataXml: [],
-
+      noCollapse: false,
       keySearch: null,
       turn:null,
-      file:'',
+      file:[],
       listExam: [{ value: null, text: "Kì thi" }],
       listSubject: [],
       listSubjectRender: [],
@@ -231,7 +231,7 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file!='' && this.selectedExam!=null ? 'success':''
+        return this.file && this.selectedExam!=null ? 'success':''
       }
     },
 };

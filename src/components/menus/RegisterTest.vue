@@ -148,7 +148,6 @@ export default {
           this.listTurn.push(obj);
         });
       } catch (e) {
-        console.log(e.message);
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
     },
