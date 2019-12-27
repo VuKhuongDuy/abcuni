@@ -3,7 +3,7 @@
     <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <b-form-input v-model="exam" placeholder="Nhập tên kỳ thi" id="name"></b-form-input>
     <br />
-    <b-button variant="success" @click="addExam">Thêm kỳ thi</b-button>
+    <b-button :variant="variantState" @click="addExam">Thêm kỳ thi</b-button>
     <div class="wrapper_table">
       <b-table
         striped
@@ -122,6 +122,11 @@ export default {
   },
   mounted: function() {
     this.loadExam();
+  },
+  computed:{
+    variantState(){
+       return this.exam!=""? "success":''
+    }
   }
 };
 </script>
@@ -139,7 +144,7 @@ export default {
   width: 600px;
   /* border: 1px solid gray; */
   overflow: auto;
-  margin-left: 311px;
+  margin-left: 351px;
   margin-top: 10px;
   background-color: white;
   box-shadow: #d9d2ba 0px 0px 7px;

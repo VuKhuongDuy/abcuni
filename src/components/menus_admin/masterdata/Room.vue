@@ -207,7 +207,7 @@ export default {
   },
   computed: {
     variantState() {
-      return this.file && this.selectedExam!=null ? 'success':''
+      return this.file.length != 0 && this.selectedExam!=null ? 'success':''
     }
   }
 };

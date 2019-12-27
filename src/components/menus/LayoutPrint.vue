@@ -7,7 +7,7 @@
         :options="listExam"
         small
         ></b-form-select>
-        <b-button variant="success" id="btnPrint" @click="printf" >Printf</b-button>
+        <b-button :variant="variantSate" id="btnPrint" @click="printf" >Printf</b-button>
     </div>    
 </template>
 <script>
@@ -60,6 +60,11 @@ export default {
     },
     mounted: function(){
         this.loadExam();
+    },
+    computed:{
+        variantSate(){
+            return this.selectedExam!= null ? 'success':''
+        }
     }
 }
 </script>
