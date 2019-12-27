@@ -21,6 +21,7 @@ import Password from '@/components/menus/Password'
 //admin
 import DashboardAdmin from '@/components/DashboardAdmin'
 import Exam from '@/components/menus_admin/masterdata/Exam'
+import PrintStudentOfSubject from '@/components/menus_admin/masterdata/PrintStudentOfSubject'
 //superadmin
 import InfoSuperAdmin from '@/components/menu_super_admin/InfoSuperAdmin'
 import ManageAdmin from '@/components/menu_super_admin/ManageAdmin'
@@ -102,7 +103,7 @@ export default new Router({
           component: User,
         },
         {
-          path: '/admin/password',
+          path: '/admin/password/:user',
           name: 'Password',
           component: Password,
         },
@@ -119,6 +120,10 @@ export default new Router({
     {
       path: '/print/:exam_id',
       component: Print
+    },
+    {
+      path: '/PrintStudentOfSubject',
+      component: PrintStudentOfSubject
     },
   ]
 })

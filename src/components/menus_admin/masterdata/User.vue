@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     changePassword: function(){
-      this.$router.push('/admin/password');
+      this.$router.push('/admin/password/user');
     },
 
     registUser: async function(){

@@ -90,7 +90,7 @@ export default {
       if(this.isAdmin === 'sinh viên'){
         this.$router.push("/password");
       }else 
-        this.$router.push("/admin/password");
+        this.$router.push("/admin/password/admin");
     }
   },
   mounted: function() {

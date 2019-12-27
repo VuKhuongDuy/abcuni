@@ -11,6 +11,7 @@
         <b-form-input
             v-model="oldPassword"
             placeholder="Mật khẩu cũ"
+            v-show="changePassUser === 'admin'"
             class="input"
             id="oldPass"
             type="password"
@@ -48,7 +49,8 @@ export default {
             username: '',
             oldPassword: '',
             newPassword: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            changePassUser: false,
         }
     },
     methods: {
@@ -63,13 +65,24 @@ export default {
             if(!window.confirm('Bạn có muốn thay đổi mật khẩu?')){
                 return;
             }
-            let url = '/changepassword';
-            let body = {
-                username: this.username, 
-                oldPassword: this.oldPassword,
-                newPassword: this.newPassword,
-                confirmPassword: this.confirmPassword
-            };
+            let url = '';
+            let body = '';
+            if(this.changePassUser === 'user'){
+                url = '/changepassword/user';
+                body = {
+                    username: this.username, 
+                    newPassword: this.newPassword,
+                    confirmPassword: this.confirmPassword
+                };
+            }else {
+                url = '/changepassword';
+                body = {
+                    username: this.username, 
+                    oldPassword: this.oldPassword,
+                    newPassword: this.newPassword,
+                    confirmPassword: this.confirmPassword
+                };
+            }
             let data = await axios.putAxios(url, body);
             if(!data.success){
                 this.typeAlert = 'warning'
@@ -82,6 +95,10 @@ export default {
             this.typeAlert = type;
             this.dismissCountDown = this.timeCountAlert;
         }
+    },
+    mounted: function(){
+        this.changePassUser = this.$route.params.user;
+        console.log(this.changePassUser);
     }
 }
 </script>
