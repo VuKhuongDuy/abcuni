@@ -98,7 +98,6 @@ export default {
     },
     mounted: function(){
         this.changePassUser = this.$route.params.user;
-        console.log(this.changePassUser);
     }
 }
 </script>

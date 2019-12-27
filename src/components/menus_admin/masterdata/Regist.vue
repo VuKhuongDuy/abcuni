@@ -2,7 +2,7 @@
   <div id="home">
     <b-alert :variant="typeAlert" class="alert" :show="dismissCountDown">{{message}}</b-alert>
     <b-button @click="check=!check" v-show="!check" id="add" variant="success">Thêm lịch thi</b-button>
-    <b-button id="print" variant="primary">In danh sách SV theo phòng</b-button>
+    <b-button id="print" variant="primary" @click="goToPrint">In danh sách SV theo phòng</b-button>
     
     <b-form-select v-model="selectedExam" :options="listExam" id="exam" @change="eventLoadExam"></b-form-select>
     <div v-show="check" class='add'>
@@ -44,6 +44,7 @@
         :sort-dsc.sync="sortDesc"
         small
         :tbody-tr-class="rowClass"
+        @row-clicked="chooseTurn"
         caption-top
       >
         <template v-slot:cell(index)="data">
@@ -136,6 +137,8 @@ export default {
       listTurn: [],
       listRoom: [],
       listExam: [],
+      subjectRegistedChoose: null,
+      registed_id: null,
       keySearch: ''
     };
   },
@@ -271,6 +274,19 @@ export default {
       }catch (e) {
         this.changeTypeAlert("SERVER gặp sự cố", "warning");
       }
+    },
+
+    chooseTurn: function(turn, index) {  
+      this.registed_id = this.listSubjectRegistedRender[index].registed_id;
+    },
+
+    goToPrint: function(){
+      if(!this.selectedExam || !this.registed_id){
+        this.dismissCountDown = 0;
+        this.changeTypeAlert('Hãy chọn kì thi và môn thi đã đăng kí', 'warning');
+        return;
+      }
+      this.$router.push('/print/' + this.selectedExam + '/' + this.registed_id);
     },
 
     searchRoom: async function(){

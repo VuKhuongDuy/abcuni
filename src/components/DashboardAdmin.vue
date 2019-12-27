@@ -19,7 +19,7 @@
                         <template v-if="check0" class="transition_menu">
                             <router-link to='/exam' @click.native="changePath" tag='button' v-bind:class="[path==='/exam'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Tạo kì thi</router-link>
                             <router-link to='/room' @click.native="changePath" tag='button' v-bind:class="[path==='/room'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Cơ sở vật chất</router-link>
-                            <router-link to='/subjectexam' @click.native="changePath" tag='button' v-bind:class="[path==='/subjectexam'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Đăng kí thi</router-link>
+                            <router-link to='/subjectexam' @click.native="changePath" tag='button' v-bind:class="[path==='/subjectexam'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Môn học</router-link>
                             <router-link to='/turn' @click.native="changePath" tag='button' v-bind:class="[path==='/turn'? 'active' : 'no_active']"><img src="@/../public/icons/right_1.png" class="icon_right">Ca thi</router-link>
                         </template>
                         <button @click="check1 = !check1" :class="check1?shadow:noshadow"><img src="@/../public/icons/stack.png" class="icon_stack"> Quản lý lịch thi<img v-if="check1" src="@/../public/icons/up.png" class="icon_down"><img v-if="!check1" src="@/../public/icons/down.png" class="icon_down"></button>

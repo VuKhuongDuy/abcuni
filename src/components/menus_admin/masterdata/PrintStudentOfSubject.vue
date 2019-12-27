@@ -28,7 +28,6 @@
             </tr>
             <tr>
                 <td>Ngày thi: <b>{{date}}</b></td>
-                <td>Giờ thi: <b>{{time}}</b></td>
             </tr>
             <tr>
                 
@@ -47,22 +46,19 @@
 </template>
 
 <script>
+import * as axios from '../../../../config/axios'
 export default {
-  props: {
-    'exam' : {
-      type: String,
-      require: true
-    }
-  },
   data() {
     return {
+      registed_id: '',
+      exam_id: '',
       subject:'Phát triển ứng dụng web',
-      credit:'3',
-      turn: '1',
-      room: '306 GĐ2',
-      date:"28/12/2019",
-      time: '7h30',
-      number: '80',
+      credit:'',
+      turn: '',
+      room: '',
+      date:"",
+      time: '',
+      number: '',
       name: '',
       mssv: '',
       school:"DTT",
@@ -101,51 +97,46 @@ export default {
     };
   },
   methods: {
-    // getUser: async function() {
-    //   const data = await axios.getAxios("/user");
-    //   if (!data || !data.success) {
-    //     return;
-    //   } else {
-    //     this.name = data.data.username;
-    //     this.mssv = data.data.mssv;
-    //   }
-    // },
 
-    // loadSubjectRegisted: async function() {
-    //   try {        
-    //     this.listSubjectRegisted = [];
-    //     let url = "/regist/" + this.exam + '/student';
-    //     let data = await axios.getAxios(url);
-    //     if (!data.success) {
-    //       return;
-    //     }
-
-    //     data.data.forEach(turn => {
-    //       let obj = {
-    //         Id: turn.registed_id,
-    //         "code_subject": turn.subject_code,
-    //         "name_subject": turn.subject_name,
-    //         "room": turn.room_name,
-    //         "date": turn.date,
-    //         "time": turn.time_begin,
-    //       };
-    //       this.listSubjectRegisted.push(obj);
-    //     });        
-    //   } catch (e) {
-    //   }
-    // },
+    loadSubjectRegisted: async function(){
+      try{
+        this.listSubjectRegisted = [];
+        let url =  '/admin/' + this.registed_id;
+        let data = await axios.getAxios(url);
+        if (!data.success) {
+          return;
+        }
+        data.data.forEach((student, index) => {
+          let obj = { 
+            stt : index,
+            mssv: student.mssv,
+            name : student.name_student,
+            date : student.birthday,
+          };
+          this.subject = student.subject_name;
+          this.credit = student.credit;
+          this.turn = student.time_begin
+          this.room = student.room_name
+          let date = new Date(student.date);
+          this.date = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+          this.number = student.count_registed
+          this.listSubjectRegisted.push(obj);
+        });
+      } catch (e) {
+      }
+    },
 
     print() {
       window.print();
     }
   },
   mounted: async function(){
-    this.exam = this.$route.params.exam_id;
-    await this.getUser();
+    this.exam_id = this.$route.params.exam_id;
+    this.registed_id = this.$route.params.registed_id;
     await this.loadSubjectRegisted();
-      setTimeout(function(){
-          print();
-        }, 1);
+      // setTimeout(function(){
+      //     print();
+      //   }, 1);
   }
 };
 </script>

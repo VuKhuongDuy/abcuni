@@ -63,9 +63,6 @@ export default {
     getUser: async function() {
       this.dismissCountDown = 0;
       const data = await axios.getAxios("/user");
-      if(!data.data){
-        this.logout();
-      }
       if (!data || !data.success) {
         this.changeTypeAlert(data.message, "warning");
       } else {

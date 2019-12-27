@@ -172,7 +172,6 @@ export default {
             student['sex'] = rows[i].sex;
             arrayObject.push(student);
           }
-          console.log(arrayObject);
           resolve(arrayObject);
         });
       })

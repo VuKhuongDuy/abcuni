@@ -117,7 +117,7 @@ export default new Router({
       component: Print
     },
     {
-      path: '/PrintStudentOfSubject',
+      path: '/print/:exam_id/:registed_id',
       component: PrintStudentOfSubject
     },
   ]
