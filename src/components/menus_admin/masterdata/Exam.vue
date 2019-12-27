@@ -12,7 +12,7 @@
         id="tableExam"
         :fields="fields"
         head-variant="light"
-        no-border-collapse="false"
+        :no-border-collapse="noCollapse"
         sort-by.sync="room"
         sort-desc.sync="false"
         caption-top
@@ -44,6 +44,7 @@ export default {
       timeCountAlert: 5,
       typeAlert: "",
       listExam: [],
+      noCollapse: false,
       fields: [
         {
           key: "index",
@@ -65,6 +66,7 @@ export default {
     loadExam: async function() {
       try {
         this.dismissCountDown = 0;
+        this.listExam = [];
         let url = "/exam";
         let data = await axios.getAxios(url);
         if (!data.success) {
@@ -95,6 +97,7 @@ export default {
         this.changeTypeAlert(data.message, "warning");
         return;
       }
+      await this.loadExam();
       this.changeTypeAlert(data.message, "success");
     },
 
@@ -107,6 +110,7 @@ export default {
         this.changeTypeAlert(data.message, "warning");
         return;
       }
+      await this.loadExam();
       this.changeTypeAlert(data.message, "success");
     },
 

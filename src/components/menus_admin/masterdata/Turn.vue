@@ -19,7 +19,7 @@
       id="table-transition-example"
       :fields="fields"
       head-variant="light"
-      :no-border-collapse="false"
+      :no-border-collapse="noCollapse"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       small
@@ -57,11 +57,12 @@ export default {
       timeCountAlert: 5,
       typeAlert: "",
       dataXml: [],
-      file:'',
+      file:[],
       listTurn: [],
       sortBy: 'number',
       sortDesc: false,
       turn: null,
+      noCollapse: false,
       fields:[
         {
           key:'index',
@@ -172,7 +173,7 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file!=''? 'success':''
+        return this.file? 'success':''
       }
     },
 };

@@ -24,7 +24,7 @@
       id="table"
       :fields="fields"
       head-variant="light"
-      :no-border-collapse="false" 
+      :no-border-collapse="noCollapse" 
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       caption-top
@@ -64,9 +64,10 @@ export default {
       timeCountAlert: 5,
       typeAlert: "",
 
+      noCollapse: false,
       sortBy: 'MSSV',
       sortDesc: false,
-      file:'',
+      file:[],
       fields:[
         {
           key:'index',
@@ -205,7 +206,7 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file!='' ? 'success':''
+        return this.file ? 'success':''
       }    
   },
 };

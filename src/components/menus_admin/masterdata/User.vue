@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       dataXml: [],
-      file:'',
+      file:[],
       typeAlert: "info",
       message: "",
       dismissCountDown: 0,
@@ -81,7 +81,7 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file!='' ? 'success':''
+        return this.file ? 'success':''
       }
     },
 };

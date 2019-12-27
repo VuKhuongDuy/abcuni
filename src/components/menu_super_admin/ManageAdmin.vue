@@ -36,7 +36,7 @@
       <b-table striped hover :items="listAdmin"
       id="table-admin"
       :fields="fields"
-      :head-variant="headVariant"
+      head-variant="light"
       :no-border-collapse="noCollapse" 
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
@@ -76,6 +76,10 @@ export default {
       timeCountAlert: 5,  
       typeAlert: "",
 
+      noCollapse: false,
+      turn: null,
+      sortBy: "room",
+      sortDesc: false,
       fields:[
         {
           key:'index',
@@ -138,7 +142,6 @@ export default {
     deleteAdmin: async function(index){
       this.dismissCountDown = 0;
       let url = '/admin/' + this.listAdmin[index].email;
-      console.log(url);
       let data = await axios.deleteAxios(url);
       if(!data.success){
           this.changeTypeAlert(data.message, 'warning');
