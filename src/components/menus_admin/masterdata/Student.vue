@@ -206,7 +206,7 @@ export default {
   },
   computed: {
       variantState(){
-        return this.file ? 'success':''
+        return this.file.length != 0 ? 'success':''
       }    
   },
 };
